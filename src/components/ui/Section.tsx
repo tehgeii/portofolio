@@ -15,7 +15,7 @@ interface SectionProps {
 export function Section({ id, eyebrow, title, subtitle, children, className = "", aside }: SectionProps) {
   const headingId = `${id}-heading`;
   return (
-    <section id={id} aria-labelledby={headingId} className={`relative py-24 sm:py-32 ${className}`}>
+    <section id={id} aria-labelledby={headingId} className={`relative py-24 sm:py-28 ${className}`}>
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <Reveal className="mb-12 flex flex-col gap-6 sm:mb-16 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-2xl">
