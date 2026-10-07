@@ -52,7 +52,7 @@ Semua isi website ada di folder [`src/data`](src/data), jadi tidak perlu menyent
 
 Setiap teks punya versi `id` dan `en`. TypeScript akan memberi tahu kalau ada terjemahan yang terlewat.
 
-Foto profil saat ini memakai avatar GitHub. Untuk memakai foto lain, taruh file di `public/` (misalnya `public/avatar.jpg`) lalu ubah `avatar` di `profile.ts` menjadi `"./avatar.jpg"`.
+Foto profil ada di [`src/assets/avatar.jpg`](src/assets/avatar.jpg) (rasio 1:1, fokus wajah & dada). Untuk menggantinya, timpa file tersebut dengan foto persegi baru dengan nama yang sama.
 
 ## 🌍 Deploy ke GitHub Pages
 

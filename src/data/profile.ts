@@ -1,3 +1,4 @@
+import avatar from "../assets/avatar.jpg";
 import type { Localized, LocalizedList } from "../types";
 
 /**
@@ -19,7 +20,8 @@ export const profile = {
   shortName: "Dafi",
   username: "tehgeii",
   email: "antsters9@gmail.com",
-  avatar: "https://avatars.githubusercontent.com/u/121181566?v=4",
+  /** Profile photo, cropped to face & chest. Replace src/assets/avatar.jpg to change it. */
+  avatar,
   website: "https://tgopremium.my.id",
   siteUrl: "https://tehgeii.github.io/portofolio/",
 
