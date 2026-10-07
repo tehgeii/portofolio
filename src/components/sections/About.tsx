@@ -1,4 +1,14 @@
-import { BrainCircuit, GraduationCap, Laptop, MapPin, Monitor, Rocket, Smartphone, Code2, type LucideIcon } from "lucide-react";
+import {
+  BrainCircuit,
+  GraduationCap,
+  Laptop,
+  MapPin,
+  Monitor,
+  Rocket,
+  Smartphone,
+  Code2,
+  type LucideIcon,
+} from "lucide-react";
 import { profile } from "../../data/profile";
 import { useLanguage } from "../../i18n/language";
 import { Reveal } from "../ui/Reveal";
@@ -68,12 +78,12 @@ export function About() {
           return (
             <Reveal as="li" key={service.title} delay={i * 0.08} className="h-full">
               <SpotlightCard className="h-full p-6 hover:-translate-y-1">
-                  <span className="bg-gradient-accent mb-5 grid size-11 place-items-center rounded-xl text-white shadow-[0_8px_24px_-8px_var(--glow)] dark:text-zinc-950">
-                    <Icon className="size-5" aria-hidden />
-                  </span>
-                  <h4 className="text-lg font-semibold">{service.title}</h4>
-                  <p className="mt-2 text-sm leading-relaxed text-muted">{service.body}</p>
-                </SpotlightCard>
+                <span className="mb-5 grid size-11 place-items-center rounded-xl bg-gradient-accent text-white shadow-[0_8px_24px_-8px_var(--glow)] dark:text-zinc-950">
+                  <Icon className="size-5" aria-hidden />
+                </span>
+                <h4 className="text-lg font-semibold">{service.title}</h4>
+                <p className="mt-2 text-sm leading-relaxed text-muted">{service.body}</p>
+              </SpotlightCard>
             </Reveal>
           );
         })}

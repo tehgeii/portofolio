@@ -248,7 +248,10 @@ export function CommandPalette({ onClose, onOpenProject }: CommandPaletteProps) 
             return (
               <li key={command.id} role="presentation">
                 {showHeader && (
-                  <p role="presentation" className="px-3 pt-3 pb-1.5 text-[11px] font-semibold tracking-wider text-subtle uppercase">
+                  <p
+                    role="presentation"
+                    className="px-3 pt-3 pb-1.5 text-[11px] font-semibold tracking-wider text-subtle uppercase"
+                  >
                     {t.palette.groups[command.group]}
                   </p>
                 )}
@@ -271,7 +274,9 @@ export function CommandPalette({ onClose, onOpenProject }: CommandPaletteProps) 
                     <Icon className="size-4" aria-hidden />
                   </span>
                   <span className="min-w-0 flex-1 truncate font-medium">{command.label}</span>
-                  {command.hint && <span className="hidden truncate font-mono text-xs text-subtle sm:block">{command.hint}</span>}
+                  {command.hint && (
+                    <span className="hidden truncate font-mono text-xs text-subtle sm:block">{command.hint}</span>
+                  )}
                   {command.group === "links" ? (
                     <ArrowUpRight className={`size-4 shrink-0 ${active ? "opacity-100" : "opacity-0"}`} aria-hidden />
                   ) : (

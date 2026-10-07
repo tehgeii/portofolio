@@ -262,8 +262,7 @@ const en: Translation = {
   contact: {
     eyebrow: "Contact",
     title: "Let's work together",
-    subtitle:
-      "Have a project idea, an internship offer, or just want to chat about tech? I'd love to hear from you.",
+    subtitle: "Have a project idea, an internship offer, or just want to chat about tech? I'd love to hear from you.",
     emailMe: "Send an email",
     copy: "Copy email",
     copied: "Email copied to clipboard!",

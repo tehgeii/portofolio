@@ -166,9 +166,14 @@ export function ProjectModal({ project, onClose, onNavigate }: ProjectModalProps
             onClick={() => onNavigate(prev.slug)}
             className="group flex items-center gap-3 p-5 text-left transition-colors hover:bg-surface-2"
           >
-            <ChevronLeft className="size-5 shrink-0 text-subtle transition-transform group-hover:-translate-x-1" aria-hidden />
+            <ChevronLeft
+              className="size-5 shrink-0 text-subtle transition-transform group-hover:-translate-x-1"
+              aria-hidden
+            />
             <span className="min-w-0">
-              <span className="block font-mono text-[10px] tracking-wider text-subtle uppercase">{t.projects.prev}</span>
+              <span className="block font-mono text-[10px] tracking-wider text-subtle uppercase">
+                {t.projects.prev}
+              </span>
               <span className="block truncate text-sm font-semibold">{prev.title}</span>
             </span>
           </button>
@@ -178,10 +183,15 @@ export function ProjectModal({ project, onClose, onNavigate }: ProjectModalProps
             className="group flex items-center justify-end gap-3 border-l border-line p-5 text-right transition-colors hover:bg-surface-2"
           >
             <span className="min-w-0">
-              <span className="block font-mono text-[10px] tracking-wider text-subtle uppercase">{t.projects.next}</span>
+              <span className="block font-mono text-[10px] tracking-wider text-subtle uppercase">
+                {t.projects.next}
+              </span>
               <span className="block truncate text-sm font-semibold">{next.title}</span>
             </span>
-            <ChevronRight className="size-5 shrink-0 text-subtle transition-transform group-hover:translate-x-1" aria-hidden />
+            <ChevronRight
+              className="size-5 shrink-0 text-subtle transition-transform group-hover:translate-x-1"
+              aria-hidden
+            />
           </button>
         </nav>
       </motion.div>

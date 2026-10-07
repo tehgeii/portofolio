@@ -52,7 +52,7 @@ export function Hero() {
     >
       {/* Background layers */}
       <div aria-hidden className="absolute inset-0 -z-10">
-        <div className="bg-grid mask-radial absolute inset-0 opacity-70" />
+        <div className="absolute inset-0 bg-grid mask-radial opacity-70" />
         <div className="absolute top-[-10%] left-[-10%] size-[520px] rounded-full bg-violet-500/20 blur-[120px] dark:bg-violet-600/20" />
         <div className="absolute right-[-10%] bottom-[0%] size-[480px] rounded-full bg-cyan-400/20 blur-[120px] dark:bg-cyan-500/10" />
         <div
@@ -213,7 +213,6 @@ export function Hero() {
           ))}
         </motion.dl>
       </div>
-
     </section>
   );
 }
@@ -271,7 +270,9 @@ function Portrait({ reduce }: { reduce: boolean }) {
         </div>
         <div className="relative size-full overflow-hidden rounded-[2rem] border border-line bg-surface">
           {imgFailed ? (
-            <div className="bg-gradient-accent grid size-full place-items-center text-8xl font-extrabold text-white">D</div>
+            <div className="grid size-full place-items-center bg-gradient-accent text-8xl font-extrabold text-white">
+              D
+            </div>
           ) : (
             <img
               src={profile.avatar}
@@ -283,7 +284,10 @@ function Portrait({ reduce }: { reduce: boolean }) {
               className="size-full object-cover"
             />
           )}
-          <div aria-hidden className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/50 to-transparent" />
+          <div
+            aria-hidden
+            className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/50 to-transparent"
+          />
           <div className="absolute right-4 bottom-4 flex items-center gap-2 rounded-full bg-black/40 px-3 py-1.5 font-mono text-xs text-white backdrop-blur-md">
             <span className="size-1.5 rounded-full bg-emerald-400" aria-hidden />@{profile.username}
           </div>
@@ -295,7 +299,7 @@ function Portrait({ reduce }: { reduce: boolean }) {
               className="flex animate-float items-center gap-2.5 rounded-2xl border border-line-strong bg-surface/85 py-2 pr-3.5 pl-2 shadow-card backdrop-blur-md"
               style={{ animationDelay: delay }}
             >
-              <span className="bg-gradient-accent grid size-8 place-items-center rounded-xl text-white dark:text-zinc-950">
+              <span className="grid size-8 place-items-center rounded-xl bg-gradient-accent text-white dark:text-zinc-950">
                 <Icon className="size-4" />
               </span>
               <span className="leading-tight">

@@ -21,7 +21,9 @@ export function Footer() {
           </div>
 
           <nav aria-label="Footer">
-            <h2 className="font-mono text-xs font-semibold tracking-[0.15em] text-subtle uppercase">{t.footer.navigation}</h2>
+            <h2 className="font-mono text-xs font-semibold tracking-[0.15em] text-subtle uppercase">
+              {t.footer.navigation}
+            </h2>
             <ul className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2.5 text-sm">
               {SECTIONS.filter((id) => id !== "home").map((id) => (
                 <li key={id}>
@@ -97,7 +99,7 @@ export function Footer() {
       {/* Oversized wordmark */}
       <p
         aria-hidden
-        className="pointer-events-none -mb-[0.22em] text-center text-[26vw] leading-none font-extrabold tracking-tighter text-transparent select-none [background-clip:text] [-webkit-background-clip:text] bg-gradient-to-b from-line-strong to-transparent md:text-[20vw]"
+        className="pointer-events-none -mb-[0.22em] bg-gradient-to-b from-line-strong to-transparent [background-clip:text] text-center text-[26vw] leading-none font-extrabold tracking-tighter text-transparent select-none [-webkit-background-clip:text] md:text-[20vw]"
       >
         DAFI
       </p>

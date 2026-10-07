@@ -22,7 +22,7 @@ export function ProjectCover({ project, size = "md", hideYear = false }: Project
       className={`relative isolate overflow-hidden ${large ? "h-44 sm:h-56" : "h-44"}`}
       style={{ background: `linear-gradient(135deg, ${from}, ${to})` }}
     >
-      <div className="absolute inset-0 -z-10 opacity-30 [background-image:radial-gradient(rgb(255_255_255/0.5)_1px,transparent_1px)] [background-size:16px_16px]" />
+      <div className="absolute inset-0 -z-10 [background-image:radial-gradient(rgb(255_255_255/0.5)_1px,transparent_1px)] [background-size:16px_16px] opacity-30" />
       <div className="absolute -right-10 -bottom-16 size-56 rounded-full bg-white/15 blur-2xl transition-transform duration-700 group-hover:scale-125" />
       <div className="absolute -top-12 -left-12 size-40 rounded-full bg-black/20 blur-2xl" />
 

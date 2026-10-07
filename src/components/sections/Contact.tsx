@@ -28,7 +28,7 @@ export function Contact() {
           <Reveal>
             <SpotlightCard className="p-6 sm:p-7">
               <div className="flex items-center gap-3">
-                <span className="bg-gradient-accent grid size-11 place-items-center rounded-xl text-white dark:text-zinc-950">
+                <span className="grid size-11 place-items-center rounded-xl bg-gradient-accent text-white dark:text-zinc-950">
                   <Mail className="size-5" aria-hidden />
                 </span>
                 <div className="min-w-0">
@@ -151,7 +151,13 @@ function ContactForm() {
 
   const fields: { key: Field; label: string; placeholder: string; type?: string; autoComplete: string }[] = [
     { key: "name", label: t.contact.form.name, placeholder: t.contact.form.namePh, autoComplete: "name" },
-    { key: "email", label: t.contact.form.email, placeholder: t.contact.form.emailPh, type: "email", autoComplete: "email" },
+    {
+      key: "email",
+      label: t.contact.form.email,
+      placeholder: t.contact.form.emailPh,
+      type: "email",
+      autoComplete: "email",
+    },
   ];
 
   const inputClass = (invalid: boolean) =>
@@ -206,7 +212,10 @@ function ContactForm() {
 
         <button type="submit" className={`${button("gradient", "lg")} group w-full`}>
           {t.contact.form.submit}
-          <Send className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden />
+          <Send
+            className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+            aria-hidden
+          />
         </button>
         <p className="text-center text-xs text-subtle">{t.contact.form.note}</p>
       </form>

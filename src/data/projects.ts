@@ -101,7 +101,7 @@ export const projects: Project[] = [
     },
     description: {
       id: "NgiBsen (peNGIngat aBSEN) memastikan mahasiswa tidak lupa presensi. Saat jam absen dibuka, HP bergetar dengan nama mata kuliah; satu tap membuka halaman presensi SiAdin (dengan login otomatis) atau Dinusverse. Tombol presensi tetap ditekan sendiri oleh pemilik HP. Aplikasi hanya mengingatkan, membuka halaman, mencatat, dan mengirim bukti ke Telegram.",
-      en: "NgiBsen (\"attendance reminder\" in Indonesian slang) makes sure students never forget to check in. When attendance opens, the phone vibrates with the course name; one tap opens the SiAdin attendance page (with auto-login) or Dinusverse. The student always presses the attendance button themselves. The app only reminds, opens the page, logs, and sends proof to Telegram.",
+      en: 'NgiBsen ("attendance reminder" in Indonesian slang) makes sure students never forget to check in. When attendance opens, the phone vibrates with the course name; one tap opens the SiAdin attendance page (with auto-login) or Dinusverse. The student always presses the attendance button themselves. The app only reminds, opens the page, logs, and sends proof to Telegram.',
     },
     highlights: {
       id: [
@@ -304,8 +304,16 @@ export const projects: Project[] = [
       en: "A playground where I build modern, responsive admin dashboard components with the latest React ecosystem.",
     },
     highlights: {
-      id: ["Komponen UI berbasis React", "Styling utility-first dengan Tailwind CSS v4", "Dev server super cepat dengan Vite"],
-      en: ["React component-based UI", "Utility-first styling with Tailwind CSS v4", "Lightning-fast dev server with Vite"],
+      id: [
+        "Komponen UI berbasis React",
+        "Styling utility-first dengan Tailwind CSS v4",
+        "Dev server super cepat dengan Vite",
+      ],
+      en: [
+        "React component-based UI",
+        "Utility-first styling with Tailwind CSS v4",
+        "Lightning-fast dev server with Vite",
+      ],
     },
     tech: ["React", "Vite", "Tailwind CSS"],
     links: [{ kind: "repo", url: "https://github.com/tehgeii/admin-ui" }],

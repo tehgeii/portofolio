@@ -9,7 +9,11 @@ export function LanguageToggle({ layoutId = "lang-pill" }: { layoutId?: string }
   const { lang, setLang, t } = useLanguage();
 
   return (
-    <div role="group" aria-label={t.a11y.switchLang} className="flex h-9 items-center rounded-full border border-line p-0.5">
+    <div
+      role="group"
+      aria-label={t.a11y.switchLang}
+      className="flex h-9 items-center rounded-full border border-line p-0.5"
+    >
       {OPTIONS.map((option) => {
         const active = option === lang;
         return (
