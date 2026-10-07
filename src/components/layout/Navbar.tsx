@@ -5,8 +5,9 @@ import { profile } from "../../data/profile";
 import { SECTIONS, scrollToSection, type SectionId } from "../../data/sections";
 import { useScrollLock } from "../../hooks/useScrollLock";
 import { useLanguage } from "../../i18n/language";
-import { socialIcons } from "../ui/BrandIcons";
-import { Kbd, isMac } from "../ui/Kbd";
+import { socialIcons } from "../ui/socialIcons";
+import { isMac } from "../../lib/platform";
+import { Kbd } from "../ui/Kbd";
 import { LanguageToggle } from "../ui/LanguageToggle";
 import { ThemeToggle } from "../ui/ThemeToggle";
 import { button } from "../ui/styles";
@@ -151,7 +152,7 @@ export function Navbar({ active, onOpenPalette }: NavbarProps) {
             animate={{ opacity: 1, height: "calc(100dvh - 4rem)" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-            className="overflow-y-auto border-t border-line lg:hidden"
+            className="overflow-y-auto border-t border-line bg-bg lg:hidden"
           >
             <div className="mx-auto flex min-h-full max-w-6xl flex-col px-5 pt-6 pb-10 sm:px-8">
               <ul className="flex flex-col">

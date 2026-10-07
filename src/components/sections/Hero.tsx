@@ -8,7 +8,7 @@ import { skillCategories } from "../../data/skills";
 import { useGitHubStats } from "../../hooks/useGitHubStats";
 import { useTypewriter } from "../../hooks/useTypewriter";
 import { useLanguage } from "../../i18n/language";
-import { socialIcons } from "../ui/BrandIcons";
+import { socialIcons } from "../ui/socialIcons";
 import { CountUp } from "../ui/CountUp";
 import { button } from "../ui/styles";
 

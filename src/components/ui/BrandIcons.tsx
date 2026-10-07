@@ -1,5 +1,4 @@
 import type { SVGProps } from "react";
-import type { SocialKey } from "../../data/profile";
 
 /**
  * Brand icons drawn in the same stroke style as lucide-react, so they sit
@@ -54,10 +53,3 @@ export const YouTubeIcon = (props: IconProps) => (
     <path d="m10 15 5-3-5-3z" />
   </Base>
 );
-
-export const socialIcons: Record<SocialKey, (props: IconProps) => React.JSX.Element> = {
-  github: GitHubIcon,
-  linkedin: LinkedInIcon,
-  instagram: InstagramIcon,
-  youtube: YouTubeIcon,
-};
