@@ -249,7 +249,7 @@ function Portrait({ reduce }: { reduce: boolean }) {
       icon: Smartphone,
       title: "NgiBsen",
       sub: "Android · Kotlin",
-      className: "-right-4 top-[42%] sm:-right-10",
+      className: "-right-10 top-[42%] hidden lg:block",
       delay: "-2s",
     },
     {
@@ -277,11 +277,12 @@ function Portrait({ reduce }: { reduce: boolean }) {
             <img
               src={profile.avatar}
               alt={profile.name}
-              width={460}
-              height={460}
+              width={358}
+              height={358}
+              decoding="async"
               fetchPriority="high"
               onError={() => setImgFailed(true)}
-              className="size-full object-cover"
+              className="size-full object-cover object-top"
             />
           )}
           <div
