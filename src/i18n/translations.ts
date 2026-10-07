@@ -62,7 +62,6 @@ const id = {
     eyebrow: "Keahlian",
     title: "Tech stack yang saya gunakan",
     subtitle: "Arahkan kursor (atau tap) ke sebuah skill untuk melihat di mana saya memakainya.",
-    all: "Semua",
   },
   projects: {
     eyebrow: "Portofolio",
@@ -78,6 +77,9 @@ const id = {
     techUsed: "Teknologi",
     links: { repo: "Kode", live: "Demo Live", website: "Website" },
     filterLabel: "Filter kategori project",
+    prev: "Sebelumnya",
+    next: "Berikutnya",
+    navLabel: "Navigasi antar project",
     count: (n: number) => `${n} project`,
   },
   journey: {
@@ -212,7 +214,6 @@ const en: Translation = {
     eyebrow: "Skills",
     title: "My tech stack",
     subtitle: "Hover (or tap) a skill to see where I've used it.",
-    all: "All",
   },
   projects: {
     eyebrow: "Portfolio",
@@ -228,6 +229,9 @@ const en: Translation = {
     techUsed: "Tech stack",
     links: { repo: "Code", live: "Live Demo", website: "Website" },
     filterLabel: "Filter projects by category",
+    prev: "Previous",
+    next: "Next",
+    navLabel: "Project navigation",
     count: (n: number) => `${n} project${n === 1 ? "" : "s"}`,
   },
   journey: {
