@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="id" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Dafi Hauzan Atsillah Hoenarko · Informatics Student &amp; Developer</title>
+    <meta
+      name="description"
+      content="Portofolio Dafi Hauzan Atsillah Hoenarko (tehgeii), mahasiswa Teknik Informatika UDINUS & developer. Kreator TGO, NgiBsen, dan ZZZ Gacha Predictor."
+    />
+    <meta name="author" content="Dafi Hauzan Atsillah Hoenarko" />
+    <meta name="keywords" content="Dafi Hauzan, tehgeii, portfolio, portofolio, developer, UDINUS, TGO, Tech Gameplay, React, Kotlin, Python" />
+    <meta name="theme-color" content="#09090b" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)" />
+    <meta name="color-scheme" content="dark light" />
+    <link rel="canonical" href="https://tehgeii.github.io/portofolio/" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+
+    <!-- Open Graph / social previews -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Dafi · Portfolio" />
+    <meta property="og:title" content="Dafi Hauzan Atsillah Hoenarko · Informatics Student & Developer" />
+    <meta
+      property="og:description"
+      content="Mahasiswa Teknik Informatika UDINUS & developer. Kreator TGO, NgiBsen, dan ZZZ Gacha Predictor."
+    />
+    <meta property="og:url" content="https://tehgeii.github.io/portofolio/" />
+    <meta property="og:image" content="https://tehgeii.github.io/portofolio/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="id_ID" />
+    <meta property="og:locale:alternate" content="en_US" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Dafi Hauzan Atsillah Hoenarko · Portfolio" />
+    <meta name="twitter:description" content="Informatics Student & Developer · Creator of TGO." />
+    <meta name="twitter:image" content="https://tehgeii.github.io/portofolio/og-image.png" />
+
+    <!--
+      Apply the saved theme & language before first paint so the page never
+      flashes the wrong colors. Mirrors the logic in src/context/*.
+    -->
+    <script>
+      (function () {
+        var root = document.documentElement;
+        try {
+          var theme = localStorage.getItem("theme");
+          if (theme !== "light" && theme !== "dark") {
+            theme = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+          }
+          root.classList.toggle("dark", theme === "dark");
+          root.style.colorScheme = theme;
+
+          var lang = localStorage.getItem("lang");
+          if (lang !== "id" && lang !== "en") {
+            lang = (navigator.language || "id").toLowerCase().indexOf("id") === 0 ? "id" : "en";
+          }
+          root.lang = lang;
+        } catch (e) {
+          /* storage blocked: keep defaults */
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <noscript>
+      <p style="padding: 2rem; font-family: system-ui, sans-serif">
+        Website ini membutuhkan JavaScript. / This website requires JavaScript.
+      </p>
+    </noscript>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
