@@ -31,8 +31,12 @@ export function Projects({ onOpen }: { onOpen: (slug: string) => void }) {
   return (
     <Section id="projects" eyebrow={t.projects.eyebrow} title={t.projects.title} subtitle={t.projects.subtitle}>
       {/* Filters */}
-      <Reveal className="-mx-5 mb-10 overflow-x-auto px-5 no-scrollbar sm:mx-0 sm:px-0">
-        <div role="group" aria-label={t.projects.filterLabel} className="flex w-max gap-1.5 rounded-full border border-line bg-surface p-1.5">
+      <Reveal className="-mx-5 mb-10 no-scrollbar overflow-x-auto px-5 sm:mx-0 sm:px-0">
+        <div
+          role="group"
+          aria-label={t.projects.filterLabel}
+          className="flex w-max gap-1.5 rounded-full border border-line bg-surface p-1.5"
+        >
           {projectCategories.map((c) => {
             const active = filter === c.key;
             return (
@@ -88,10 +92,18 @@ export function Projects({ onOpen }: { onOpen: (slug: string) => void }) {
       </motion.ul>
 
       <Reveal className="mt-12 flex justify-center">
-        <a href={`https://github.com/${profile.username}?tab=repositories`} target="_blank" rel="noreferrer noopener" className={`${button("secondary", "md")} group`}>
+        <a
+          href={`https://github.com/${profile.username}?tab=repositories`}
+          target="_blank"
+          rel="noreferrer noopener"
+          className={`${button("secondary", "md")} group`}
+        >
           <GitHubIcon className="size-4" />
           {t.projects.more}
-          <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden />
+          <ArrowUpRight
+            className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+            aria-hidden
+          />
         </a>
       </Reveal>
     </Section>

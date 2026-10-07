@@ -63,7 +63,11 @@ export function GitHubActivity() {
                 <SpotlightCard className="h-full p-5 sm:p-6">
                   <Icon className="size-5 text-accent" aria-hidden />
                   <p className="mt-4 text-2xl font-bold tracking-tight sm:text-3xl">
-                    {typeof value === "number" ? <CountUp value={value} /> : <span className="text-xl sm:text-2xl">{value}</span>}
+                    {typeof value === "number" ? (
+                      <CountUp value={value} />
+                    ) : (
+                      <span className="text-xl sm:text-2xl">{value}</span>
+                    )}
                   </p>
                   <p className="mt-1 text-sm text-muted">{label}</p>
                 </SpotlightCard>

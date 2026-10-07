@@ -69,7 +69,7 @@ export function Navbar({ active, onOpenPalette }: NavbarProps) {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,box-shadow] duration-300 ${
-        scrolled || open ? "glass border-b border-line" : "border-b border-transparent"
+        scrolled || open ? "border-b border-line glass" : "border-b border-transparent"
       }`}
     >
       <nav aria-label="Main" className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-5 sm:px-8">

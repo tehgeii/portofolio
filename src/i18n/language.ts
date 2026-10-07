@@ -19,4 +19,3 @@ export function useLanguage() {
   if (!ctx) throw new Error("useLanguage must be used inside <LanguageProvider>");
   return ctx;
 }
-
