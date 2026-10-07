@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
 
-export const isMac = typeof navigator !== "undefined" && /Mac|iPhone|iPad|iPod/.test(navigator.userAgent);
 
 export function Kbd({ children, className = "" }: { children: ReactNode; className?: string }) {
   return (

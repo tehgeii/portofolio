@@ -103,6 +103,7 @@ const id = {
     offline: "Gagal memuat data live, menampilkan data terakhir yang diketahui.",
     viewProfile: "Kunjungi profil GitHub",
     noDescription: "Tanpa deskripsi",
+    other: "Lainnya",
   },
   contact: {
     eyebrow: "Kontak",
@@ -138,6 +139,7 @@ const id = {
     stack: "Dibuat dengan React, TypeScript, Tailwind CSS & Motion",
     rights: "Hak cipta dilindungi.",
     palette: "untuk navigasi cepat",
+    navigation: "Navigasi",
   },
   palette: {
     placeholder: "Ketik perintah atau cari…",
@@ -255,6 +257,7 @@ const en: Translation = {
     offline: "Couldn't load live data, showing the last known snapshot.",
     viewProfile: "Visit GitHub profile",
     noDescription: "No description",
+    other: "Other",
   },
   contact: {
     eyebrow: "Contact",
@@ -290,6 +293,7 @@ const en: Translation = {
     stack: "Made with React, TypeScript, Tailwind CSS & Motion",
     rights: "All rights reserved.",
     palette: "for quick navigation",
+    navigation: "Navigation",
   },
   palette: {
     placeholder: "Type a command or search…",
