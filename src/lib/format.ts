@@ -26,6 +26,13 @@ export function monthYear(iso: string, lang: Lang) {
   return new Intl.DateTimeFormat(LOCALES[lang], { month: "long", year: "numeric" }).format(new Date(iso));
 }
 
+/** "7 Okt 2026" / "Oct 7, 2026". */
+export function shortDate(iso: string, lang: Lang) {
+  return new Intl.DateTimeFormat(LOCALES[lang], { day: "numeric", month: "short", year: "numeric" }).format(
+    new Date(iso),
+  );
+}
+
 /** GitHub's own language colors for the languages that appear on the profile. */
 const LANGUAGE_COLORS: Record<string, string> = {
   PHP: "#4F5D95",

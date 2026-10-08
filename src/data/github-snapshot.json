@@ -1,0 +1,75 @@
+{
+  "publicRepos": 17,
+  "followers": 8,
+  "totalStars": 6,
+  "createdAt": "2022-12-21T15:14:24Z",
+  "languages": [
+    [
+      "PHP",
+      3
+    ],
+    [
+      "Python",
+      2
+    ],
+    [
+      "C++",
+      2
+    ],
+    [
+      "Batchfile",
+      2
+    ],
+    [
+      "Kotlin",
+      1
+    ],
+    [
+      "Go",
+      1
+    ],
+    [
+      "JavaScript",
+      1
+    ],
+    [
+      "HTML",
+      1
+    ]
+  ],
+  "recent": [
+    {
+      "name": "sistem-bot-otomatis",
+      "description": "NgiBsen UDINUS: Android attendance reminder",
+      "url": "https://github.com/tehgeii/sistem-bot-otomatis",
+      "language": "Kotlin",
+      "stars": 0,
+      "pushedAt": "2026-10-07T03:25:14Z"
+    },
+    {
+      "name": "project-data-mining",
+      "description": "https://project-data-mining-zzz.streamlit.app/",
+      "url": "https://github.com/tehgeii/project-data-mining",
+      "language": "Python",
+      "stars": 0,
+      "pushedAt": "2026-10-06T03:13:13Z"
+    },
+    {
+      "name": "wifi-speed-tester",
+      "description": "WiFi Speed + Ping Tester for Windows",
+      "url": "https://github.com/tehgeii/wifi-speed-tester",
+      "language": "Go",
+      "stars": 0,
+      "pushedAt": "2026-10-05T08:55:27Z"
+    },
+    {
+      "name": "zzz-gacha-mining",
+      "description": "https://zzz-gacha-mining.streamlit.app/",
+      "url": "https://github.com/tehgeii/zzz-gacha-mining",
+      "language": "Python",
+      "stars": 0,
+      "pushedAt": "2026-09-29T12:27:22Z"
+    }
+  ],
+  "fetchedAt": "2026-10-07T05:00:00Z"
+}

@@ -1,4 +1,4 @@
-# dafi.dev · Portofolio
+# Portofolio · Dafi Hauzan Atsillah Hoenarko
 
 Website portofolio pribadi **Dafi Hauzan Atsillah Hoenarko** ([@tehgeii](https://github.com/tehgeii)), mahasiswa Teknik Informatika Universitas Dian Nuswantoro (UDINUS) dan kreator **TGO (Tech Gameplay Optimizer)**.
 
@@ -14,12 +14,14 @@ Website portofolio pribadi **Dafi Hauzan Atsillah Hoenarko** ([@tehgeii](https:/
 | 🇮🇩🇬🇧 **Dua bahasa**       | Bahasa Indonesia & English, terdeteksi otomatis dari browser dan bisa diganti kapan saja.                     |
 | ⌘ **Command palette**     | Tekan `Ctrl + K` / `⌘ + K` atau `/` untuk lompat ke section, membuka project, ganti tema/bahasa, salin email. |
 | 🧭 **Navigasi pintar**    | Navbar dengan _scroll-spy_, progress bar baca, tombol kembali ke atas, menu mobile layar penuh.               |
-| 🗂️ **Project interaktif** | Filter kategori beranimasi, modal detail (Esc untuk tutup, ← → untuk pindah project).                         |
+| 🗂️ **Project interaktif** | Filter kategori beranimasi, modal detail (Esc untuk tutup, ← → untuk pindah project), link share per project. |
 | 🧠 **Skill kontekstual**  | Arahkan/tap sebuah skill untuk melihat di mana skill itu dipakai.                                             |
-| 📈 **GitHub live**        | Statistik repositori, bintang, bahasa, dan repo terbaru diambil langsung dari GitHub API (dengan fallback).   |
+| 📈 **GitHub live**        | Statistik GitHub diambil saat deploy (update otomatis tiap Senin) lalu diperbarui live di browser.            |
 | ✉️ **Kontak**             | Salin email sekali klik dan form tervalidasi yang membuka aplikasi email.                                     |
 | ♿ **Aksesibel**          | Skip link, fokus keyboard jelas, focus trap di dialog, label ARIA, dan menghormati _reduced motion_.          |
 | ⚡ **Ringan & cepat**     | Font di-host sendiri, tanpa backend, siap di-deploy sebagai situs statis.                                     |
+| 🔎 **SEO**                | Open Graph, data terstruktur JSON-LD, sitemap, robots.txt, dan halaman 404 khusus.                            |
+| 🧪 **Teruji**             | Test end-to-end Playwright (desktop & mobile) berjalan otomatis di setiap push.                               |
 
 ## 🛠️ Teknologi
 
@@ -36,7 +38,16 @@ npm run build     # build produksi ke folder dist/
 npm run preview   # coba hasil build
 npm run lint      # cek kualitas kode
 npm run format    # rapikan format kode
+npm run stats     # perbarui snapshot statistik GitHub
+npm run test:e2e  # jalankan test end-to-end (setelah npm run build)
 ```
+
+Sebelum test pertama kali, pasang browser-nya dengan `npx playwright install chromium`.
+
+### 🔗 Link langsung
+
+- Ke section: `https://tehgeii.github.io/portofolio/#contact` (juga `#about`, `#skills`, `#projects`, `#journey`, `#github`)
+- Ke satu project: `https://tehgeii.github.io/portofolio/#project/tgo` (slug ada di [`projects.ts`](src/data/projects.ts))
 
 ## ✏️ Mengubah konten
 
@@ -56,9 +67,12 @@ Foto profil ada di [`src/assets/avatar.jpg`](src/assets/avatar.jpg) (rasio 1:1, 
 
 ## 🌍 Deploy ke GitHub Pages
 
-Workflow [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) otomatis menjalankan lint, typecheck, dan build di setiap pull request, lalu men-deploy ke GitHub Pages setiap ada push ke `main`.
+Workflow [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) menjalankan format check, lint, typecheck, build, dan test end-to-end di setiap pull request, lalu men-deploy ke GitHub Pages setiap ada push ke `main`. Setiap Senin pagi workflow ini juga berjalan otomatis supaya statistik GitHub tetap segar.
 
-Aktifkan sekali saja: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+Pengaturan sekali saja (sudah dilakukan):
+
+1. **Settings → Pages → Source: GitHub Actions**
+2. **Settings → Environments → github-pages → Deployment branches**: izinkan `main`
 
 ## 📁 Struktur
 
@@ -72,7 +86,9 @@ src/
 ├── data/           Konten website
 ├── hooks/          Scroll-spy, typewriter, GitHub stats, focus trap, …
 ├── i18n/           Bahasa & terjemahan
-└── lib/            Helper (format tanggal, clipboard, platform)
+└── lib/            Helper (statistik GitHub, format tanggal, clipboard, platform)
+scripts/            Script build (snapshot statistik GitHub)
+tests/              Test end-to-end Playwright
 ```
 
 ## 👤 Author & Kontributor
