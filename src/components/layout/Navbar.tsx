@@ -27,7 +27,7 @@ export function Logo() {
         <span className="absolute -right-0.5 -bottom-0.5 size-2.5 rounded-full border-2 border-bg bg-gradient-accent" />
       </span>
       <span className="font-mono text-[15px] font-semibold tracking-tight">
-        dafi<span className="text-gradient">.dev</span>
+        dafi<span className="text-gradient">.</span>
       </span>
     </span>
   );
@@ -108,7 +108,10 @@ export function Navbar({ active, onOpenPalette }: NavbarProps) {
         <div className="flex items-center gap-1.5">
           <button
             type="button"
-            onClick={onOpenPalette}
+            onClick={() => {
+              setOpen(false);
+              onOpenPalette();
+            }}
             className="hidden h-9 items-center gap-2 rounded-full border border-line bg-surface/60 pr-1.5 pl-3 text-sm text-subtle transition-colors hover:border-line-strong hover:text-fg sm:flex"
           >
             <Search className="size-3.5" aria-hidden />
@@ -120,7 +123,10 @@ export function Navbar({ active, onOpenPalette }: NavbarProps) {
           </button>
           <button
             type="button"
-            onClick={onOpenPalette}
+            onClick={() => {
+              setOpen(false);
+              onOpenPalette();
+            }}
             className={`${button("ghost", "icon")} sm:hidden`}
             aria-label={t.nav.search}
           >

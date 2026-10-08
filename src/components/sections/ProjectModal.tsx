@@ -1,4 +1,4 @@
-import { motion } from "motion/react";
+import { motion, useIsPresent } from "motion/react";
 import { CheckCircle2, ChevronLeft, ChevronRight, Users, X } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { projectCategories, projects, type Project } from "../../data/projects";
@@ -21,8 +21,12 @@ export function ProjectModal({ project, onClose, onNavigate }: ProjectModalProps
   const closeRef = useRef<HTMLButtonElement>(null);
   const titleId = `project-${project.slug}-title`;
 
+  // False while the modal animates out; it must stop reacting to keys then,
+  // or an Escape meant for a newly opened overlay would close things twice.
+  const isPresent = useIsPresent();
+
   useScrollLock(true);
-  useFocusTrap(panelRef, true, closeRef);
+  useFocusTrap(panelRef, isPresent, closeRef);
 
   const index = projects.findIndex((p) => p.slug === project.slug);
   const prev = projects[(index - 1 + projects.length) % projects.length];
@@ -30,6 +34,7 @@ export function ProjectModal({ project, onClose, onNavigate }: ProjectModalProps
   const category = projectCategories.find((c) => c.key === project.category);
 
   useEffect(() => {
+    if (!isPresent) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
       else if (e.key === "ArrowLeft") onNavigate(prev.slug);
@@ -37,7 +42,7 @@ export function ProjectModal({ project, onClose, onNavigate }: ProjectModalProps
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [onClose, onNavigate, prev.slug, next.slug]);
+  }, [isPresent, onClose, onNavigate, prev.slug, next.slug]);
 
   // Start each project at the top when navigating between them.
   useEffect(() => {

@@ -1,4 +1,4 @@
-import { motion } from "motion/react";
+import { motion, useIsPresent } from "motion/react";
 import {
   ArrowUpRight,
   Copy,
@@ -59,8 +59,10 @@ export function CommandPalette({ onClose, onOpenProject }: CommandPaletteProps) 
   const listRef = useRef<HTMLUListElement>(null);
   const uid = useId();
 
+  const isPresent = useIsPresent();
+
   useScrollLock(true);
-  useFocusTrap(panelRef, true, inputRef);
+  useFocusTrap(panelRef, isPresent, inputRef);
 
   const commands = useMemo<Command[]>(
     () => [

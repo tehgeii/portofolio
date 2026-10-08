@@ -38,7 +38,7 @@ const id = {
       repos: "Repositori publik",
       projects: "Project unggulan",
       languages: "Bahasa pemrograman",
-      stars: "Bintang di TGO",
+      stars: "Bintang di GitHub",
     },
   },
   about: {
@@ -192,7 +192,7 @@ const en: Translation = {
       repos: "Public repositories",
       projects: "Featured projects",
       languages: "Programming languages",
-      stars: "Stars on TGO",
+      stars: "GitHub stars",
     },
   },
   about: {

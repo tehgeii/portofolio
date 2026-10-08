@@ -8,6 +8,8 @@ export interface Skill {
   color: string;
   /** Short note shown on hover/focus. */
   note: Localized;
+  /** Markup / query languages are listed but not counted as programming languages. */
+  markup?: boolean;
 }
 
 export interface SkillCategory {
@@ -43,8 +45,18 @@ export const skillCategories: SkillCategory[] = [
         color: "#C1F12E",
         note: { id: "Otomasi & tweak Windows (TGO)", en: "Windows automation & tweaks (TGO)" },
       },
-      { name: "HTML & CSS", color: "#e34c26", note: { id: "Fondasi setiap web", en: "The foundation of every site" } },
-      { name: "SQL", color: "#e38c00", note: { id: "MySQL & Room (SQLite)", en: "MySQL & Room (SQLite)" } },
+      {
+        name: "HTML & CSS",
+        color: "#e34c26",
+        note: { id: "Fondasi setiap web", en: "The foundation of every site" },
+        markup: true,
+      },
+      {
+        name: "SQL",
+        color: "#e38c00",
+        note: { id: "MySQL & Room (SQLite)", en: "MySQL & Room (SQLite)" },
+        markup: true,
+      },
     ],
   },
   {
@@ -132,6 +144,10 @@ export const skillCategories: SkillCategory[] = [
     ],
   },
 ];
+
+/** Real programming languages only (HTML/CSS and SQL are not counted). */
+export const programmingLanguageCount =
+  skillCategories.find((c) => c.key === "languages")?.skills.filter((s) => !s.markup).length ?? 0;
 
 /** Flat list used by the marquee strip under the hero. */
 export const allSkillNames = skillCategories.flatMap((c) => c.skills.map((s) => s.name));
