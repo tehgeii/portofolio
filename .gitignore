@@ -24,3 +24,6 @@ Thumbs.db
 # Playwright
 test-results/
 playwright-report/
+
+# CV drafts (see npm run cv:pdf)
+cv-output/
