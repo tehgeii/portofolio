@@ -4,7 +4,7 @@ import { profile } from "../../data/profile";
 import { projects } from "../../data/projects";
 import { useGitHubStats, type GitHubStatus, type RepoSummary } from "../../hooks/useGitHubStats";
 import { useLanguage } from "../../i18n/language";
-import { languageColor, monthYear, timeAgo } from "../../lib/format";
+import { languageColor, monthYear, shortDate, timeAgo } from "../../lib/format";
 import { GitHubIcon } from "../ui/BrandIcons";
 import { CountUp } from "../ui/CountUp";
 import { Reveal } from "../ui/Reveal";
@@ -53,7 +53,7 @@ export function GitHubActivity() {
       eyebrow={t.github.eyebrow}
       title={t.github.title}
       subtitle={t.github.subtitle}
-      aside={<StatusPill status={status} />}
+      aside={<StatusPill status={status} fetchedAt={stats.fetchedAt} />}
     >
       <div className="grid gap-5 lg:grid-cols-[1.1fr_1fr]">
         <div className="flex flex-col gap-5">
@@ -173,12 +173,12 @@ export function GitHubActivity() {
   );
 }
 
-function StatusPill({ status }: { status: GitHubStatus }) {
-  const { t } = useLanguage();
+function StatusPill({ status, fetchedAt }: { status: GitHubStatus; fetchedAt: string }) {
+  const { t, lang } = useLanguage();
   const styles: Record<GitHubStatus, { dot: string; label: string }> = {
     loading: { dot: "bg-amber-400 animate-pulse", label: t.github.loading },
     live: { dot: "bg-emerald-500", label: "Live · api.github.com" },
-    fallback: { dot: "bg-zinc-400", label: "Snapshot" },
+    fallback: { dot: "bg-zinc-400", label: `Snapshot · ${shortDate(fetchedAt, lang)}` },
   };
   const s = styles[status];
   return (

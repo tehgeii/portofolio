@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <title>404 · Halaman tidak ditemukan</title>
+    <link rel="icon" type="image/svg+xml" href="/portofolio/favicon.svg" />
+    <style>
+      :root {
+        --bg: #fafafa;
+        --fg: #18181b;
+        --muted: #52525b;
+        --line: rgb(24 24 27 / 0.12);
+        --a: #7c3aed;
+        --b: #0891b2;
+        color-scheme: light dark;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root:not(.light) {
+          --bg: #09090b;
+          --fg: #fafafa;
+          --muted: #a1a1aa;
+          --line: rgb(255 255 255 / 0.12);
+          --a: #a78bfa;
+          --b: #22d3ee;
+        }
+      }
+      :root.dark {
+        --bg: #09090b;
+        --fg: #fafafa;
+        --muted: #a1a1aa;
+        --line: rgb(255 255 255 / 0.12);
+        --a: #a78bfa;
+        --b: #22d3ee;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+      }
+      body {
+        min-height: 100svh;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+        background: var(--bg);
+        color: var(--fg);
+        font-family:
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          "Segoe UI",
+          sans-serif;
+        text-align: center;
+      }
+      .code {
+        font:
+          800 clamp(96px, 28vw, 180px) / 1 ui-sans-serif,
+          system-ui,
+          sans-serif;
+        letter-spacing: -0.05em;
+        background: linear-gradient(110deg, var(--a), var(--b));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      h1 {
+        margin-top: 12px;
+        font-size: 24px;
+      }
+      p {
+        margin-top: 10px;
+        color: var(--muted);
+        line-height: 1.6;
+        max-width: 420px;
+      }
+      a {
+        display: inline-flex;
+        margin-top: 28px;
+        padding: 12px 22px;
+        border-radius: 999px;
+        background: var(--fg);
+        color: var(--bg);
+        font-weight: 600;
+        text-decoration: none;
+      }
+      a:focus-visible {
+        outline: 2px solid var(--a);
+        outline-offset: 3px;
+      }
+      [lang="en"] .id,
+      [lang="id"] .en {
+        display: none;
+      }
+    </style>
+    <script>
+      (function () {
+        var root = document.documentElement;
+        try {
+          var theme = localStorage.getItem("theme");
+          if (theme === "dark" || theme === "light") root.classList.add(theme);
+          var lang = localStorage.getItem("lang");
+          if (lang !== "id" && lang !== "en") {
+            lang = (navigator.language || "id").toLowerCase().indexOf("id") === 0 ? "id" : "en";
+          }
+          root.lang = lang;
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <main>
+      <div class="code">404</div>
+      <h1><span class="id">Halaman tidak ditemukan</span><span class="en">Page not found</span></h1>
+      <p>
+        <span class="id">Sepertinya link yang kamu buka salah ketik atau sudah tidak ada.</span>
+        <span class="en">The link you followed may be mistyped or no longer exists.</span>
+      </p>
+      <a href="/portofolio/"><span class="id">← Kembali ke beranda</span><span class="en">← Back to home</span></a>
+    </main>
+  </body>
+</html>
