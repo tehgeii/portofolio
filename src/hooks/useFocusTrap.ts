@@ -5,7 +5,8 @@ const FOCUSABLE =
 
 /**
  * Keeps keyboard focus inside `ref` while active, focuses the first element
- * (or `initialFocus`) on open and restores the previous focus on close.
+ * (or `initialFocus`) on open and restores the previous focus on close —
+ * unless another overlay has taken focus in the meantime.
  */
 export function useFocusTrap(
   ref: RefObject<HTMLElement | null>,
@@ -44,7 +45,12 @@ export function useFocusTrap(
     container.addEventListener("keydown", onKeyDown);
     return () => {
       container.removeEventListener("keydown", onKeyDown);
-      previous?.focus?.({ preventScroll: true });
+      // Only hand focus back if it is still ours. If e.g. the command palette
+      // opened while this modal was animating out, stealing focus back would
+      // leave the palette unable to receive keys like Escape.
+      const current = document.activeElement;
+      const stillOurs = !current || current === document.body || container.contains(current);
+      if (stillOurs && previous?.isConnected) previous.focus({ preventScroll: true });
     };
   }, [ref, active, initialFocus]);
 }

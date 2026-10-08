@@ -4,7 +4,7 @@ import { useRef, useState, type PointerEvent } from "react";
 import { profile } from "../../data/profile";
 import { projects } from "../../data/projects";
 import { scrollToSection } from "../../data/sections";
-import { skillCategories } from "../../data/skills";
+import { programmingLanguageCount } from "../../data/skills";
 import { useGitHubStats } from "../../hooks/useGitHubStats";
 import { useTypewriter } from "../../hooks/useTypewriter";
 import { useLanguage } from "../../i18n/language";
@@ -13,8 +13,6 @@ import { CountUp } from "../ui/CountUp";
 import { button } from "../ui/styles";
 
 const ease = [0.21, 0.47, 0.32, 0.98] as const;
-
-const languageCount = skillCategories.find((c) => c.key === "languages")?.skills.length ?? 0;
 
 export function Hero() {
   const { t, l } = useLanguage();
@@ -38,7 +36,7 @@ export function Hero() {
   const heroStats = [
     { value: stats.publicRepos, suffix: "+", label: t.hero.stats.repos },
     { value: projects.length, suffix: "", label: t.hero.stats.projects },
-    { value: languageCount, suffix: "", label: t.hero.stats.languages },
+    { value: programmingLanguageCount, suffix: "", label: t.hero.stats.languages },
     { value: stats.totalStars, suffix: "★", label: t.hero.stats.stars },
   ];
 

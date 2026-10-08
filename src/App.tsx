@@ -15,8 +15,9 @@ import { Projects } from "./components/sections/Projects";
 import { Skills } from "./components/sections/Skills";
 import { TechMarquee } from "./components/sections/TechMarquee";
 import { projects } from "./data/projects";
-import { SECTIONS } from "./data/sections";
+import { SECTIONS, type SectionId } from "./data/sections";
 import { useActiveSection } from "./hooks/useActiveSection";
+import { useProjectRoute } from "./hooks/useProjectRoute";
 import { useLanguage } from "./i18n/language";
 
 function isTypingTarget(target: EventTarget | null) {
@@ -28,19 +29,28 @@ export default function App() {
   const { t } = useLanguage();
   const active = useActiveSection(SECTIONS);
   const [paletteOpen, setPaletteOpen] = useState(false);
-  const [projectSlug, setProjectSlug] = useState<string | null>(null);
+  const { slug: projectSlug, open: showProject, close: closeProject } = useProjectRoute();
 
   const openProject = projects.find((p) => p.slug === projectSlug) ?? null;
-  const closeProject = useCallback(() => setProjectSlug(null), []);
   const closePalette = useCallback(() => setPaletteOpen(false), []);
-  const openFromPalette = useCallback((slug: string) => setProjectSlug(slug), []);
+
+  // Sections are rendered by JavaScript, so the browser can't jump to
+  // `…/#contact` on its own when the page first loads. Do it ourselves.
+  useEffect(() => {
+    const id = window.location.hash.slice(1);
+    if (!SECTIONS.includes(id as SectionId) || id === "home") return;
+    const jump = () => document.getElementById(id)?.scrollIntoView({ block: "start" });
+    requestAnimationFrame(jump);
+    // Re-align once web fonts have settled the layout.
+    document.fonts?.ready.then(jump).catch(() => {});
+  }, []);
 
   // Global shortcuts: Ctrl/⌘ + K toggles the palette, "/" opens it.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
         e.preventDefault();
-        setProjectSlug(null);
+        if (projectSlug) closeProject();
         setPaletteOpen((open) => !open);
       } else if (e.key === "/" && !isTypingTarget(e.target) && !paletteOpen && !projectSlug) {
         e.preventDefault();
@@ -49,7 +59,7 @@ export default function App() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [paletteOpen, projectSlug]);
+  }, [paletteOpen, projectSlug, closeProject]);
 
   return (
     <>
@@ -68,7 +78,7 @@ export default function App() {
         <TechMarquee />
         <About />
         <Skills />
-        <Projects onOpen={setProjectSlug} />
+        <Projects onOpen={showProject} />
         <Journey />
         <GitHubActivity />
         <Contact />
@@ -79,11 +89,11 @@ export default function App() {
 
       <AnimatePresence>
         {openProject && (
-          <ProjectModal key="project-modal" project={openProject} onClose={closeProject} onNavigate={setProjectSlug} />
+          <ProjectModal key="project-modal" project={openProject} onClose={closeProject} onNavigate={showProject} />
         )}
       </AnimatePresence>
       <AnimatePresence>
-        {paletteOpen && <CommandPalette key="palette" onClose={closePalette} onOpenProject={openFromPalette} />}
+        {paletteOpen && <CommandPalette key="palette" onClose={closePalette} onOpenProject={showProject} />}
       </AnimatePresence>
     </>
   );
