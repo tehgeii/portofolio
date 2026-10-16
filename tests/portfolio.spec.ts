@@ -184,8 +184,24 @@ test("awards & certifications show text and verification links, never certificat
     await expect(link).toHaveAttribute("rel", /noopener/);
   }
 
-  // Privacy guard: certificate scans/photos must never be published.
+  // Privacy guard: cards never show certificate images…
   await expect(section.locator("img")).toHaveCount(0);
+
+  // …only the watermarked award previews, and only inside the dialog.
+  await section
+    .getByRole("button", { name: /lihat sertifikat|view certificate/i })
+    .first()
+    .click();
+  const dialog = page.getByRole("dialog");
+  const preview = dialog.locator("img");
+  await expect(preview).toHaveCount(1);
+  await expect(preview).toHaveAttribute("src", /-preview[^/]*\.webp$/);
+  await expect(preview).toHaveAttribute("alt", /.+/);
+  await expect.poll(() => preview.evaluate((el: HTMLImageElement) => el.complete && el.naturalWidth > 0)).toBe(true);
+
+  await page.keyboard.press("Escape");
+  await expect(dialog).toHaveCount(0);
+  expect(await page.evaluate(() => getComputedStyle(document.body).overflow)).not.toBe("hidden");
 });
 
 test("certifications can be expanded and collapsed", async ({ page }) => {

@@ -1,11 +1,16 @@
+import isifPreview from "../assets/certificates/isif-2023-preview.webp";
+import samsungPreview from "../assets/certificates/samsung-sft-2023-preview.webp";
 import type { Localized } from "../types";
 
 /**
  * Awards and certifications, newest first within each kind.
  * Used by the website ("Prestasi & Sertifikat") and the CV.
  *
- * Privacy: only text and public verification links are published, never
- * the certificate files themselves, school names or certificate numbers.
+ * Privacy: online certificates are shown as text plus their public
+ * verification link. Awards without online verification get a preview image
+ * that is low-resolution, watermarked across the whole certificate, and has
+ * the school name and certificate number blurred. Original files are never
+ * published.
  */
 export interface Certificate {
   /** Short stable id, used e.g. to pick which certificates go on the CV. */
@@ -22,6 +27,10 @@ export interface Certificate {
   /** One or two sentences on what it was for. */
   note?: Localized;
   skills?: string[];
+  /** Watermarked, redacted preview (awards without online verification). */
+  preview?: { src: string; width: number; height: number };
+  /** Official page about the event, e.g. the organiser's announcement. */
+  relatedUrl?: string;
 }
 
 export const certificates: Certificate[] = [
@@ -35,6 +44,7 @@ export const certificates: Certificate[] = [
     },
     issuer: "Indonesian Young Scientist Association (IYSA)",
     date: "2023-11",
+    preview: { src: isifPreview, width: 1200, height: 849 },
     note: {
       id: "Kategori Education untuk project “Voyage of Digestion” pada kompetisi sains & inovasi internasional (daring), Bali.",
       en: "Education category for the project “Voyage of Digestion” at an international science & invention fair (online), Bali.",
@@ -49,6 +59,9 @@ export const certificates: Certificate[] = [
     },
     issuer: "Samsung",
     date: "2023-09",
+    preview: { src: samsungPreview, width: 1000, height: 1416 },
+    relatedUrl:
+      "https://news.samsung.com/id/inovator-muda-pemenang-samsung-solve-for-tomorrow-sukses-lahirkan-ide-brilian-untuk-indonesia",
     note: {
       id: "Terpilih dari 309 tim pada kompetisi STEM nasional, termasuk program pelatihan selama setengah tahun.",
       en: "Selected from 309 teams in a national STEM competition that included a six-month training programme.",

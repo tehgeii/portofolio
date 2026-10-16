@@ -101,6 +101,9 @@ const id = {
     courses: (n: number) => `${n} kursus`,
     showAll: (n: number) => `Tampilkan semua (${n})`,
     showLess: "Tampilkan lebih sedikit",
+    viewCertificate: "Lihat sertifikat",
+    aboutCompetition: "Tentang kompetisi",
+    previewNote: "Pratinjau ber-watermark. Nomor sertifikat dan nama sekolah disamarkan demi privasi.",
   },
   github: {
     eyebrow: "Aktivitas",
@@ -269,6 +272,9 @@ const en: Translation = {
     courses: (n: number) => `${n} course${n === 1 ? "" : "s"}`,
     showAll: (n: number) => `Show all (${n})`,
     showLess: "Show fewer",
+    viewCertificate: "View certificate",
+    aboutCompetition: "About the competition",
+    previewNote: "Watermarked preview. The certificate number and school name are blurred for privacy.",
   },
   github: {
     eyebrow: "Activity",

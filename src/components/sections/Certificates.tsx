@@ -1,5 +1,6 @@
-import { ArrowUpRight, Award, BadgeCheck, ChevronDown, Medal, type LucideIcon } from "lucide-react";
-import { useRef, useState } from "react";
+import { AnimatePresence } from "motion/react";
+import { ArrowUpRight, Award, BadgeCheck, ChevronDown, FileImage, Medal, type LucideIcon } from "lucide-react";
+import { useCallback, useRef, useState } from "react";
 import { awards, certifications, type Certificate } from "../../data/certificates";
 import { useLanguage } from "../../i18n/language";
 import { monthYear } from "../../lib/format";
@@ -8,6 +9,7 @@ import { Reveal } from "../ui/Reveal";
 import { Section } from "../ui/Section";
 import { SpotlightCard } from "../ui/SpotlightCard";
 import { button } from "../ui/styles";
+import { CertificatePreview } from "./CertificatePreview";
 
 /** "2026-10" → "Oktober 2026" / "October 2026". */
 function formatDate(date: string, lang: Lang) {
@@ -31,6 +33,9 @@ export function Certificates() {
   const toggleRef = useRef<HTMLButtonElement>(null);
   const visible = showAll ? certifications : certifications.slice(0, INITIAL_COUNT);
   const hiddenCount = certifications.length - INITIAL_COUNT;
+  const [previewId, setPreviewId] = useState<string | null>(null);
+  const previewCert = awards.find((a) => a.id === previewId) ?? null;
+  const closePreview = useCallback(() => setPreviewId(null), []);
 
   return (
     <Section
@@ -62,6 +67,35 @@ export function Certificates() {
                       <p className="mt-1 text-sm text-muted">{cert.issuer}</p>
                       {cert.note && (
                         <p className="mt-3 text-sm leading-relaxed text-pretty text-muted">{l(cert.note)}</p>
+                      )}
+                      {(cert.preview || cert.relatedUrl) && (
+                        <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2">
+                          {cert.preview && (
+                            <button
+                              type="button"
+                              onClick={() => setPreviewId(cert.id)}
+                              className="group inline-flex items-center gap-1.5 text-sm font-semibold text-accent"
+                            >
+                              <FileImage className="size-4" aria-hidden />
+                              {t.certificates.viewCertificate}
+                            </button>
+                          )}
+                          {cert.relatedUrl && (
+                            <a
+                              href={cert.relatedUrl}
+                              target="_blank"
+                              rel="noreferrer noopener"
+                              className="group inline-flex items-center gap-1.5 text-sm font-medium text-muted transition-colors hover:text-fg"
+                            >
+                              {t.certificates.aboutCompetition}
+                              <ArrowUpRight
+                                className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                                aria-hidden
+                              />
+                              <span className="sr-only">{t.a11y.opensNewTab}</span>
+                            </a>
+                          )}
+                        </div>
                       )}
                     </div>
                   </SpotlightCard>
@@ -148,6 +182,10 @@ export function Certificates() {
           )}
         </>
       )}
+
+      <AnimatePresence>
+        {previewCert && <CertificatePreview key={previewCert.id} cert={previewCert} onClose={closePreview} />}
+      </AnimatePresence>
     </Section>
   );
 }
