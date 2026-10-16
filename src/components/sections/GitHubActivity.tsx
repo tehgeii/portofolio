@@ -1,7 +1,7 @@
 import { motion } from "motion/react";
 import { ArrowUpRight, BookMarked, CalendarDays, Star, Users, type LucideIcon } from "lucide-react";
 import { profile } from "../../data/profile";
-import { projects } from "../../data/projects";
+import { allProjects } from "../../data/projects";
 import { useGitHubStats, type GitHubStatus, type RepoSummary } from "../../hooks/useGitHubStats";
 import { useLanguage } from "../../i18n/language";
 import { languageColor, monthYear, shortDate, timeAgo } from "../../lib/format";
@@ -21,7 +21,7 @@ const normalize = (url: string) => url.replace(/\/$/, "").toLowerCase();
 function useRepoDescription() {
   const { t, l } = useLanguage();
   return (repo: RepoSummary) => {
-    const project = projects.find((p) => p.links.some((link) => normalize(link.url) === normalize(repo.url)));
+    const project = allProjects.find((p) => p.links.some((link) => normalize(link.url) === normalize(repo.url)));
     const raw = repo.description?.trim();
     if (raw && !/^https?:\/\//.test(raw)) return raw;
     if (project) return l(project.summary);

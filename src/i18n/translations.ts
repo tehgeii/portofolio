@@ -37,7 +37,7 @@ const id = {
     ctaContact: "Hubungi Saya",
     stats: {
       repos: "Repositori publik",
-      projects: "Project unggulan",
+      projects: "Project pilihan",
       languages: "Bahasa pemrograman",
       stars: "Bintang di GitHub",
     },
@@ -208,7 +208,7 @@ const en: Translation = {
     ctaContact: "Get in Touch",
     stats: {
       repos: "Public repositories",
-      projects: "Featured projects",
+      projects: "Selected projects",
       languages: "Programming languages",
       stars: "GitHub stars",
     },

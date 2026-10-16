@@ -252,8 +252,8 @@ function Portrait({ reduce }: { reduce: boolean }) {
     },
     {
       icon: BrainCircuit,
-      title: "96.7%",
-      sub: lang === "id" ? "Akurasi XGBoost" : "XGBoost accuracy",
+      title: lang === "id" ? "6 Algoritma" : "6 Algorithms",
+      sub: lang === "id" ? "ZZZ Predictor · Data Mining" : "ZZZ Predictor · Data Mining",
       className: "-left-2 bottom-[10%] sm:-left-8",
       delay: "-4s",
     },

@@ -240,3 +240,20 @@ test("privacy: no CV details on the site and no third-party requests", async ({ 
   // Only our own server, plus the public GitHub API for live stats.
   expect([...hosts].filter((h) => h !== "localhost" && h !== "api.github.com")).toEqual([]);
 });
+
+test("project grid: only TGO is featured and no empty category is offered", async ({ page }) => {
+  await page.goto("./#projects");
+  const cards = page.locator("#projects article");
+  await expect(cards).toHaveCount(4);
+
+  const featured = page.locator("#projects article", { hasText: /Unggulan|Featured/ });
+  await expect(featured).toHaveCount(1);
+  await expect(featured.locator("h3")).toContainText("TGO");
+
+  // Every filter button shows a count above zero.
+  const filters = page.getByRole("group", { name: /filter/i }).getByRole("button");
+  for (const btn of await filters.all()) {
+    const count = Number((await btn.locator("span").last().textContent())?.trim());
+    expect(count).toBeGreaterThan(0);
+  }
+});

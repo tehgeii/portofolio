@@ -99,7 +99,7 @@ export const skillCategories: SkillCategory[] = [
       {
         name: "XGBoost",
         color: "#2e86de",
-        note: { id: "Akurasi 96.70% di ZZZ Predictor", en: "96.70% accuracy on ZZZ Predictor" },
+        note: { id: "Prediksi S-Rank di ZZZ Predictor", en: "S-Rank prediction in ZZZ Predictor" },
       },
       { name: "Pandas & NumPy", color: "#e70488", note: { id: "Pengolahan data", en: "Data wrangling" } },
       {

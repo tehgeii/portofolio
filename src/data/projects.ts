@@ -1,11 +1,14 @@
 import type { LucideIcon } from "lucide-react";
-import { BrainCircuit, Gauge, LayoutDashboard, Rocket, Shirt, Smartphone, Sparkles, Wifi } from "lucide-react";
+import { BrainCircuit, Rocket, Smartphone, Sparkles, Wifi } from "lucide-react";
 import ngibsenJadwal from "../assets/projects/ngibsen-jadwal.webp";
 import ngibsenRiwayat from "../assets/projects/ngibsen-riwayat.webp";
 import zzzBerandaCover from "../assets/projects/zzz-predictor-beranda-cover.webp";
 import zzzBeranda from "../assets/projects/zzz-predictor-beranda.webp";
 import zzzKalkulatorCover from "../assets/projects/zzz-predictor-kalkulator-cover.webp";
 import zzzKalkulator from "../assets/projects/zzz-predictor-kalkulator.webp";
+import wifiHistory from "../assets/projects/wifi-tester-history.webp";
+import wifiMainCover from "../assets/projects/wifi-tester-main-cover.webp";
+import wifiMain from "../assets/projects/wifi-tester-main.webp";
 import type { Localized, LocalizedList } from "../types";
 
 export type ProjectCategory = "web" | "mobile" | "desktop" | "data";
@@ -40,6 +43,8 @@ export interface Project {
   year: string;
   category: ProjectCategory;
   featured?: boolean;
+  /** Kept for the CV but not shown on the website. */
+  archived?: boolean;
   /** Team projects show the owner's role. */
   role?: Localized;
   summary: Localized;
@@ -64,7 +69,7 @@ export const projectCategories: { key: ProjectCategory | "all"; label: Localized
   { key: "data", label: { id: "Data & ML", en: "Data & ML" } },
 ];
 
-export const projects: Project[] = [
+export const allProjects: Project[] = [
   {
     slug: "tgo",
     title: "TGO · Tech Gameplay Optimizer",
@@ -114,7 +119,6 @@ export const projects: Project[] = [
     title: "NgiBsen UDINUS",
     year: "2026",
     category: "mobile",
-    featured: true,
     summary: {
       id: "Aplikasi Android pengingat absen kuliah untuk mahasiswa UDINUS, dengan bukti absen yang terkirim otomatis ke Telegram.",
       en: "An Android app that reminds UDINUS students to take class attendance, sending proof straight to Telegram.",
@@ -173,7 +177,7 @@ export const projects: Project[] = [
     title: "ZZZ Gacha Mining & Predictor",
     year: "2026",
     category: "data",
-    featured: true,
+    archived: true,
     summary: {
       id: "Web app data mining untuk menganalisis riwayat gacha Zenless Zone Zero dan memprediksi S-Rank dengan Markov Chain, Random Forest, dan XGBoost.",
       en: "A data mining web app that analyzes Zenless Zone Zero gacha history and predicts S-Ranks with Markov Chains, Random Forest, and XGBoost.",
@@ -250,6 +254,25 @@ export const projects: Project[] = [
     links: [{ kind: "repo", url: "https://github.com/tehgeii/wifi-speed-tester" }],
     icon: Wifi,
     file: "main.go",
+    screenshots: [
+      {
+        src: wifiMain,
+        thumb: wifiMainCover,
+        device: "desktop",
+        alt: {
+          id: "Hasil tes WiFi Speed + Ping Tester: download, upload, ping, jitter, packet loss dan rating koneksi",
+          en: "WiFi Speed + Ping Tester results: download, upload, ping, jitter, packet loss and connection rating",
+        },
+      },
+      {
+        src: wifiHistory,
+        device: "desktop",
+        alt: {
+          id: "Riwayat tes dengan grafik kecepatan & ping serta rata-rata per koneksi",
+          en: "Test history with speed & ping charts and averages per connection",
+        },
+      },
+    ],
     gradient: ["#06b6d4", "#3b82f6"],
   },
   {
@@ -317,108 +340,7 @@ export const projects: Project[] = [
     ],
     gradient: ["#8b5cf6", "#06b6d4"],
   },
-  {
-    slug: "laundry-app",
-    title: "Laundry App",
-    year: "2026",
-    category: "web",
-    summary: {
-      id: "Aplikasi manajemen laundry berbasis web dengan fitur CRUD lengkap, dibangun dengan CodeIgniter 4.",
-      en: "A web-based laundry management app with full CRUD features, built on CodeIgniter 4.",
-    },
-    description: {
-      id: "Project Ujian Akhir Semester mata kuliah Pemrograman Web Lanjut (semester 4). Mengelola data transaksi laundry dengan arsitektur MVC CodeIgniter 4 dan database MySQL.",
-      en: "Final exam project for the Advanced Web Programming course (semester 4). Manages laundry transactions using CodeIgniter 4's MVC architecture and a MySQL database.",
-    },
-    highlights: {
-      id: [
-        "Arsitektur MVC yang rapi dengan CodeIgniter 4",
-        "Operasi CRUD lengkap untuk data laundry",
-        "Database relasional MySQL",
-      ],
-      en: [
-        "Clean MVC architecture with CodeIgniter 4",
-        "Full CRUD operations for laundry data",
-        "Relational MySQL database",
-      ],
-    },
-    tech: ["PHP", "CodeIgniter 4", "MySQL"],
-    links: [{ kind: "repo", url: "https://github.com/tehgeii/UAS_laundry_app" }],
-    icon: Shirt,
-    file: "LaundryController.php",
-    gradient: ["#6366f1", "#a855f7"],
-  },
-  {
-    slug: "admin-ui",
-    title: "Admin UI",
-    year: "2026",
-    category: "web",
-    summary: {
-      id: "Eksperimen antarmuka dashboard admin dengan React, Vite, dan Tailwind CSS v4.",
-      en: "An admin dashboard interface experiment with React, Vite, and Tailwind CSS v4.",
-    },
-    description: {
-      id: "Tempat saya bereksperimen membangun komponen dashboard admin yang modern dan responsif menggunakan ekosistem React terbaru.",
-      en: "A playground where I build modern, responsive admin dashboard components with the latest React ecosystem.",
-    },
-    highlights: {
-      id: [
-        "Komponen UI berbasis React",
-        "Styling utility-first dengan Tailwind CSS v4",
-        "Dev server super cepat dengan Vite",
-      ],
-      en: [
-        "React component-based UI",
-        "Utility-first styling with Tailwind CSS v4",
-        "Lightning-fast dev server with Vite",
-      ],
-    },
-    tech: ["React", "Vite", "Tailwind CSS"],
-    links: [{ kind: "repo", url: "https://github.com/tehgeii/admin-ui" }],
-    icon: LayoutDashboard,
-    file: "App.jsx",
-    gradient: ["#0ea5e9", "#22d3ee"],
-  },
-  {
-    slug: "tech-gameplay-collection",
-    title: "Tech Gameplay Collection",
-    year: "2025",
-    category: "desktop",
-    summary: {
-      id: "Kumpulan aplikasi berguna (Part 1–58) dan tweak Registry (Part 1–33) untuk penonton kanal Tech Gameplay.",
-      en: "A curated set of useful apps (Parts 1–58) and Registry tweaks (Parts 1–33) for Tech Gameplay viewers.",
-    },
-    description: {
-      id: "Pelengkap konten YouTube Tech Gameplay Indonesia: setiap part video dirangkum menjadi paket unduhan yang rapi lewat GitHub Releases, sehingga penonton bisa langsung mencoba tanpa repot mencari satu per satu.",
-      en: "A companion to the Tech Gameplay Indonesia YouTube channel: each video part is bundled into a tidy download via GitHub Releases, so viewers can try everything without hunting for files.",
-    },
-    highlights: {
-      id: [
-        "58 part kumpulan aplikasi berguna untuk PC & laptop",
-        "33 part settingan Registry Editor untuk mempercepat Windows",
-        "Distribusi rapi lewat GitHub Releases",
-      ],
-      en: [
-        "58 parts of must-have apps for PCs & laptops",
-        "33 parts of Registry Editor tweaks to speed up Windows",
-        "Neatly distributed through GitHub Releases",
-      ],
-    },
-    tech: ["Windows", "Registry", "GitHub Releases"],
-    stats: [
-      { value: "58", label: { id: "Part aplikasi", en: "App parts" } },
-      { value: "33", label: { id: "Part regedit", en: "Regedit parts" } },
-    ],
-    links: [
-      {
-        kind: "repo",
-        url: "https://github.com/tehgeii/AplikasiBerguna",
-        label: { id: "Aplikasi Berguna", en: "Useful Apps" },
-      },
-      { kind: "repo", url: "https://github.com/tehgeii/regedit", label: { id: "Regedit", en: "Regedit" } },
-    ],
-    icon: Gauge,
-    file: "Regedit.reg",
-    gradient: ["#22c55e", "#84cc16"],
-  },
 ];
+
+/** Projects shown on the website, in this order. */
+export const projects = allProjects.filter((p) => !p.archived);

@@ -5,7 +5,7 @@ import { GitHubIcon, LinkedInIcon } from "../components/ui/BrandIcons";
 import { awards, certifications } from "../data/certificates";
 import { cv, type CvEntry } from "../data/cv";
 import { profile } from "../data/profile";
-import { projects } from "../data/projects";
+import { allProjects } from "../data/projects";
 import { skillCategories } from "../data/skills";
 import type { Lang, Localized } from "../types";
 import { cvCopy } from "./copy";
@@ -115,8 +115,8 @@ export function CvPage() {
   ];
 
   const cvProjects = cv.projectSlugs
-    .map((slug) => projects.find((p) => p.slug === slug))
-    .filter((p): p is (typeof projects)[number] => !!p);
+    .map((slug) => allProjects.find((p) => p.slug === slug))
+    .filter((p): p is (typeof allProjects)[number] => !!p);
 
   const cvCertifications = cv.certificationIds
     .map((id) => certifications.find((cert) => cert.id === id))

@@ -28,6 +28,9 @@ export function Projects({ onOpen }: { onOpen: (slug: string) => void }) {
     return map;
   }, []);
 
+  // Only offer categories that actually contain projects.
+  const categories = projectCategories.filter((c) => counts[c.key] > 0);
+
   return (
     <Section id="projects" eyebrow={t.projects.eyebrow} title={t.projects.title} subtitle={t.projects.subtitle}>
       {/* Filters */}
@@ -37,7 +40,7 @@ export function Projects({ onOpen }: { onOpen: (slug: string) => void }) {
           aria-label={t.projects.filterLabel}
           className="flex w-max gap-1.5 rounded-full border border-line bg-surface p-1.5"
         >
-          {projectCategories.map((c) => {
+          {categories.map((c) => {
             const active = filter === c.key;
             return (
               <button

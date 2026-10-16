@@ -19,8 +19,8 @@ export const journey: JourneyItem[] = [
     title: { id: "Semester 5 · Data Mining & Android", en: "Semester 5 · Data Mining & Android" },
     place: "UDINUS",
     description: {
-      id: "Membangun ZZZ Gacha Predictor dengan XGBoost (akurasi 96.70%), merilis NgiBsen untuk membantu teman-teman kuliah absen tepat waktu, dan membuat WiFi Speed Tester dengan Go.",
-      en: "Built the ZZZ Gacha Predictor with XGBoost (96.70% accuracy), shipped NgiBsen to help classmates check in on time, and created a WiFi Speed Tester in Go.",
+      id: "Membangun ZZZ Gacha Predictor bersama tim untuk membandingkan 6 algoritma data mining, merilis NgiBsen untuk membantu teman-teman kuliah absen tepat waktu, dan membuat WiFi Speed Tester dengan Go.",
+      en: "Built the ZZZ Gacha Predictor with my team to compare 6 data mining algorithms, shipped NgiBsen to help classmates check in on time, and created a WiFi Speed Tester in Go.",
     },
     tags: ["Python", "Kotlin", "Go", "Machine Learning"],
     icon: Sparkles,
