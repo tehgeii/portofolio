@@ -77,6 +77,8 @@ npm run cv        # buka pratinjau CV di browser (bisa ganti ID/EN & foto)
 npm run cv:pdf    # buat PDF ke folder cv-output/ (ID dengan foto, EN tanpa foto)
 ```
 
+Data pribadi seperti **IPK** dan nomor HP disimpan di `src/data/cv.private.json`, yang **tidak pernah ikut ke GitHub** (sudah di-`.gitignore`). Contoh isinya: `{ "gpa": "3.xx / 4.00" }`.
+
 `npm run cv:pdf` memberi tahu bagian mana yang masih kosong dan memastikan CV tetap satu halaman. Selama masih ada yang kosong, nama file diberi akhiran `-DRAFT`. CV **belum ikut dipublikasikan** di website; folder `cv-output/` juga tidak ikut ke Git.
 
 ## 🌍 Deploy ke GitHub Pages

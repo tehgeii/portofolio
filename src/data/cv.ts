@@ -34,9 +34,25 @@ export interface CvLanguage {
   level: Localized | null;
 }
 
+/**
+ * Private details that must never reach the public repository live in
+ * `src/data/cv.private.json` (git-ignored), e.g.
+ *
+ *   { "gpa": "3.xx / 4.00", "phone": "+62 …" }
+ *
+ * The file is optional: without it the GPA shows a yellow "fill in" marker
+ * and the phone number is simply left out.
+ */
+interface CvPrivate {
+  gpa?: string;
+  phone?: string;
+}
+const privateModules = import.meta.glob<CvPrivate>("./cv.private.json", { eager: true, import: "default" });
+const privateData: CvPrivate = Object.values(privateModules)[0] ?? {};
+
 export const cv = {
-  /** Optional. Leave "" to hide the phone number. */
-  phone: "" as string,
+  /** From cv.private.json; empty hides the phone number. */
+  phone: privateData.phone ?? "",
 
   headline: {
     id: "Mahasiswa Teknik Informatika & Software Developer",
@@ -56,7 +72,7 @@ export const cv = {
       start: "2024",
       end: "2028",
       expectedGraduation: { id: "September 2028", en: "September 2028" },
-      gpa: null,
+      gpa: privateData.gpa ?? null,
       courses: {
         id: ["Algoritma & Struktur Data", "Pemrograman Web Lanjut", "Pemrograman Berbasis Web", "Penambangan Data"],
         en: ["Algorithms & Data Structures", "Advanced Web Programming", "Web-Based Programming", "Data Mining"],
@@ -72,12 +88,10 @@ export const cv = {
       bullets: {
         id: [
           "Membangun dan memelihara TGO (Tech Gameplay Optimizer), tool optimasi Windows open-source yang dirilis hingga v3.1 dan didistribusikan lewat tgopremium.my.id.",
-          "Mengembangkan TGOpti (C#), aplikasi desktop untuk membersihkan dan mempercepat PC.",
           "Mengelola kanal YouTube Tech Gameplay Indonesia dan merangkum 58 part kumpulan aplikasi serta 33 part tweak Registry untuk penonton lewat GitHub Releases.",
         ],
         en: [
           "Built and maintain TGO (Tech Gameplay Optimizer), an open-source Windows optimization tool released up to v3.1 and distributed via tgopremium.my.id.",
-          "Developed TGOpti (C#), a desktop app that cleans up and speeds up PCs.",
           "Run the Tech Gameplay Indonesia YouTube channel and curated 58 parts of useful apps and 33 parts of Registry tweaks for viewers via GitHub Releases.",
         ],
       },

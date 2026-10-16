@@ -42,10 +42,10 @@ export const journey: JourneyItem[] = [
     title: { id: "Meluncurkan TGO", en: "Launched TGO" },
     place: "Tech Gameplay",
     description: {
-      id: "Merilis TGO (Tech Gameplay Optimizer) sebagai project open-source untuk komunitas gamer, mengembangkan TGOpti dengan C#, dan merapikan koleksi aplikasi & regedit untuk penonton YouTube.",
-      en: "Released TGO (Tech Gameplay Optimizer) as an open-source project for the gaming community, developed TGOpti in C#, and organized app & regedit collections for YouTube viewers.",
+      id: "Merilis TGO (Tech Gameplay Optimizer) sebagai project open-source untuk komunitas gamer, serta merapikan koleksi aplikasi & regedit untuk penonton YouTube.",
+      en: "Released TGO (Tech Gameplay Optimizer) as an open-source project for the gaming community, and organized app & regedit collections for YouTube viewers.",
     },
-    tags: ["Batch", "C#", "Windows", "Open Source"],
+    tags: ["Batch", "PowerShell", "Windows", "Open Source"],
     icon: Rocket,
   },
   {

@@ -48,7 +48,7 @@ export const cvCopy: Record<
     todo: {
       label: "Isi",
       graduation: "perkiraan tahun lulus",
-      gpa: "IPK (opsional)",
+      gpa: "IPK di src/data/cv.private.json",
       english: "level, mis. Menengah / TOEFL 5xx",
       certificates: "3–5 sertifikat terbaik di src/data/certificates.ts",
     },
@@ -78,7 +78,7 @@ export const cvCopy: Record<
     todo: {
       label: "Fill in",
       graduation: "expected graduation year",
-      gpa: "GPA (optional)",
+      gpa: "GPA in src/data/cv.private.json",
       english: "level, e.g. Intermediate / TOEFL 5xx",
       certificates: "3–5 best certificates in src/data/certificates.ts",
     },

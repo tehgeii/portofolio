@@ -203,3 +203,24 @@ test("certifications can be expanded and collapsed", async ({ page }) => {
   await expect(cards).toHaveCount(6);
   await expect(toggle).toBeInViewport();
 });
+
+test("privacy: no CV details on the site and no third-party requests", async ({ page }) => {
+  const hosts = new Set<string>();
+  page.on("request", (req) => hosts.add(new URL(req.url()).hostname));
+
+  await page.goto("./");
+  // Scroll through the page so every lazy image and section has loaded.
+  await page.evaluate(async () => {
+    for (let y = 0; y < document.body.scrollHeight; y += 600) {
+      window.scrollTo(0, y);
+      await new Promise((r) => setTimeout(r, 30));
+    }
+  });
+  await page.waitForLoadState("networkidle");
+
+  const html = await page.content();
+  expect(html).not.toMatch(/\bIPK\b|\bGPA\b|cv\.html|cv-output/);
+
+  // Only our own server, plus the public GitHub API for live stats.
+  expect([...hosts].filter((h) => h !== "localhost" && h !== "api.github.com")).toEqual([]);
+});

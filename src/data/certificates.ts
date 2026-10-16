@@ -93,6 +93,18 @@ export const certificates: Certificate[] = [
     skills: ["C++", "Parallel Computing", "MPI"],
   },
   {
+    id: "nginx-reverse-proxy",
+    kind: "certification",
+    name: {
+      id: "Implement NGINX Web Servers and Reverse Proxy Solutions",
+      en: "Implement NGINX Web Servers and Reverse Proxy Solutions",
+    },
+    issuer: "EDUCBA · Coursera",
+    date: "2026-09",
+    credentialUrl: "https://coursera.org/verify/UVMOQVJ4L89V",
+    skills: ["NGINX", "Reverse Proxy", "Web Servers"],
+  },
+  {
     id: "data-mining-uiuc",
     kind: "certification",
     name: { id: "Data Mining Specialization", en: "Data Mining Specialization" },

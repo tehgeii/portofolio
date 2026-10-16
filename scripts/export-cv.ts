@@ -7,7 +7,7 @@
  * accident. Files are suffixed with -DRAFT while yellow "fill in" markers
  * remain. Set PW_CHROMIUM_PATH to use an already installed Chromium.
  */
-import { mkdirSync, writeFileSync } from "node:fs";
+import { mkdirSync, rmSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { chromium } from "@playwright/test";
 import { createServer } from "vite";
@@ -39,6 +39,8 @@ try {
     const pdf = await page.pdf({ format: "A4", printBackground: true, preferCSSPageSize: true });
     const pages = (pdf.toString("latin1").match(/\/Type\s*\/Page[^s]/g) ?? []).length;
 
+    // Drop older exports of this variant so a stale draft can never be sent by mistake.
+    for (const old of [`${v.file}.pdf`, `${v.file}-DRAFT.pdf`]) rmSync(`${outDir}${old}`, { force: true });
     const name = `${v.file}${todos.length ? "-DRAFT" : ""}.pdf`;
     writeFileSync(`${outDir}${name}`, pdf);
     console.log(`✓ cv-output/${name} (${pages} page${pages === 1 ? "" : "s"})`);

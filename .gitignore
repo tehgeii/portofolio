@@ -27,3 +27,6 @@ playwright-report/
 
 # CV drafts (see npm run cv:pdf)
 cv-output/
+
+# Private CV details (GPA, phone): never commit
+src/data/cv.private.json
