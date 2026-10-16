@@ -1,5 +1,11 @@
 import type { LucideIcon } from "lucide-react";
 import { BrainCircuit, Gauge, LayoutDashboard, Rocket, Shirt, Smartphone, Sparkles, Wifi } from "lucide-react";
+import ngibsenJadwal from "../assets/projects/ngibsen-jadwal.webp";
+import ngibsenRiwayat from "../assets/projects/ngibsen-riwayat.webp";
+import zzzBerandaCover from "../assets/projects/zzz-predictor-beranda-cover.webp";
+import zzzBeranda from "../assets/projects/zzz-predictor-beranda.webp";
+import zzzKalkulatorCover from "../assets/projects/zzz-predictor-kalkulator-cover.webp";
+import zzzKalkulator from "../assets/projects/zzz-predictor-kalkulator.webp";
 import type { Localized, LocalizedList } from "../types";
 
 export type ProjectCategory = "web" | "mobile" | "desktop" | "data";
@@ -16,6 +22,18 @@ export interface ProjectStat {
   label: Localized;
 }
 
+/**
+ * A real screenshot. Personal details (schedules, rooms, class codes,
+ * attendance numbers…) must be blurred before an image is added here.
+ */
+export interface ProjectScreenshot {
+  src: string;
+  /** Tighter crop for the project card; defaults to `src`. */
+  thumb?: string;
+  alt: Localized;
+  device: "phone" | "desktop";
+}
+
 export interface Project {
   slug: string;
   title: string;
@@ -30,6 +48,8 @@ export interface Project {
   tech: string[];
   stats?: ProjectStat[];
   links: ProjectLink[];
+  /** Shown on the card and in the details modal when available. */
+  screenshots?: ProjectScreenshot[];
   /** Visual identity of the generated cover. */
   icon: LucideIcon;
   file: string;
@@ -128,6 +148,24 @@ export const projects: Project[] = [
     links: [{ kind: "repo", url: "https://github.com/tehgeii/sistem-bot-otomatis" }],
     icon: Smartphone,
     file: "MainActivity.kt",
+    screenshots: [
+      {
+        src: ngibsenJadwal,
+        device: "phone",
+        alt: {
+          id: "Halaman Jadwal NgiBsen: daftar mata kuliah per hari dan status absen hari ini",
+          en: "NgiBsen schedule screen: courses per day and today's attendance status",
+        },
+      },
+      {
+        src: ngibsenRiwayat,
+        device: "phone",
+        alt: {
+          id: "Halaman Riwayat NgiBsen: grafik kehadiran per minggu dan bukti absen yang terkirim",
+          en: "NgiBsen history screen: weekly attendance chart and sent attendance proofs",
+        },
+      },
+    ],
     gradient: ["#10b981", "#0ea5e9"],
   },
   {
@@ -257,6 +295,26 @@ export const projects: Project[] = [
     ],
     icon: Sparkles,
     file: "streamlit_app.py",
+    screenshots: [
+      {
+        src: zzzBeranda,
+        thumb: zzzBerandaCover,
+        device: "desktop",
+        alt: {
+          id: "Beranda ZZZ Gacha Predictor dengan menu dan aturan banner yang dipakai",
+          en: "ZZZ Gacha Predictor home page with navigation and the banner rules used",
+        },
+      },
+      {
+        src: zzzKalkulator,
+        thumb: zzzKalkulatorCover,
+        device: "desktop",
+        alt: {
+          id: "Kalkulator peluang S-Rank berbasis Markov Chain",
+          en: "Markov Chain based S-Rank odds calculator",
+        },
+      },
+    ],
     gradient: ["#8b5cf6", "#06b6d4"],
   },
   {

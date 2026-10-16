@@ -13,8 +13,10 @@ export interface CvEducation {
   degree: Localized;
   location: string;
   start: string;
-  /** Expected graduation, e.g. "2028". */
+  /** End year, e.g. "2028". */
   end: string | null;
+  /** Shown next to the GPA while still studying, e.g. "September 2028". */
+  expectedGraduation?: Localized;
   /** Leave null to fill in later; set to "" to hide it on purpose. */
   gpa: string | null;
   courses: LocalizedList;
@@ -52,7 +54,8 @@ export const cv = {
       degree: { id: "S1 Teknik Informatika", en: "B.Sc. in Informatics Engineering" },
       location: "Semarang",
       start: "2024",
-      end: null,
+      end: "2028",
+      expectedGraduation: { id: "September 2028", en: "September 2028" },
       gpa: null,
       courses: {
         id: ["Algoritma & Struktur Data", "Pemrograman Web Lanjut", "Pemrograman Berbasis Web", "Penambangan Data"],
@@ -81,7 +84,10 @@ export const cv = {
     },
   ] satisfies CvEntry[],
 
-  /** Organisations, committees, lab assistant roles, internships… */
+  /**
+   * Organisations, committees, lab assistant roles, internships…
+   * The section is hidden while this list is empty.
+   */
   organizations: [] as CvEntry[],
 
   /** Projects shown on the CV, in this order (slugs from projects.ts). */
@@ -89,6 +95,6 @@ export const cv = {
 
   languages: [
     { name: { id: "Bahasa Indonesia", en: "Indonesian" }, level: { id: "Bahasa ibu", en: "Native" } },
-    { name: { id: "Bahasa Inggris", en: "English" }, level: null },
+    { name: { id: "Bahasa Inggris", en: "English" }, level: { id: "Menengah", en: "Intermediate" } },
   ] satisfies CvLanguage[],
 };

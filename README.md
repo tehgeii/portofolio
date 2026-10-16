@@ -108,7 +108,7 @@ tests/              Test end-to-end Playwright
 
 ## 👤 Author & Kontributor
 
-**Dafi Hauzan Atsillah Hoenarko**, pemilik, perancang, dan kontributor utama website ini.
+**Dafi Hauzan Atsillah Hoenarko** ([@tehgeii](https://github.com/tehgeii)), pemilik, perancang, dan pengembang website ini.
 
 - GitHub: [@tehgeii](https://github.com/tehgeii)
 - LinkedIn: [in/dafi-hauzan](https://www.linkedin.com/in/dafi-hauzan)
@@ -117,8 +117,12 @@ tests/              Test end-to-end Playwright
 - Email: [antsters9@gmail.com](mailto:antsters9@gmail.com)
 - Website TGO: [tgopremium.my.id](https://tgopremium.my.id)
 
-Dibantu oleh Claude (Anthropic) dalam penulisan kode.
-
 ## 📄 Lisensi
 
-© 2026 Dafi Hauzan Atsillah Hoenarko. Hak cipta dilindungi. Konten (teks, data project, dan identitas pribadi) tidak boleh digunakan ulang tanpa izin.
+© 2026–sekarang Dafi Hauzan Atsillah Hoenarko ([@tehgeii](https://github.com/tehgeii)). Hak cipta dilindungi.
+
+- **Konten pribadi** (nama, foto, biodata, CV, sertifikat, kontak, deskripsi & screenshot project, merek "dafi." dan "TGO") tidak boleh disalin, diubah, atau digunakan tanpa izin tertulis.
+- **Kode sumber** boleh dilihat dan dipelajari, tetapi tidak boleh disalin, disebarkan, atau di-deploy ulang sebagai portofolio orang lain tanpa izin.
+- **Komponen pihak ketiga** (React, Vite, Tailwind CSS, dll.) tetap mengikuti lisensinya masing-masing.
+
+Detail lengkap ada di [`LICENSE`](LICENSE). Permohonan izin: [antsters9@gmail.com](mailto:antsters9@gmail.com).

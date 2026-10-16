@@ -120,6 +120,40 @@ export function ProjectModal({ project, onClose, onNavigate }: ProjectModalProps
             </dl>
           )}
 
+          {project.screenshots && project.screenshots.length > 0 && (
+            <>
+              <h3 className="mt-8 font-mono text-xs font-semibold tracking-[0.15em] text-subtle uppercase">
+                {t.projects.screenshots}
+              </h3>
+              <ul
+                className={`mt-4 grid gap-3 ${project.screenshots[0].device === "phone" ? "grid-cols-2" : "grid-cols-1"}`}
+              >
+                {project.screenshots.map((shot) => (
+                  <li key={shot.src}>
+                    <figure>
+                      <a
+                        href={shot.src}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                        className="group/shot block overflow-hidden rounded-xl border border-line bg-surface-2"
+                      >
+                        <img
+                          src={shot.src}
+                          alt={l(shot.alt)}
+                          loading="lazy"
+                          decoding="async"
+                          className="block w-full transition-transform duration-300 group-hover/shot:scale-[1.02]"
+                        />
+                        <span className="sr-only">{t.projects.openFull}</span>
+                      </a>
+                      <figcaption className="mt-2 text-xs leading-relaxed text-muted">{l(shot.alt)}</figcaption>
+                    </figure>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
+
           <h3 className="mt-8 font-mono text-xs font-semibold tracking-[0.15em] text-subtle uppercase">
             {t.projects.highlights}
           </h3>

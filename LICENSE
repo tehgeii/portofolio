@@ -1,0 +1,82 @@
+Copyright (c) 2026–present Dafi Hauzan Atsillah Hoenarko (tehgeii)
+All rights reserved.
+
+This repository contains the source code and content of the personal
+portfolio website of Dafi Hauzan Atsillah Hoenarko, published at
+https://tehgeii.github.io/portofolio/.
+
+
+1. PERSONAL CONTENT
+
+The following belong to the author and may not be copied, reproduced,
+modified, redistributed, or used in any form without the author's prior
+written permission:
+
+  a. the author's name, photographs, likeness, and biography;
+  b. CV / résumé content, academic information, certificates, and contact
+     details;
+  c. project descriptions, screenshots, and all other written or visual
+     content of the website;
+  d. the "dafi." and "TGO" names, logos, and branding.
+
+Using any of the above to impersonate the author, or to present the author's
+work, certificates, or achievements as someone else's, is expressly
+prohibited.
+
+
+2. SOURCE CODE
+
+The source code is published so it can be viewed and evaluated, for example
+by recruiters, lecturers, and fellow students.
+
+  - Allowed: viewing the code, and forking it on GitHub to the extent the
+    GitHub Terms of Service permit.
+  - Allowed: learning from the code and taking general inspiration from it.
+  - Not allowed without prior written permission: copying, modifying,
+    redistributing, sublicensing, or deploying this code or any derivative
+    of it, in whole or in part, commercially or non-commercially, including
+    publishing a copy of this website as another person's portfolio.
+
+
+3. THIRD-PARTY COMPONENTS
+
+This project uses open-source software that remains under its own licenses,
+including React (MIT), Vite (MIT), Tailwind CSS (MIT), Motion (MIT),
+Lucide (ISC), qrcode (MIT), Playwright (Apache-2.0), and the Plus Jakarta
+Sans and JetBrains Mono typefaces (SIL Open Font License 1.1). Nothing in
+this license limits the rights those licenses grant for those components.
+
+
+4. NO WARRANTY
+
+The software and content are provided "as is", without warranty of any
+kind, express or implied. In no event shall the author be liable for any
+claim, damages, or other liability arising from the use of this repository.
+
+
+5. PERMISSION REQUESTS
+
+To ask for permission to use any part of this repository, contact
+antsters9@gmail.com.
+
+
+---------------------------------------------------------------------------
+
+RINGKASAN (BAHASA INDONESIA)
+
+Hak cipta (c) 2026–sekarang Dafi Hauzan Atsillah Hoenarko (tehgeii).
+Hak cipta dilindungi undang-undang.
+
+- Nama, foto, biodata, isi CV, data akademik, sertifikat, kontak, deskripsi
+  dan tangkapan layar project, serta merek "dafi." dan "TGO" adalah milik
+  penulis dan tidak boleh disalin, diubah, disebarkan, atau digunakan tanpa
+  izin tertulis. Menggunakannya untuk menyamar sebagai penulis atau mengaku
+  karya/sertifikat penulis sebagai milik orang lain dilarang keras.
+- Kode sumber boleh dilihat dan dipelajari, tetapi tidak boleh disalin,
+  diubah, disebarkan, atau di-deploy ulang (termasuk dijadikan portofolio
+  orang lain) tanpa izin tertulis.
+- Komponen pihak ketiga tetap mengikuti lisensinya masing-masing.
+- Disediakan "apa adanya" tanpa jaminan apa pun.
+- Permohonan izin: antsters9@gmail.com
+
+Jika terdapat perbedaan tafsir, versi bahasa Inggris di atas yang berlaku.

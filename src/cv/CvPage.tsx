@@ -70,8 +70,7 @@ function countTodos() {
     cv.education.filter((e) => e.end === null).length +
     cv.education.filter((e) => e.gpa === null).length +
     cv.languages.filter((language) => language.level === null).length +
-    (certificates.length === 0 ? 1 : 0) +
-    (cv.organizations.length === 0 ? 1 : 0)
+    (certificates.length === 0 ? 1 : 0)
   );
 }
 
@@ -229,9 +228,19 @@ export function CvPage() {
                   · {edu.school}, {edu.location}
                 </span>
               </p>
-              {edu.gpa !== "" && (
+              {(edu.gpa !== "" || edu.expectedGraduation) && (
                 <p>
-                  {c.gpa}: {edu.gpa ?? <Todo label={c.todo.label}>{c.todo.gpa}</Todo>}
+                  {edu.gpa !== "" && (
+                    <>
+                      {c.gpa} {edu.gpa ?? <Todo label={c.todo.label}>{c.todo.gpa}</Todo>}
+                    </>
+                  )}
+                  {edu.gpa !== "" && edu.expectedGraduation && <span className="mx-2 text-subtle">·</span>}
+                  {edu.expectedGraduation && (
+                    <>
+                      {c.expectedGraduation} {l(edu.expectedGraduation)}
+                    </>
+                  )}
                 </p>
               )}
               <p>
@@ -290,13 +299,7 @@ export function CvPage() {
           )}
         </Section>
 
-        <Section title={c.organizations}>
-          {cv.organizations.length === 0 ? (
-            <Todo label={c.todo.label}>{c.todo.organizations}</Todo>
-          ) : (
-            cv.organizations.map(renderEntry)
-          )}
-        </Section>
+        {cv.organizations.length > 0 && <Section title={c.organizations}>{cv.organizations.map(renderEntry)}</Section>}
 
         <Section title={c.languages}>
           <p>

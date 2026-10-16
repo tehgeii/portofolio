@@ -14,6 +14,7 @@ export const cvCopy: Record<
     languages: string;
     courses: string;
     gpa: string;
+    expectedGraduation: string;
     present: string;
     skillGroups: Record<"languages" | "frameworks" | "data" | "tools", string>;
     qr: string;
@@ -23,7 +24,6 @@ export const cvCopy: Record<
       gpa: string;
       english: string;
       certificates: string;
-      organizations: string;
     };
     toolbar: { photo: string; print: string; hint: string; todos: (n: number) => string };
   }
@@ -39,6 +39,7 @@ export const cvCopy: Record<
     languages: "Bahasa",
     courses: "Mata kuliah relevan",
     gpa: "IPK",
+    expectedGraduation: "Perkiraan lulus",
     present: "Sekarang",
     skillGroups: { languages: "Bahasa", frameworks: "Framework", data: "Data & ML", tools: "Tools" },
     qr: "Scan untuk melihat portofolio & semua project",
@@ -48,7 +49,6 @@ export const cvCopy: Record<
       gpa: "IPK (opsional)",
       english: "level, mis. Menengah / TOEFL 5xx",
       certificates: "3–5 sertifikat terbaik di src/data/certificates.ts",
-      organizations: "organisasi / kepanitiaan / asisten lab (opsional)",
     },
     toolbar: {
       photo: "Foto",
@@ -68,6 +68,7 @@ export const cvCopy: Record<
     languages: "Languages",
     courses: "Relevant courses",
     gpa: "GPA",
+    expectedGraduation: "Expected graduation",
     present: "Present",
     skillGroups: { languages: "Languages", frameworks: "Frameworks", data: "Data & ML", tools: "Tools" },
     qr: "Scan to see the full portfolio & every project",
@@ -77,7 +78,6 @@ export const cvCopy: Record<
       gpa: "GPA (optional)",
       english: "level, e.g. Intermediate / TOEFL 5xx",
       certificates: "3–5 best certificates in src/data/certificates.ts",
-      organizations: "organizations / committees / lab assistant (optional)",
     },
     toolbar: {
       photo: "Photo",
