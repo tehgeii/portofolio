@@ -187,3 +187,19 @@ test("awards & certifications show text and verification links, never certificat
   // Privacy guard: certificate scans/photos must never be published.
   await expect(section.locator("img")).toHaveCount(0);
 });
+
+test("certifications can be expanded and collapsed", async ({ page }) => {
+  await page.goto("./#certificates");
+  const cards = page.locator("#certifications-list > li");
+  const toggle = page.locator("#certificates button[aria-controls='certifications-list']");
+  await expect(cards).toHaveCount(6);
+  await expect(toggle).toHaveAttribute("aria-expanded", "false");
+
+  await toggle.click();
+  await expect(toggle).toHaveAttribute("aria-expanded", "true");
+  expect(await cards.count()).toBeGreaterThan(6);
+
+  await toggle.click();
+  await expect(cards).toHaveCount(6);
+  await expect(toggle).toBeInViewport();
+});

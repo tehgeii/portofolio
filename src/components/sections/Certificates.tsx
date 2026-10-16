@@ -1,4 +1,5 @@
-import { ArrowUpRight, Award, BadgeCheck, Medal, type LucideIcon } from "lucide-react";
+import { ArrowUpRight, Award, BadgeCheck, ChevronDown, Medal, type LucideIcon } from "lucide-react";
+import { useRef, useState } from "react";
 import { awards, certifications, type Certificate } from "../../data/certificates";
 import { useLanguage } from "../../i18n/language";
 import { monthYear } from "../../lib/format";
@@ -6,6 +7,7 @@ import type { Lang } from "../../types";
 import { Reveal } from "../ui/Reveal";
 import { Section } from "../ui/Section";
 import { SpotlightCard } from "../ui/SpotlightCard";
+import { button } from "../ui/styles";
 
 /** "2026-10" → "Oktober 2026" / "October 2026". */
 function formatDate(date: string, lang: Lang) {
@@ -20,8 +22,15 @@ function awardStyle(cert: Certificate): { icon: LucideIcon; badge: string } {
   return { icon: Award, badge: "bg-gradient-accent text-white dark:text-zinc-950" };
 }
 
+/** How many certifications are shown before "Show all". */
+const INITIAL_COUNT = 6;
+
 export function Certificates() {
   const { t, l, lang } = useLanguage();
+  const [showAll, setShowAll] = useState(false);
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  const visible = showAll ? certifications : certifications.slice(0, INITIAL_COUNT);
+  const hiddenCount = certifications.length - INITIAL_COUNT;
 
   return (
     <Section
@@ -68,8 +77,8 @@ export function Certificates() {
           <Reveal className={awards.length > 0 ? "mt-14" : ""}>
             <h3 className="mb-5 font-mono text-sm text-subtle">// {t.certificates.certifications}</h3>
           </Reveal>
-          <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {certifications.map((cert, i) => (
+          <ul id="certifications-list" className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {visible.map((cert, i) => (
               <Reveal as="li" key={cert.name.en} delay={(i % 3) * 0.08} className="h-full">
                 <SpotlightCard className="flex h-full flex-col p-6">
                   <div className="flex items-center justify-between gap-3">
@@ -115,6 +124,28 @@ export function Certificates() {
               </Reveal>
             ))}
           </ul>
+          {hiddenCount > 0 && (
+            <div className="mt-8 flex justify-center">
+              <button
+                ref={toggleRef}
+                type="button"
+                onClick={() => {
+                  setShowAll((v) => !v);
+                  // When collapsing, the list shrinks above the button: keep the button in view.
+                  if (showAll) requestAnimationFrame(() => toggleRef.current?.scrollIntoView({ block: "center" }));
+                }}
+                aria-expanded={showAll}
+                aria-controls="certifications-list"
+                className={`${button("secondary", "md")} group`}
+              >
+                {showAll ? t.certificates.showLess : t.certificates.showAll(certifications.length)}
+                <ChevronDown
+                  className={`size-4 transition-transform duration-300 ${showAll ? "rotate-180" : ""}`}
+                  aria-hidden
+                />
+              </button>
+            </div>
+          )}
         </>
       )}
     </Section>

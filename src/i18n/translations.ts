@@ -99,6 +99,8 @@ const id = {
     certifications: "Sertifikasi",
     verify: "Verifikasi",
     courses: (n: number) => `${n} kursus`,
+    showAll: (n: number) => `Tampilkan semua (${n})`,
+    showLess: "Tampilkan lebih sedikit",
   },
   github: {
     eyebrow: "Aktivitas",
@@ -265,6 +267,8 @@ const en: Translation = {
     certifications: "Certifications",
     verify: "Verify",
     courses: (n: number) => `${n} course${n === 1 ? "" : "s"}`,
+    showAll: (n: number) => `Show all (${n})`,
+    showLess: "Show fewer",
   },
   github: {
     eyebrow: "Activity",

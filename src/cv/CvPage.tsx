@@ -118,6 +118,10 @@ export function CvPage() {
     .map((slug) => projects.find((p) => p.slug === slug))
     .filter((p): p is (typeof projects)[number] => !!p);
 
+  const cvCertifications = cv.certificationIds
+    .map((id) => certifications.find((cert) => cert.id === id))
+    .filter((cert): cert is (typeof certifications)[number] => !!cert);
+
   const renderEntry = (entry: CvEntry) => (
     <Row key={entry.org + l(entry.role)} aside={l(entry.period)}>
       <p className="font-semibold text-fg">
@@ -299,10 +303,10 @@ export function CvPage() {
           </Section>
         )}
 
-        {certifications.length > 0 && (
+        {cvCertifications.length > 0 && (
           <Section title={c.certificates}>
             <ul className="grid grid-cols-2 gap-x-[6mm] gap-y-[1.2mm]">
-              {certifications.slice(0, cv.maxCertifications).map((cert) => (
+              {cvCertifications.map((cert) => (
                 <li key={cert.name.en} className="break-inside-avoid">
                   <span className="font-semibold text-fg">{l(cert.name)}</span>
                   <span className="block text-[10px] text-muted">

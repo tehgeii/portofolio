@@ -93,8 +93,12 @@ export const cv = {
   /** Projects shown on the CV, in this order (slugs from projects.ts). */
   projectSlugs: ["ngibsen", "zzz-gacha-mining", "wifi-speed-tester"],
 
-  /** The CV lists only the newest few certifications to stay on one page. */
-  maxCertifications: 4,
+  /**
+   * Certifications shown on the CV, in this order (ids from certificates.ts).
+   * Four fit on one page: strongest issuers, longest programmes and the
+   * closest match to the projects above.
+   */
+  certificationIds: ["ibm-machine-learning", "data-mining-uiuc", "google-project-management", "ibm-systems-analyst"],
 
   languages: [
     { name: { id: "Bahasa Indonesia", en: "Indonesian" }, level: { id: "Bahasa ibu", en: "Native" } },
