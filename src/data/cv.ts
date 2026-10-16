@@ -91,7 +91,10 @@ export const cv = {
   organizations: [] as CvEntry[],
 
   /** Projects shown on the CV, in this order (slugs from projects.ts). */
-  projectSlugs: ["ngibsen", "zzz-gacha-mining", "wifi-speed-tester", "laundry-app"],
+  projectSlugs: ["ngibsen", "zzz-gacha-mining", "wifi-speed-tester"],
+
+  /** The CV lists only the newest few certifications to stay on one page. */
+  maxCertifications: 4,
 
   languages: [
     { name: { id: "Bahasa Indonesia", en: "Indonesian" }, level: { id: "Bahasa ibu", en: "Native" } },

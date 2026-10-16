@@ -10,6 +10,7 @@ export const cvCopy: Record<
     organizations: string;
     projects: string;
     skills: string;
+    awards: string;
     certificates: string;
     languages: string;
     courses: string;
@@ -35,7 +36,8 @@ export const cvCopy: Record<
     organizations: "Organisasi & Kegiatan",
     projects: "Project Pilihan",
     skills: "Keahlian",
-    certificates: "Sertifikat",
+    awards: "Prestasi",
+    certificates: "Sertifikasi",
     languages: "Bahasa",
     courses: "Mata kuliah relevan",
     gpa: "IPK",
@@ -64,6 +66,7 @@ export const cvCopy: Record<
     organizations: "Organizations & Activities",
     projects: "Selected Projects",
     skills: "Skills",
+    awards: "Awards",
     certificates: "Certifications",
     languages: "Languages",
     courses: "Relevant courses",

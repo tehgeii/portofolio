@@ -1,5 +1,14 @@
 /** Page sections in scroll order. Keys match `t.nav`. */
-export const SECTIONS = ["home", "about", "skills", "projects", "journey", "github", "contact"] as const;
+export const SECTIONS = [
+  "home",
+  "about",
+  "skills",
+  "projects",
+  "journey",
+  "certificates",
+  "github",
+  "contact",
+] as const;
 
 export type SectionId = (typeof SECTIONS)[number];
 

@@ -112,7 +112,7 @@ export function Navbar({ active, onOpenPalette }: NavbarProps) {
               setOpen(false);
               onOpenPalette();
             }}
-            className="hidden h-9 items-center gap-2 rounded-full border border-line bg-surface/60 pr-1.5 pl-3 text-sm text-subtle transition-colors hover:border-line-strong hover:text-fg sm:flex"
+            className="hidden h-9 items-center gap-2 rounded-full border border-line bg-surface/60 pr-1.5 pl-3 text-sm text-subtle transition-colors hover:border-line-strong hover:text-fg sm:flex lg:hidden xl:flex"
           >
             <Search className="size-3.5" aria-hidden />
             <span className="pr-4">{t.nav.search}</span>
@@ -127,7 +127,7 @@ export function Navbar({ active, onOpenPalette }: NavbarProps) {
               setOpen(false);
               onOpenPalette();
             }}
-            className={`${button("ghost", "icon")} sm:hidden`}
+            className={`${button("ghost", "icon")} sm:hidden lg:inline-flex xl:hidden`}
             aria-label={t.nav.search}
           >
             <Search className="size-[18px]" aria-hidden />

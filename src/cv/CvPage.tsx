@@ -2,7 +2,7 @@ import { Globe, Mail, MapPin, Phone, Printer, type LucideIcon } from "lucide-rea
 import QRCode from "qrcode";
 import { useEffect, useState, type ReactNode } from "react";
 import { GitHubIcon, LinkedInIcon } from "../components/ui/BrandIcons";
-import { certificates } from "../data/certificates";
+import { awards, certifications } from "../data/certificates";
 import { cv, type CvEntry } from "../data/cv";
 import { profile } from "../data/profile";
 import { projects } from "../data/projects";
@@ -70,7 +70,7 @@ function countTodos() {
     cv.education.filter((e) => e.end === null).length +
     cv.education.filter((e) => e.gpa === null).length +
     cv.languages.filter((language) => language.level === null).length +
-    (certificates.length === 0 ? 1 : 0)
+    (awards.length + certifications.length === 0 ? 1 : 0)
   );
 }
 
@@ -279,25 +279,41 @@ export function CvPage() {
           </dl>
         </Section>
 
-        <Section title={c.certificates}>
-          {certificates.length === 0 ? (
+        {awards.length + certifications.length === 0 && (
+          <Section title={c.certificates}>
             <Todo label={c.todo.label}>{c.todo.certificates}</Todo>
-          ) : (
-            <ul className="grid grid-cols-2 gap-x-[6mm] gap-y-[1mm]">
-              {certificates.map((cert) => (
-                <li key={cert.name} className="break-inside-avoid">
-                  <span className="font-semibold text-fg">{cert.name}</span>
+          </Section>
+        )}
+
+        {awards.length > 0 && (
+          <Section title={c.awards}>
+            {awards.map((award) => (
+              <Row key={award.name.en} aside={monthYear(award.date, lang)}>
+                <p>
+                  <span className="font-semibold text-fg">{l(award.name)}</span>{" "}
+                  <span className="text-muted">· {award.issuer}</span>
+                </p>
+                {award.note && <p className="text-pretty">{l(award.note)}</p>}
+              </Row>
+            ))}
+          </Section>
+        )}
+
+        {certifications.length > 0 && (
+          <Section title={c.certificates}>
+            <ul className="grid grid-cols-2 gap-x-[6mm] gap-y-[1.2mm]">
+              {certifications.slice(0, cv.maxCertifications).map((cert) => (
+                <li key={cert.name.en} className="break-inside-avoid">
+                  <span className="font-semibold text-fg">{l(cert.name)}</span>
                   <span className="block text-[10px] text-muted">
                     {cert.issuer} · {monthYear(cert.date, lang)}
-                    {(cert.credentialId || cert.credentialUrl) && (
-                      <> · {cert.credentialId ?? stripProtocol(cert.credentialUrl ?? "")}</>
-                    )}
+                    {cert.credentialUrl && <> · {stripProtocol(cert.credentialUrl)}</>}
                   </span>
                 </li>
               ))}
             </ul>
-          )}
-        </Section>
+          </Section>
+        )}
 
         {cv.organizations.length > 0 && <Section title={c.organizations}>{cv.organizations.map(renderEntry)}</Section>}
 

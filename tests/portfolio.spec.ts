@@ -170,3 +170,20 @@ test("project screenshots load in the details modal", async ({ page }) => {
     await expect.poll(() => img.evaluate((el: HTMLImageElement) => el.complete && el.naturalWidth > 0)).toBe(true);
   }
 });
+
+test("awards & certifications show text and verification links, never certificate images", async ({ page }) => {
+  await page.goto("./#certificates");
+  const section = page.locator("#certificates");
+  await expect(section.getByRole("heading", { level: 2 })).toBeVisible();
+  await expect(section.locator("h4")).not.toHaveCount(0);
+
+  const verifyLinks = section.locator('a[href^="https://coursera.org/verify/"]');
+  await expect(verifyLinks).not.toHaveCount(0);
+  for (const link of await verifyLinks.all()) {
+    await expect(link).toHaveAttribute("target", "_blank");
+    await expect(link).toHaveAttribute("rel", /noopener/);
+  }
+
+  // Privacy guard: certificate scans/photos must never be published.
+  await expect(section.locator("img")).toHaveCount(0);
+});

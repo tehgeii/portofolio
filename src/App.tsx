@@ -6,6 +6,7 @@ import { Footer } from "./components/layout/Footer";
 import { Navbar } from "./components/layout/Navbar";
 import { ScrollProgress } from "./components/layout/ScrollProgress";
 import { About } from "./components/sections/About";
+import { Certificates } from "./components/sections/Certificates";
 import { Contact } from "./components/sections/Contact";
 import { GitHubActivity } from "./components/sections/GitHubActivity";
 import { Hero } from "./components/sections/Hero";
@@ -80,6 +81,7 @@ export default function App() {
         <Skills />
         <Projects onOpen={showProject} />
         <Journey />
+        <Certificates />
         <GitHubActivity />
         <Contact />
       </main>
