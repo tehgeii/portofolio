@@ -125,6 +125,7 @@ export function ProjectModal({ project, onClose, onNavigate }: ProjectModalProps
               <h3 className="mt-8 font-mono text-xs font-semibold tracking-[0.15em] text-subtle uppercase">
                 {t.projects.screenshots}
               </h3>
+              {project.screenshotsNote && <p className="mt-2 text-sm text-muted">{l(project.screenshotsNote)}</p>}
               <ul
                 className={`mt-4 grid gap-3 ${project.screenshots[0].device === "phone" ? "grid-cols-2" : "grid-cols-1"}`}
               >

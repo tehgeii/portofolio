@@ -2,6 +2,9 @@ import type { LucideIcon } from "lucide-react";
 import { BrainCircuit, Rocket, Smartphone, Sparkles, Wifi } from "lucide-react";
 import ngibsenJadwal from "../assets/projects/ngibsen-jadwal.webp";
 import ngibsenRiwayat from "../assets/projects/ngibsen-riwayat.webp";
+import tgoAppManager from "../assets/projects/tgo-app-manager.webp";
+import tgoDashboardCover from "../assets/projects/tgo-dashboard-cover.webp";
+import tgoDashboard from "../assets/projects/tgo-dashboard.webp";
 import zzzBerandaCover from "../assets/projects/zzz-predictor-beranda-cover.webp";
 import zzzBeranda from "../assets/projects/zzz-predictor-beranda.webp";
 import zzzKalkulatorCover from "../assets/projects/zzz-predictor-kalkulator-cover.webp";
@@ -55,6 +58,8 @@ export interface Project {
   links: ProjectLink[];
   /** Shown on the card and in the details modal when available. */
   screenshots?: ProjectScreenshot[];
+  /** Short note above the screenshots, e.g. when they show a version in development. */
+  screenshotsNote?: Localized;
   /** Visual identity of the generated cover. */
   icon: LucideIcon;
   file: string;
@@ -110,6 +115,29 @@ export const allProjects: Project[] = [
       { kind: "website", url: "https://tgopremium.my.id" },
       { kind: "repo", url: "https://github.com/tehgeii/TGO" },
     ],
+    screenshots: [
+      {
+        src: tgoDashboard,
+        thumb: tgoDashboardCover,
+        device: "desktop",
+        alt: {
+          id: "Dashboard TGO: spesifikasi perangkat dan pemantauan CPU, RAM, disk, GPU, jaringan secara real-time",
+          en: "TGO dashboard: device specs and real-time CPU, RAM, disk, GPU and network monitoring",
+        },
+      },
+      {
+        src: tgoAppManager,
+        device: "desktop",
+        alt: {
+          id: "App Manager TGO: pasang aplikasi populer atau hapus aplikasi desktop & Microsoft Store beserta sisa filenya",
+          en: "TGO App Manager: install popular apps, or uninstall desktop & Microsoft Store apps and their leftovers",
+        },
+      },
+    ],
+    screenshotsNote: {
+      id: "Pratinjau tampilan baru TGO yang masih dalam pengembangan.",
+      en: "A preview of TGO's new interface, still in development.",
+    },
     icon: Rocket,
     file: "TGO.bat",
     gradient: ["#7c3aed", "#ec4899"],

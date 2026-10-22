@@ -160,16 +160,18 @@ test("contact form explains what's missing", async ({ page }) => {
   await expect(page.locator("#contact input[name=name]")).toBeFocused();
 });
 
-test("project screenshots load in the details modal", async ({ page }) => {
-  await page.goto("./#project/ngibsen");
-  const shots = page.getByRole("dialog").locator("figure img");
-  await expect(shots).toHaveCount(2);
-  for (const img of await shots.all()) {
-    await img.scrollIntoViewIfNeeded();
-    await expect(img).toHaveAttribute("alt", /.+/);
-    await expect.poll(() => img.evaluate((el: HTMLImageElement) => el.complete && el.naturalWidth > 0)).toBe(true);
-  }
-});
+for (const slug of ["ngibsen", "tgo"]) {
+  test(`${slug} screenshots load in the details modal`, async ({ page }) => {
+    await page.goto(`./#project/${slug}`);
+    const shots = page.getByRole("dialog").locator("figure img");
+    await expect(shots).toHaveCount(2);
+    for (const img of await shots.all()) {
+      await img.scrollIntoViewIfNeeded();
+      await expect(img).toHaveAttribute("alt", /.+/);
+      await expect.poll(() => img.evaluate((el: HTMLImageElement) => el.complete && el.naturalWidth > 0)).toBe(true);
+    }
+  });
+}
 
 test("awards & certifications show text and verification links, never certificate images", async ({ page }) => {
   await page.goto("./#certificates");
