@@ -17,7 +17,9 @@ import { projects } from "./data/projects";
 import { SECTIONS, type SectionId } from "./data/sections";
 import { useActiveSection } from "./hooks/useActiveSection";
 import { useProjectRoute } from "./hooks/useProjectRoute";
+import { integrations } from "./config/integrations";
 import { useLanguage } from "./i18n/language";
+import { countPageview } from "./lib/goatcounter";
 
 // Overlays load on demand, so the first visit downloads less JavaScript.
 const loadProjectModal = () => import("./components/sections/ProjectModal");
@@ -38,6 +40,11 @@ export default function App() {
 
   const openProject = projects.find((p) => p.slug === projectSlug) ?? null;
   const closePalette = useCallback(() => setPaletteOpen(false), []);
+
+  // One privacy-friendly page view per visit, when visitor stats are switched on.
+  useEffect(() => {
+    if (integrations.goatcounterCode) countPageview(integrations.goatcounterCode);
+  }, []);
 
   // Fetch the overlays once the page is idle, so opening one feels instant.
   useEffect(() => {

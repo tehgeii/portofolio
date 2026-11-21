@@ -173,6 +173,7 @@ const id = {
     rights: "Hak cipta dilindungi.",
     palette: "untuk navigasi cepat",
     navigation: "Navigasi",
+    visits: (n: string) => `${n} kunjungan`,
   },
   palette: {
     placeholder: "Ketik perintah atau cari…",
@@ -366,6 +367,7 @@ const en: Translation = {
     rights: "All rights reserved.",
     palette: "for quick navigation",
     navigation: "Navigation",
+    visits: (n: string) => `${n} visits`,
   },
   palette: {
     placeholder: "Type a command or search…",

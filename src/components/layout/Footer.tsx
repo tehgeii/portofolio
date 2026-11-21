@@ -1,6 +1,9 @@
-import { Heart } from "lucide-react";
+import { useInView } from "motion/react";
+import { Eye, Heart } from "lucide-react";
+import { useRef } from "react";
 import { profile } from "../../data/profile";
 import { SECTIONS, scrollToSection } from "../../data/sections";
+import { useVisitorCount } from "../../hooks/useVisitorCount";
 import { useLanguage } from "../../i18n/language";
 import { socialIcons } from "../ui/socialIcons";
 import { isMac } from "../../lib/platform";
@@ -8,11 +11,15 @@ import { Kbd } from "../ui/Kbd";
 import { Logo } from "./Navbar";
 
 export function Footer() {
-  const { t, l } = useLanguage();
+  const { t, l, lang } = useLanguage();
   const year = new Date().getFullYear();
+  // Read the visitor count only once the footer is about to be seen.
+  const ref = useRef<HTMLElement>(null);
+  const near = useInView(ref, { once: true, margin: "0px 0px 600px 0px" });
+  const visits = useVisitorCount(near);
 
   return (
-    <footer className="relative overflow-hidden border-t border-line">
+    <footer ref={ref} className="relative overflow-hidden border-t border-line">
       <div className="mx-auto max-w-6xl px-5 pt-16 pb-10 sm:px-8">
         <div className="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr]">
           <div>
@@ -92,7 +99,15 @@ export function Footer() {
           <p>
             © {year} {profile.name}. {t.footer.rights}
           </p>
-          <p>{t.footer.stack}</p>
+          <p className="flex flex-wrap items-center gap-x-3 gap-y-1">
+            {visits !== null && (
+              <span data-testid="visits" className="inline-flex items-center gap-1.5">
+                <Eye className="size-3.5" aria-hidden />
+                {t.footer.visits(visits.toLocaleString(lang === "id" ? "id-ID" : "en-US"))}
+              </span>
+            )}
+            <span>{t.footer.stack}</span>
+          </p>
         </div>
       </div>
 

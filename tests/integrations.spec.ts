@@ -86,3 +86,37 @@ test("spam bots that fill the hidden field are ignored", async ({ page }) => {
   await expect(page.getByRole("status").filter({ hasText: /Pesan terkirim|Message sent/ })).toBeVisible();
   expect(sent).toBe(0);
 });
+
+const COUNTER = "https://e2e-dummy.goatcounter.com/counter/TOTAL.json";
+
+test("the footer shows the total number of visits", async ({ page }) => {
+  await page.route(COUNTER, (route) => route.fulfill({ json: { count: "1,234" } }));
+  await page.goto("./");
+  await page.locator("footer").scrollIntoViewIfNeeded();
+  await expect(page.getByTestId("visits")).toHaveText(/1[.,]234 (kunjungan|visits)/);
+});
+
+test("the visit counter stays hidden when GoatCounter refuses", async ({ page }) => {
+  let asked = false;
+  await page.route(COUNTER, (route) => {
+    asked = true;
+    return route.fulfill({ status: 403, body: "Forbidden" });
+  });
+  await page.goto("./");
+  await page.locator("footer").scrollIntoViewIfNeeded();
+  await expect.poll(() => asked).toBe(true);
+  await expect(page.getByTestId("visits")).toHaveCount(0);
+});
+
+test("automated browsers are never counted as visitors", async ({ page }) => {
+  const hits: string[] = [];
+  page.on("request", (req) => {
+    const url = new URL(req.url());
+    if (url.hostname.endsWith("goatcounter.com") && url.pathname === "/count") hits.push(req.url());
+  });
+  await page.route(COUNTER, (route) => route.fulfill({ json: { count: "10" } }));
+  await page.goto("./");
+  await page.locator("footer").scrollIntoViewIfNeeded();
+  await expect(page.getByTestId("visits")).toBeVisible();
+  expect(hits).toEqual([]);
+});

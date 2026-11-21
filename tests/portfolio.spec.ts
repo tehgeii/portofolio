@@ -248,8 +248,11 @@ test("privacy: no CV details on the site and no third-party requests", async ({ 
   const html = await page.content();
   expect(html).not.toMatch(/\bIPK\b|\bGPA\b|cv\.html|cv-output/);
 
-  // Only our own server, plus the public GitHub API for live stats.
-  expect([...hosts].filter((h) => h !== "localhost" && h !== "api.github.com")).toEqual([]);
+  // Only our own server, the public GitHub API for live stats and, when their keys are
+  // set, Web3Forms (contact form) and GoatCounter (visitor count).
+  const allowed = (h: string) =>
+    ["localhost", "api.github.com", "api.web3forms.com"].includes(h) || /^[a-z0-9-]+\.goatcounter\.com$/.test(h);
+  expect([...hosts].filter((h) => !allowed(h))).toEqual([]);
 });
 
 test("project grid: only TGO is featured and no empty category is offered", async ({ page }) => {
