@@ -2,6 +2,7 @@ import { motion, useIsPresent } from "motion/react";
 import {
   ArrowUpRight,
   BadgeCheck,
+  PlayCircle,
   Copy,
   CornerDownLeft,
   Globe,
@@ -18,6 +19,7 @@ import { useEffect, useId, useMemo, useRef, useState, type ComponentType, type S
 import { useTheme } from "../../context/theme";
 import { certifications } from "../../data/certificates";
 import { profile } from "../../data/profile";
+import { youtube } from "../../data/youtube";
 import { projects } from "../../data/projects";
 import { SECTIONS, scrollToSection } from "../../data/sections";
 import { useCopyEmail } from "../../hooks/useCopyEmail";
@@ -28,7 +30,7 @@ import { translations } from "../../i18n/translations";
 import { socialIcons } from "../ui/socialIcons";
 import { Kbd } from "../ui/Kbd";
 
-type Group = "navigation" | "projects" | "certificates" | "actions" | "links";
+type Group = "navigation" | "projects" | "certificates" | "videos" | "actions" | "links";
 
 interface Command {
   id: string;
@@ -45,7 +47,7 @@ interface CommandPaletteProps {
   onOpenProject: (slug: string) => void;
 }
 
-const GROUP_ORDER: Group[] = ["navigation", "projects", "certificates", "actions", "links"];
+const GROUP_ORDER: Group[] = ["navigation", "projects", "certificates", "videos", "actions", "links"];
 
 function openExternal(url: string) {
   window.open(url, "_blank", "noopener,noreferrer");
@@ -100,6 +102,15 @@ export function CommandPalette({ onClose, onOpenProject }: CommandPaletteProps) 
           keywords: `${c.issuer} ${(c.skills ?? []).join(" ")} sertifikat certificate`,
           run: () => openExternal(c.credentialUrl!),
         })),
+      ...(youtube?.videos ?? []).map((v) => ({
+        id: `video-${v.id}`,
+        group: "videos" as const,
+        label: v.title,
+        hint: "YouTube",
+        icon: PlayCircle,
+        keywords: "youtube video tech gameplay",
+        run: () => openExternal(v.url),
+      })),
       {
         id: "action-theme",
         group: "actions",
@@ -308,7 +319,7 @@ export function CommandPalette({ onClose, onOpenProject }: CommandPaletteProps) 
                       {command.hint && (
                         <span className="hidden truncate font-mono text-xs text-subtle sm:block">{command.hint}</span>
                       )}
-                      {command.group === "links" || command.group === "certificates" ? (
+                      {command.group === "links" || command.group === "certificates" || command.group === "videos" ? (
                         <ArrowUpRight
                           className={`size-4 shrink-0 ${active ? "opacity-100" : "opacity-0"}`}
                           aria-hidden

@@ -18,6 +18,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "stats": "node scripts/fetch-github-stats.ts",
+    "youtube": "node scripts/fetch-youtube.ts",
     "test:e2e": "playwright test",
     "cv": "vite --open /cv.html",
     "cv:pdf": "node scripts/export-cv.ts",

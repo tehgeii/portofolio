@@ -32,3 +32,6 @@ cv-output/
 
 # Private CV details (GPA, phone): never commit
 src/data/cv.private.json
+
+# Built in CI from the YouTube API (npm run youtube); never committed
+src/data/generated/

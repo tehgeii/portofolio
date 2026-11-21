@@ -83,9 +83,21 @@ Data pribadi seperti **IPK** dan nomor HP disimpan di `src/data/cv.private.json`
 
 `npm run cv:pdf` memberi tahu bagian mana yang masih kosong dan memastikan CV tetap satu halaman. Selama masih ada yang kosong, nama file diberi akhiran `-DRAFT`. CV **belum ikut dipublikasikan** di website; folder `cv-output/` juga tidak ikut ke Git.
 
+## 🔌 Fitur opsional (otomatis)
+
+Ketiga fitur ini mati sampai kuncinya diisi, dan website tetap berjalan normal tanpa mereka.
+
+| Fitur                                | Cara menyalakan                                                                                                                                                                                        |
+| ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Form kontak langsung masuk ke email  | Isi `web3formsAccessKey` di [`src/config/public-keys.ts`](src/config/public-keys.ts) dengan access key dari [web3forms.com](https://web3forms.com). Tanpa key, form membuka aplikasi email pengunjung. |
+| Jumlah pengunjung di footer          | Isi `goatcounterCode` dengan kode situs [GoatCounter](https://www.goatcounter.com), lalu aktifkan _"Allow adding visitor counts on your website"_ di pengaturan GoatCounter.                           |
+| Section YouTube (subscriber & video) | Simpan API key YouTube Data API v3 sebagai secret repo `YOUTUBE_API_KEY` (Settings → Secrets and variables → Actions). Datanya diambil saat build, setiap 6 jam.                                       |
+
+Dua key pertama memang aman untuk publik (hanya bisa mengirim pesan ke inbox pemiliknya / menghitung kunjungan). API key YouTube hanya dipakai saat build di GitHub Actions dan tidak pernah masuk ke website.
+
 ## 🌍 Deploy ke GitHub Pages
 
-Workflow [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) menjalankan format check, lint, typecheck, build, dan test end-to-end di setiap pull request, lalu men-deploy ke GitHub Pages setiap ada push ke `main`. Setiap Senin pagi workflow ini juga berjalan otomatis supaya statistik GitHub tetap segar.
+Workflow [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) menjalankan format check, lint, typecheck, build, dan test end-to-end di setiap pull request, lalu men-deploy ke GitHub Pages setiap ada push ke `main`. Setiap 6 jam workflow ini juga berjalan otomatis supaya statistik GitHub dan data YouTube tetap segar.
 
 Pengaturan sekali saja (sudah dilakukan):
 

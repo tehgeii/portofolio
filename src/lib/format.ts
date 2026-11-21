@@ -21,6 +21,19 @@ export function timeAgo(iso: string, lang: Lang, now = Date.now()) {
   return rtf.format(0, "minute");
 }
 
+/** "12,3 rb" / "12.3K". */
+export function compactNumber(n: number, lang: Lang) {
+  return new Intl.NumberFormat(LOCALES[lang], { notation: "compact", maximumFractionDigits: 1 }).format(n);
+}
+
+/** "PT12M3S" → "12:03", "PT1H2M3S" → "1:02:03". */
+export function videoLength(seconds: number) {
+  const h = Math.floor(seconds / 3600);
+  const m = Math.floor((seconds % 3600) / 60);
+  const s = String(seconds % 60).padStart(2, "0");
+  return h ? `${h}:${String(m).padStart(2, "0")}:${s}` : `${m}:${s}`;
+}
+
 /** "Desember 2022" / "December 2022". */
 export function monthYear(iso: string, lang: Lang) {
   return new Intl.DateTimeFormat(LOCALES[lang], { month: "long", year: "numeric" }).format(new Date(iso));

@@ -13,6 +13,7 @@ import { Journey } from "./components/sections/Journey";
 import { Projects } from "./components/sections/Projects";
 import { Skills } from "./components/sections/Skills";
 import { TechMarquee } from "./components/sections/TechMarquee";
+import { YouTube } from "./components/sections/YouTube";
 import { projects } from "./data/projects";
 import { SECTIONS, type SectionId } from "./data/sections";
 import { useActiveSection } from "./hooks/useActiveSection";
@@ -107,6 +108,7 @@ export default function App() {
         <Projects onOpen={showProject} />
         <Journey />
         <Certificates />
+        <YouTube />
         <GitHubActivity />
         <Contact />
       </main>

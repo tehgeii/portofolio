@@ -120,3 +120,46 @@ test("automated browsers are never counted as visitors", async ({ page }) => {
   await expect(page.getByTestId("visits")).toBeVisible();
   expect(hits).toEqual([]);
 });
+
+test("the YouTube section shows channel stats and three videos without contacting YouTube", async ({ page }) => {
+  const hosts = new Set<string>();
+  page.on("request", (req) => hosts.add(new URL(req.url()).hostname));
+  await page.goto("./#youtube");
+
+  const section = page.locator("#youtube");
+  await expect(section.getByRole("heading", { level: 2 })).toBeVisible();
+  await expect(section.locator("dl > div")).toHaveCount(3);
+
+  const cards = section.locator("ul > li a");
+  await expect(cards).toHaveCount(3);
+  await expect(cards.first()).toHaveAttribute("href", "https://www.youtube.com/watch?v=fixtureVid1");
+  for (const card of await cards.all()) {
+    await expect(card).toHaveAttribute("target", "_blank");
+    await expect(card).toHaveAttribute("rel", /noopener/);
+  }
+  await expect(cards.first()).toContainText(/Terpopuler|Most viewed/);
+  await expect(cards.nth(1)).toContainText(/Terbaru|Latest/);
+  await expect(cards.nth(2)).toContainText("1:02:03");
+
+  // Thumbnails are bundled with the site; the one without a thumbnail gets a placeholder.
+  const images = section.locator("ul img");
+  await expect(images).toHaveCount(2);
+  for (const img of await images.all()) {
+    expect(await img.getAttribute("src")).not.toMatch(/ytimg|youtube|googleusercontent/);
+  }
+  await page.waitForLoadState("networkidle");
+  expect([...hosts].filter((h) => /youtube|ytimg|googleapis|google\.com/.test(h))).toEqual([]);
+});
+
+test("YouTube appears in the navigation and the search palette", async ({ page }) => {
+  await page.goto("./");
+  await expect(page.locator("footer").getByRole("link", { name: "YouTube", exact: true })).toHaveAttribute(
+    "href",
+    "#youtube",
+  );
+  await page.keyboard.press("Control+k");
+  await page.getByRole("combobox").fill("fixture newest");
+  await expect(
+    page.getByRole("group", { name: /video/i }).getByRole("option", { name: /Fixture: the newest video/ }),
+  ).toBeVisible();
+});

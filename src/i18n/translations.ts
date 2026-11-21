@@ -28,6 +28,7 @@ const id = {
     projects: "Project",
     journey: "Perjalanan",
     certificates: "Prestasi",
+    youtube: "YouTube",
     github: "GitHub",
     contact: "Kontak",
     search: "Cari…",
@@ -109,6 +110,20 @@ const id = {
     aboutCompetition: "Tentang kompetisi",
     previewNote: "Pratinjau ber-watermark. Nomor sertifikat dan nama sekolah disamarkan demi privasi.",
   },
+  youtube: {
+    eyebrow: "YouTube",
+    title: "Berbagi lewat video",
+    subtitle:
+      "Di kanal Tech Gameplay Indonesia saya berbagi aplikasi berguna, tweak Windows, dan tips optimasi PC untuk para gamer.",
+    subscribers: "Subscriber",
+    videos: "Video",
+    views: "Total tayangan",
+    popular: "Terpopuler",
+    latest: "Terbaru",
+    viewCount: (n: string) => `${n} x ditonton`,
+    visit: "Kunjungi channel",
+    updated: (date: string) => `Diperbarui otomatis dari YouTube · ${date}`,
+  },
   github: {
     eyebrow: "Aktivitas",
     title: "Langsung dari GitHub",
@@ -183,6 +198,7 @@ const id = {
       actions: "Aksi",
       projects: "Project",
       certificates: "Sertifikat",
+      videos: "Video YouTube",
       links: "Tautan",
     },
     actions: {
@@ -223,6 +239,7 @@ const en: Translation = {
     projects: "Projects",
     journey: "Journey",
     certificates: "Achievements",
+    youtube: "YouTube",
     github: "GitHub",
     contact: "Contact",
     search: "Search…",
@@ -304,6 +321,20 @@ const en: Translation = {
     aboutCompetition: "About the competition",
     previewNote: "Watermarked preview. The certificate number and school name are blurred for privacy.",
   },
+  youtube: {
+    eyebrow: "YouTube",
+    title: "Sharing through video",
+    subtitle:
+      "On my Tech Gameplay Indonesia channel I share useful apps, Windows tweaks, and PC optimization tips for gamers.",
+    subscribers: "Subscribers",
+    videos: "Videos",
+    views: "Total views",
+    popular: "Most viewed",
+    latest: "Latest",
+    viewCount: (n: string) => `${n} views`,
+    visit: "Visit channel",
+    updated: (date: string) => `Updated automatically from YouTube · ${date}`,
+  },
   github: {
     eyebrow: "Activity",
     title: "Live from GitHub",
@@ -377,6 +408,7 @@ const en: Translation = {
       actions: "Actions",
       projects: "Projects",
       certificates: "Certificates",
+      videos: "YouTube videos",
       links: "Links",
     },
     actions: {

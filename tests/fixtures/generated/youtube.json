@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "fetchedAt": "2026-11-20T06:17:00.000Z",
+  "channel": {
+    "id": "UCfixturechannel000000",
+    "title": "Tech Gameplay Indonesia",
+    "handle": "@techgameplayindonesia",
+    "url": "https://www.youtube.com/@techgameplayindonesia",
+    "subscribers": 12300,
+    "videoCount": 245,
+    "viewCount": 1234567
+  },
+  "popular": {
+    "id": "fixtureVid1",
+    "title": "Fixture: the most viewed video",
+    "publishedAt": "2025-03-01T10:00:00Z",
+    "views": 98765,
+    "duration": "PT12M3S",
+    "thumb": { "sm": "fixtureVid1.svg", "lg": "fixtureVid1.svg" }
+  },
+  "latest": [
+    {
+      "id": "fixtureVid2",
+      "title": "Fixture: the newest video",
+      "publishedAt": "2026-11-10T10:00:00Z",
+      "views": 1200,
+      "duration": "PT8M30S",
+      "thumb": { "sm": "fixtureVid2.svg", "lg": "fixtureVid2.svg" }
+    },
+    {
+      "id": "fixtureVid3",
+      "title": "Fixture: a video without a thumbnail",
+      "publishedAt": "2026-10-28T10:00:00Z",
+      "views": 860,
+      "duration": "PT1H2M3S",
+      "thumb": null
+    }
+  ]
+}

@@ -91,7 +91,7 @@ export function Navbar({ active, onOpenPalette }: NavbarProps) {
           {NAV_ITEMS.map((id) => {
             const isActive = active === id;
             return (
-              <li key={id}>
+              <li key={id} className={id === "youtube" ? "hidden xl:block" : undefined}>
                 <a
                   href={`#${id}`}
                   onClick={go(id)}
