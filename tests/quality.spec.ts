@@ -33,6 +33,20 @@ async function visitWholePage(page: Page) {
     }
     window.scrollTo(0, 0);
   });
+  await animationsSettled(page);
+}
+
+/**
+ * Sections fade in as they scroll into view (opacity still animates with
+ * reduced motion). Contrast must be measured after the fades, not halfway.
+ * Endless decorative animations (marquee, pulsing dots) are ignored.
+ */
+async function animationsSettled(page: Page) {
+  await page.waitForFunction(() =>
+    document
+      .getAnimations()
+      .every((a) => a.playState !== "running" || !Number.isFinite(Number(a.effect?.getComputedTiming().endTime))),
+  );
 }
 
 for (const colorScheme of ["dark", "light"] as const) {
@@ -47,6 +61,7 @@ for (const colorScheme of ["dark", "light"] as const) {
 
     await page.goto("./#project/tgo");
     await expect(page.getByRole("dialog")).toBeVisible();
+    await animationsSettled(page);
     expect(await seriousA11yIssues(page)).toEqual([]);
     await context.close();
   });
