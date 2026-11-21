@@ -1,15 +1,15 @@
 {
-  "publicRepos": 17,
-  "followers": 8,
-  "totalStars": 6,
+  "publicRepos": 19,
+  "followers": 11,
   "createdAt": "2022-12-21T15:14:24Z",
+  "totalStars": 11,
   "languages": [
     [
       "PHP",
       3
     ],
     [
-      "Python",
+      "Batchfile",
       2
     ],
     [
@@ -17,15 +17,19 @@
       2
     ],
     [
-      "Batchfile",
+      "Kotlin",
       2
     ],
     [
-      "Kotlin",
-      1
+      "Python",
+      2
     ],
     [
       "Go",
+      1
+    ],
+    [
+      "HTML",
       1
     ],
     [
@@ -33,43 +37,68 @@
       1
     ],
     [
-      "HTML",
+      "PowerShell",
+      1
+    ],
+    [
+      "TypeScript",
       1
     ]
   ],
   "recent": [
     {
-      "name": "sistem-bot-otomatis",
-      "description": "NgiBsen UDINUS: Android attendance reminder",
-      "url": "https://github.com/tehgeii/sistem-bot-otomatis",
-      "language": "Kotlin",
+      "name": "wifi-speed-tester",
+      "description": "Tes kecepatan WiFi dengan hasil yang sangat lengkap (beta)",
+      "url": "https://github.com/tehgeii/wifi-speed-tester",
+      "language": "Go",
+      "stars": 1,
+      "pushedAt": "2026-11-21T06:31:02Z"
+    },
+    {
+      "name": "TGOS",
+      "description": "Tech Gameplay Operating System, Windows 11 Pro Edition only (beta)",
+      "url": "https://github.com/tehgeii/TGOS",
+      "language": "PowerShell",
       "stars": 0,
-      "pushedAt": "2026-10-07T03:25:14Z"
+      "pushedAt": "2026-11-18T13:40:31Z"
+    },
+    {
+      "name": "admin-ui",
+      "description": null,
+      "url": "https://github.com/tehgeii/admin-ui",
+      "language": "JavaScript",
+      "stars": 0,
+      "pushedAt": "2026-11-18T04:29:00Z"
     },
     {
       "name": "project-data-mining",
       "description": "https://project-data-mining-zzz.streamlit.app/",
       "url": "https://github.com/tehgeii/project-data-mining",
       "language": "Python",
-      "stars": 0,
-      "pushedAt": "2026-10-06T03:13:13Z"
-    },
-    {
-      "name": "wifi-speed-tester",
-      "description": "WiFi Speed + Ping Tester for Windows",
-      "url": "https://github.com/tehgeii/wifi-speed-tester",
-      "language": "Go",
-      "stars": 0,
-      "pushedAt": "2026-10-05T08:55:27Z"
-    },
-    {
-      "name": "zzz-gacha-mining",
-      "description": "https://zzz-gacha-mining.streamlit.app/",
-      "url": "https://github.com/tehgeii/zzz-gacha-mining",
-      "language": "Python",
-      "stars": 0,
-      "pushedAt": "2026-09-29T12:27:22Z"
+      "stars": 1,
+      "pushedAt": "2026-10-31T05:17:42Z"
     }
   ],
-  "fetchedAt": "2026-10-07T05:00:00Z"
+  "repoStars": {
+    "wifi-speed-tester": 1,
+    "tgos": 0,
+    "admin-ui": 0,
+    "project-data-mining": 1,
+    "sistem-bot-otomatis": 1,
+    "portofolio": 1,
+    "student-toolkit": 0,
+    "zzz-gacha-mining": 0,
+    "tgo": 7,
+    "tgoresources": 0,
+    "aplikasiberguna": 0,
+    "uas_laundry_app": 0,
+    "laundry_app": 0,
+    "utsprojectpwl": 0,
+    "projectpbw": 0,
+    "regedit": 0,
+    "link": 0,
+    "alpro": 0,
+    "daspro": 0
+  },
+  "fetchedAt": "2026-11-21T08:10:55.992Z"
 }

@@ -5,6 +5,9 @@
   "description": "Personal portfolio website of Dafi Hauzan Atsillah Hoenarko (tehgeii).",
   "author": "Dafi Hauzan Atsillah Hoenarko <antsters9@gmail.com> (https://github.com/tehgeii)",
   "type": "module",
+  "engines": {
+    "node": ">=22.18"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

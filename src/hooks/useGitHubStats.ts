@@ -10,25 +10,32 @@ export type GitHubStatus = "loading" | "live" | "fallback";
  * Stats baked in at deploy time (scripts/fetch-github-stats.ts). Shown
  * instantly, and kept if the visitor's browser can't reach the GitHub API.
  */
-export const SNAPSHOT_STATS = snapshot as GitHubStats;
+export const SNAPSHOT_STATS = snapshot as unknown as GitHubStats;
 
-const CACHE_KEY = "gh-stats-v2";
+const CACHE_KEY = "gh-stats-v3";
 const CACHE_TTL = 30 * 60 * 1000; // 30 minutes keeps us far below the API rate limit
+/** After a failure (offline, rate-limited) wait this long before asking again. */
+const FAILURE_TTL = 10 * 60 * 1000;
+const TIMEOUT = 8000;
 
-function readCache(): GitHubStats | null {
+type CacheEntry = { at: number; data: GitHubStats } | { at: number; failed: true };
+
+/** localStorage survives new tabs, so a visitor costs at most one request per half hour. */
+function readCache(): CacheEntry | null {
   try {
-    const raw = sessionStorage.getItem(CACHE_KEY);
+    const raw = localStorage.getItem(CACHE_KEY);
     if (!raw) return null;
-    const { at, data } = JSON.parse(raw) as { at: number; data: GitHubStats };
-    return Date.now() - at < CACHE_TTL ? data : null;
+    const entry = JSON.parse(raw) as CacheEntry;
+    const ttl = "failed" in entry ? FAILURE_TTL : CACHE_TTL;
+    return Date.now() - entry.at < ttl ? entry : null;
   } catch {
     return null;
   }
 }
 
-function writeCache(data: GitHubStats) {
+function writeCache(entry: CacheEntry) {
   try {
-    sessionStorage.setItem(CACHE_KEY, JSON.stringify({ at: Date.now(), data }));
+    localStorage.setItem(CACHE_KEY, JSON.stringify(entry));
   } catch {
     /* ignore */
   }
@@ -40,11 +47,17 @@ const inflight = new Map<string, Promise<GitHubStats>>();
 function loadStats(username: string) {
   let promise = inflight.get(username);
   if (!promise) {
-    promise = fetchGitHubStats(username).then((data) => {
-      writeCache(data);
-      return data;
-    });
-    promise.catch(() => inflight.delete(username));
+    promise = fetchGitHubStats(username, { signal: AbortSignal.timeout(TIMEOUT) }).then(
+      (data) => {
+        writeCache({ at: Date.now(), data });
+        return data;
+      },
+      (error: unknown) => {
+        writeCache({ at: Date.now(), failed: true });
+        inflight.delete(username);
+        throw error;
+      },
+    );
     inflight.set(username, promise);
   }
   return promise;
@@ -53,8 +66,9 @@ function loadStats(username: string) {
 /** Live GitHub profile stats with caching and a graceful offline fallback. */
 export function useGitHubStats(username: string) {
   const [cached] = useState(readCache);
-  const [stats, setStats] = useState<GitHubStats>(cached ?? SNAPSHOT_STATS);
-  const [status, setStatus] = useState<GitHubStatus>(cached ? "live" : "loading");
+  const cachedData = cached && "data" in cached ? cached.data : null;
+  const [stats, setStats] = useState<GitHubStats>(cachedData ?? SNAPSHOT_STATS);
+  const [status, setStatus] = useState<GitHubStatus>(cachedData ? "live" : cached ? "fallback" : "loading");
 
   useEffect(() => {
     if (cached) return;

@@ -16,7 +16,9 @@ export default defineConfig({
   testDir: "tests",
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
-  reporter: process.env.CI ? [["github"], ["list"]] : "list",
+  // One retry in CI; a test that only passes on retry is still flagged as flaky in the report.
+  retries: process.env.CI ? 1 : 0,
+  reporter: process.env.CI ? [["github"], ["list"], ["html", { open: "never" }]] : "list",
   use: {
     baseURL,
     reducedMotion: "reduce",

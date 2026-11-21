@@ -21,6 +21,8 @@ export interface GitHubStats {
   /** [language, repoCount], most used first. */
   languages: [string, number][];
   recent: RepoSummary[];
+  /** Stars per own (non-fork) repository, keyed by lower-cased name. */
+  repoStars?: Record<string, number>;
   /** When the data was fetched (ISO string). */
   fetchedAt: string;
 }
@@ -70,16 +72,20 @@ export function summarize(user: ApiUser, allRepos: ApiRepo[], fetchedAt = new Da
         stars: r.stargazers_count,
         pushedAt: r.pushed_at,
       })),
+    repoStars: Object.fromEntries(repos.map((r) => [r.name.toLowerCase(), r.stargazers_count])),
     fetchedAt,
   };
 }
 
-export async function fetchGitHubStats(username: string, token?: string): Promise<GitHubStats> {
+export async function fetchGitHubStats(
+  username: string,
+  { token, signal }: { token?: string; signal?: AbortSignal } = {},
+): Promise<GitHubStats> {
   const headers: Record<string, string> = { Accept: "application/vnd.github+json" };
   if (token) headers.Authorization = `Bearer ${token}`;
   const [userRes, reposRes] = await Promise.all([
-    fetch(`https://api.github.com/users/${username}`, { headers }),
-    fetch(`https://api.github.com/users/${username}/repos?per_page=100&sort=pushed`, { headers }),
+    fetch(`https://api.github.com/users/${username}`, { headers, signal }),
+    fetch(`https://api.github.com/users/${username}/repos?per_page=100&sort=pushed`, { headers, signal }),
   ]);
   if (!userRes.ok || !reposRes.ok) throw new Error(`GitHub API ${userRes.status}/${reposRes.status}`);
   return summarize((await userRes.json()) as ApiUser, (await reposRes.json()) as ApiRepo[]);

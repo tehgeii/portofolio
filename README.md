@@ -29,7 +29,7 @@ Website portofolio pribadi **Dafi Hauzan Atsillah Hoenarko** ([@tehgeii](https:/
 
 ## 🚀 Menjalankan di komputer
 
-Butuh **Node.js 20+**.
+Butuh **Node.js 22.18+** (script di folder `scripts/` dijalankan langsung sebagai TypeScript).
 
 ```bash
 npm install       # pasang dependency
@@ -46,7 +46,7 @@ Sebelum test pertama kali, pasang browser-nya dengan `npx playwright install chr
 
 ### 🔗 Link langsung
 
-- Ke section: `https://tehgeii.github.io/portofolio/#contact` (juga `#about`, `#skills`, `#projects`, `#journey`, `#github`)
+- Ke section: `https://tehgeii.github.io/portofolio/#contact` (juga `#about`, `#skills`, `#projects`, `#journey`, `#certificates`, `#github`)
 - Ke satu project: `https://tehgeii.github.io/portofolio/#project/tgo` (slug ada di [`projects.ts`](src/data/projects.ts))
 
 ## ✏️ Mengubah konten
@@ -59,6 +59,8 @@ Semua isi website ada di folder [`src/data`](src/data), jadi tidak perlu menyent
 | [`projects.ts`](src/data/projects.ts)         | Daftar project, deskripsi, fitur, teknologi, dan link |
 | [`skills.ts`](src/data/skills.ts)             | Kategori skill beserta keterangan penggunaannya       |
 | [`journey.ts`](src/data/journey.ts)           | Timeline perjalanan kuliah & project                  |
+| [`certificates.ts`](src/data/certificates.ts) | Prestasi & sertifikat beserta link verifikasinya      |
+| [`cv.ts`](src/data/cv.ts)                     | Data khusus CV (pendidikan, pengalaman, bahasa)       |
 | [`translations.ts`](src/i18n/translations.ts) | Semua teks antarmuka dalam Bahasa Indonesia & English |
 
 Setiap teks punya versi `id` dan `en`. TypeScript akan memberi tahu kalau ada terjemahan yang terlewat.

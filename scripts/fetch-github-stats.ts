@@ -16,11 +16,13 @@ const USERNAME = "tehgeii";
 const target = fileURLToPath(new URL("../src/data/github-snapshot.json", import.meta.url));
 
 try {
-  const stats = await fetchGitHubStats(USERNAME, process.env.GITHUB_TOKEN);
+  const stats = await fetchGitHubStats(USERNAME, { token: process.env.GITHUB_TOKEN });
   writeFileSync(target, `${JSON.stringify(stats, null, 2)}\n`);
   console.log(
     `GitHub snapshot updated: ${stats.publicRepos} repos, ${stats.totalStars} stars, ${stats.followers} followers`,
   );
 } catch (error) {
-  console.warn(`Could not refresh GitHub snapshot, keeping the existing one. (${(error as Error).message})`);
+  // A GitHub Actions annotation makes a stale snapshot visible on the run's summary page.
+  const prefix = process.env.GITHUB_ACTIONS ? "::warning title=GitHub stats::" : "";
+  console.warn(`${prefix}Could not refresh GitHub snapshot, keeping the existing one. (${(error as Error).message})`);
 }
