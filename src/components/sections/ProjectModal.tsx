@@ -8,6 +8,7 @@ import { useLanguage } from "../../i18n/language";
 import { ProjectCover } from "../ui/ProjectCover";
 import { linkIcon } from "../ui/linkIcon";
 import { button } from "../ui/styles";
+import { TagList } from "../ui/TagList";
 
 interface ProjectModalProps {
   project: Project;
@@ -170,13 +171,7 @@ export function ProjectModal({ project, onClose, onNavigate }: ProjectModalProps
           <h3 className="mt-8 font-mono text-xs font-semibold tracking-[0.15em] text-subtle uppercase">
             {t.projects.techUsed}
           </h3>
-          <ul className="mt-4 flex flex-wrap gap-2">
-            {project.tech.map((tech) => (
-              <li key={tech} className="rounded-lg border border-line bg-surface-2 px-3 py-1.5 font-mono text-xs">
-                {tech}
-              </li>
-            ))}
-          </ul>
+          <TagList tags={project.tech} size="md" className="mt-4" />
 
           <div className="mt-8 flex flex-wrap gap-3">
             {project.links.map((link, i) => {

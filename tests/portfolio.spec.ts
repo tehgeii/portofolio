@@ -259,3 +259,43 @@ test("project grid: only TGO is featured and no empty category is offered", asyn
     expect(count).toBeGreaterThan(0);
   }
 });
+
+test("small phones (360px): nothing sticks out of the screen", async ({ browser }) => {
+  const context = await browser.newContext({ viewport: { width: 360, height: 740 }, reducedMotion: "reduce" });
+  const page = await context.newPage();
+  await page.route("https://api.github.com/**", (route) => route.abort());
+  await page.goto("./");
+  // Visit every section so lazy content is rendered.
+  await page.evaluate(async () => {
+    for (let y = 0; y < document.body.scrollHeight; y += 500) {
+      window.scrollTo(0, y);
+      await new Promise((r) => setTimeout(r, 20));
+    }
+  });
+
+  const overflowsX = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth);
+  expect(overflowsX).toBe(false);
+
+  // Links and buttons must sit fully inside the viewport, except in deliberate sideways scrollers.
+  const outside = await page.evaluate(() =>
+    [...document.querySelectorAll<HTMLElement>("main a, main button")]
+      .filter((el) => el.offsetParent !== null && !el.closest("[data-scroll-x], [aria-hidden='true']"))
+      .filter((el) => {
+        const r = el.getBoundingClientRect();
+        return r.width > 0 && (r.left < -1 || r.right > window.innerWidth + 1);
+      })
+      .map((el) => el.textContent?.trim().slice(0, 40) || el.getAttribute("aria-label")),
+  );
+  expect(outside).toEqual([]);
+
+  // No text spilling out of its box (e.g. a label squeezed into a narrow card).
+  const spilling = await page.evaluate(() =>
+    [...document.querySelectorAll<HTMLElement>("main a, main button, main p, main span, main li")]
+      .filter((el) => el.offsetParent !== null && !el.closest("[data-scroll-x], [aria-hidden='true']"))
+      .filter((el) => el.textContent?.trim() && el.clientWidth > 0 && getComputedStyle(el).overflow === "visible")
+      .filter((el) => el.scrollWidth > el.clientWidth + 2)
+      .map((el) => el.textContent?.trim().slice(0, 40)),
+  );
+  expect(spilling).toEqual([]);
+  await context.close();
+});

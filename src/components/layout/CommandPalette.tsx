@@ -132,7 +132,7 @@ export function CommandPalette({ onClose, onOpenProject }: CommandPaletteProps) 
       {
         id: "link-website",
         group: "links",
-        label: "TGO Website",
+        label: t.palette.tgoWebsite,
         hint: "tgopremium.my.id",
         icon: Globe,
         keywords: "tgo premium website",

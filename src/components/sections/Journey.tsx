@@ -6,6 +6,7 @@ import { useLanguage } from "../../i18n/language";
 import { Reveal } from "../ui/Reveal";
 import { Section } from "../ui/Section";
 import { SpotlightCard } from "../ui/SpotlightCard";
+import { TagList } from "../ui/TagList";
 
 export function Journey() {
   const { t, l } = useLanguage();
@@ -71,13 +72,7 @@ export function Journey() {
                   <p className="mt-3 text-sm leading-relaxed text-pretty text-muted sm:text-[15px]">
                     {l(item.description)}
                   </p>
-                  <ul className="mt-4 flex flex-wrap gap-1.5">
-                    {item.tags.map((tag) => (
-                      <li key={tag} className="rounded-md bg-surface-2 px-2 py-1 font-mono text-[11px] text-muted">
-                        {tag}
-                      </li>
-                    ))}
-                  </ul>
+                  <TagList tags={item.tags} className="mt-4" />
                 </SpotlightCard>
               </Reveal>
             );

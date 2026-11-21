@@ -9,6 +9,7 @@ import { socialIcons } from "../ui/socialIcons";
 import { Reveal } from "../ui/Reveal";
 import { Section } from "../ui/Section";
 import { SpotlightCard } from "../ui/SpotlightCard";
+import { Subheading } from "../ui/Subheading";
 import { button } from "../ui/styles";
 
 type Field = "name" | "email" | "message";
@@ -32,7 +33,7 @@ export function Contact() {
                   <Mail className="size-5" aria-hidden />
                 </span>
                 <div className="min-w-0">
-                  <p className="text-sm text-muted">Email</p>
+                  <p className="text-sm text-muted">{t.contact.emailLabel}</p>
                   <a
                     href={`mailto:${profile.email}`}
                     className="block truncate text-lg font-semibold transition-colors hover:text-accent"
@@ -41,7 +42,7 @@ export function Contact() {
                   </a>
                 </div>
               </div>
-              <div className="mt-6 grid grid-cols-2 gap-3">
+              <div className="mt-6 grid gap-3 min-[400px]:grid-cols-2">
                 <a href={`mailto:${profile.email}`} className={button("primary", "md")}>
                   <Send className="size-4" aria-hidden />
                   {t.contact.emailMe}
@@ -71,8 +72,8 @@ export function Contact() {
 
           {/* Socials */}
           <Reveal delay={0.08}>
-            <h3 className="mb-3 font-mono text-sm text-subtle">// {t.contact.findMe}</h3>
-            <ul className="grid grid-cols-2 gap-3">
+            <Subheading className="mb-3">{t.contact.findMe}</Subheading>
+            <ul className="grid gap-3 sm:grid-cols-2">
               {profile.socials.map((s) => {
                 const Icon = socialIcons[s.key];
                 return (

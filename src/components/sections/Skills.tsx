@@ -84,7 +84,7 @@ function SkillCard({ category }: { category: SkillCategory }) {
       <div
         id={`${titleId}-note`}
         aria-live="polite"
-        className="flex min-h-12 items-end border-t border-dashed border-line pt-4 text-sm text-muted"
+        className="flex h-[3.75rem] items-end border-t border-dashed border-line pt-4 text-sm text-muted"
       >
         <AnimatePresence mode="wait" initial={false}>
           <motion.p
@@ -98,12 +98,12 @@ function SkillCard({ category }: { category: SkillCategory }) {
             {active ? (
               <>
                 <span className="font-mono text-accent">→</span>
-                <span>
+                <span className="line-clamp-2">
                   <span className="font-semibold text-fg">{active.name}</span> · {l(active.note)}
                 </span>
               </>
             ) : (
-              l(category.description)
+              <span className="line-clamp-2">{l(category.description)}</span>
             )}
           </motion.p>
         </AnimatePresence>

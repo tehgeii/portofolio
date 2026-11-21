@@ -20,7 +20,7 @@ export function Footer() {
             <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted">{l(profile.tagline)}</p>
           </div>
 
-          <nav aria-label="Footer">
+          <nav aria-label={t.a11y.footerNav}>
             <h2 className="font-mono text-xs font-semibold tracking-[0.15em] text-subtle uppercase">
               {t.footer.navigation}
             </h2>
@@ -99,7 +99,7 @@ export function Footer() {
       {/* Oversized wordmark */}
       <p
         aria-hidden
-        className="pointer-events-none -mb-[0.22em] bg-gradient-to-b from-line-strong to-transparent [background-clip:text] text-center text-[26vw] leading-none font-extrabold tracking-tighter text-transparent select-none [-webkit-background-clip:text] md:text-[20vw]"
+        className="pointer-events-none -mb-[0.22em] bg-gradient-to-b from-line-strong to-transparent [background-clip:text] text-center text-[min(26vw,14rem)] leading-none font-extrabold tracking-tighter text-transparent select-none [-webkit-background-clip:text] md:text-[min(20vw,16rem)]"
       >
         DAFI
       </p>

@@ -128,7 +128,7 @@ export function GitHubActivity() {
                       />
                     </div>
                     <p className="mt-1.5 line-clamp-1 text-sm text-muted">{describe(repo)}</p>
-                    <div className="mt-3 flex items-center gap-4 text-xs text-subtle">
+                    <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-subtle">
                       {repo.language && (
                         <span className="flex items-center gap-1.5">
                           <span
@@ -177,8 +177,8 @@ function StatusPill({ status, fetchedAt }: { status: GitHubStatus; fetchedAt: st
   const { t, lang } = useLanguage();
   const styles: Record<GitHubStatus, { dot: string; label: string }> = {
     loading: { dot: "bg-amber-400 animate-pulse", label: t.github.loading },
-    live: { dot: "bg-emerald-500", label: "Live · api.github.com" },
-    fallback: { dot: "bg-zinc-400", label: `Snapshot · ${shortDate(fetchedAt, lang)}` },
+    live: { dot: "bg-emerald-500", label: `${t.github.live} · api.github.com` },
+    fallback: { dot: "bg-zinc-400", label: `${t.github.snapshot} · ${shortDate(fetchedAt, lang)}` },
   };
   const s = styles[status];
   return (

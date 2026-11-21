@@ -47,7 +47,7 @@ const LANGUAGE_COLORS: Record<string, string> = {
   CSS: "#563d7c",
   "C#": "#178600",
   Java: "#b07219",
-  PowerShell: "#012456",
+  PowerShell: "#5391FE",
   Shell: "#89e051",
 };
 

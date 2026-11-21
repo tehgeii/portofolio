@@ -14,6 +14,7 @@ import { useLanguage } from "../../i18n/language";
 import { Reveal } from "../ui/Reveal";
 import { Section } from "../ui/Section";
 import { SpotlightCard } from "../ui/SpotlightCard";
+import { Subheading } from "../ui/Subheading";
 
 const SERVICE_ICONS: LucideIcon[] = [Laptop, Smartphone, Monitor, BrainCircuit];
 
@@ -70,14 +71,14 @@ export function About() {
       </div>
 
       <Reveal className="mt-20">
-        <h3 className="mb-6 font-mono text-sm font-medium tracking-wide text-subtle">// {t.about.whatIDo}</h3>
+        <Subheading className="mb-6">{t.about.whatIDo}</Subheading>
       </Reveal>
       <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {t.about.services.map((service, i) => {
           const Icon = SERVICE_ICONS[i];
           return (
             <Reveal as="li" key={service.title} delay={i * 0.08} className="h-full">
-              <SpotlightCard className="h-full p-6 hover:-translate-y-1">
+              <SpotlightCard className="h-full p-6">
                 <span className="mb-5 grid size-11 place-items-center rounded-xl bg-gradient-accent text-white shadow-[0_8px_24px_-8px_var(--glow)] dark:text-zinc-950">
                   <Icon className="size-5" aria-hidden />
                 </span>

@@ -23,5 +23,16 @@ export function button(variant: keyof typeof variants = "primary", size: keyof t
   return `${base} ${variants[variant]} ${sizes[size]}`;
 }
 
-export const chip =
-  "inline-flex items-center gap-1.5 rounded-full border border-line bg-surface-2/60 px-3 py-1 text-xs font-medium text-muted";
+const tagSizes = {
+  sm: "rounded-md bg-surface-2 px-2 py-1 font-mono text-[11px] text-muted",
+  md: "rounded-lg border border-line bg-surface-2 px-3 py-1.5 font-mono text-xs",
+} as const;
+
+/** Technology / skill tags: `sm` on cards, `md` in detail views. */
+export function tag(size: keyof typeof tagSizes = "sm") {
+  return tagSizes[size];
+}
+
+/** Inline text link with an underline on hover and keyboard focus. */
+export const textLink =
+  "inline-flex items-center gap-1.5 text-sm font-semibold text-accent decoration-2 underline-offset-4 hover:underline focus-visible:underline";

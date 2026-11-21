@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "motion/react";
 import { ArrowRight, ArrowUpRight, Star, Users } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { profile } from "../../data/profile";
 import { projectCategories, projects, type Project, type ProjectCategory } from "../../data/projects";
 import { useLanguage } from "../../i18n/language";
@@ -10,6 +10,7 @@ import { ProjectCover } from "../ui/ProjectCover";
 import { Reveal } from "../ui/Reveal";
 import { Section } from "../ui/Section";
 import { button } from "../ui/styles";
+import { TagList } from "../ui/TagList";
 
 type Filter = ProjectCategory | "all";
 
@@ -31,45 +32,72 @@ export function Projects({ onOpen }: { onOpen: (slug: string) => void }) {
   // Only offer categories that actually contain projects.
   const categories = projectCategories.filter((c) => counts[c.key] > 0);
 
+  // On narrow screens the filter scrolls sideways: fade whichever edge hides more buttons.
+  const scroller = useRef<HTMLDivElement>(null);
+  const [edges, setEdges] = useState({ start: false, end: false });
+  const updateEdges = useCallback(() => {
+    const el = scroller.current;
+    if (!el) return;
+    const start = el.scrollLeft > 4;
+    const end = el.scrollLeft + el.clientWidth < el.scrollWidth - 4;
+    setEdges((prev) => (prev.start === start && prev.end === end ? prev : { start, end }));
+  }, []);
+  useEffect(() => {
+    updateEdges();
+    window.addEventListener("resize", updateEdges);
+    return () => window.removeEventListener("resize", updateEdges);
+  }, [updateEdges]);
+  const fade = `linear-gradient(to right, ${edges.start ? "transparent, black 40px" : "black"}, ${
+    edges.end ? "black calc(100% - 40px), transparent" : "black"
+  })`;
+
   return (
     <Section id="projects" eyebrow={t.projects.eyebrow} title={t.projects.title} subtitle={t.projects.subtitle}>
       {/* Filters */}
-      <Reveal className="-mx-5 mb-10 no-scrollbar overflow-x-auto px-5 sm:mx-0 sm:px-0">
+      <Reveal className="mb-10">
         <div
-          role="group"
-          aria-label={t.projects.filterLabel}
-          className="flex w-max gap-1.5 rounded-full border border-line bg-surface p-1.5"
+          ref={scroller}
+          onScroll={updateEdges}
+          data-scroll-x
+          className="-mx-5 no-scrollbar overflow-x-auto px-5 sm:mx-0 sm:px-0"
+          style={{ maskImage: fade, WebkitMaskImage: fade }}
         >
-          {categories.map((c) => {
-            const active = filter === c.key;
-            return (
-              <button
-                key={c.key}
-                type="button"
-                onClick={() => setFilter(c.key)}
-                aria-pressed={active}
-                className={`relative flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors ${
-                  active ? "text-bg" : "text-muted hover:text-fg"
-                }`}
-              >
-                {active && (
-                  <motion.span
-                    layoutId="project-filter"
-                    className="absolute inset-0 rounded-full bg-fg"
-                    transition={{ type: "spring", stiffness: 420, damping: 34 }}
-                  />
-                )}
-                <span className="relative">{l(c.label)}</span>
-                <span
-                  className={`relative rounded-full px-1.5 font-mono text-[10px] ${
-                    active ? "bg-bg/20 text-bg" : "bg-surface-2 text-subtle"
+          <div
+            role="group"
+            aria-label={t.projects.filterLabel}
+            className="flex w-max gap-1.5 rounded-full border border-line bg-surface p-1.5"
+          >
+            {categories.map((c) => {
+              const active = filter === c.key;
+              return (
+                <button
+                  key={c.key}
+                  type="button"
+                  onClick={() => setFilter(c.key)}
+                  aria-pressed={active}
+                  className={`relative flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors ${
+                    active ? "text-bg" : "text-muted hover:text-fg"
                   }`}
                 >
-                  {counts[c.key]}
-                </span>
-              </button>
-            );
-          })}
+                  {active && (
+                    <motion.span
+                      layoutId="project-filter"
+                      className="absolute inset-0 rounded-full bg-fg"
+                      transition={{ type: "spring", stiffness: 420, damping: 34 }}
+                    />
+                  )}
+                  <span className="relative">{l(c.label)}</span>
+                  <span
+                    className={`relative rounded-full px-1.5 font-mono text-[10px] ${
+                      active ? "bg-bg/20 text-bg" : "bg-surface-2 text-subtle"
+                    }`}
+                  >
+                    {counts[c.key]}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
         </div>
       </Reveal>
 
@@ -115,15 +143,14 @@ export function Projects({ onOpen }: { onOpen: (slug: string) => void }) {
 
 function ProjectCard({ project, onOpen }: { project: Project; onOpen: (slug: string) => void }) {
   const { t, l } = useLanguage();
-  const shownTech = project.tech.slice(0, 4);
-  const hiddenTech = project.tech.length - shownTech.length;
 
   return (
-    <article className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-card transition-all duration-300 hover:-translate-y-1.5 hover:border-line-strong hover:shadow-[0_24px_48px_-24px_var(--glow)]">
+    <article className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-card transition-all duration-300 hover:-translate-y-1.5 hover:border-line-strong hover:shadow-[0_24px_48px_-24px_var(--glow)] has-[:focus-visible]:-translate-y-1.5 has-[:focus-visible]:border-line-strong">
       <ProjectCover project={project} />
 
       <div className="flex flex-1 flex-col p-6">
-        <div className="mb-3 flex flex-wrap items-center gap-2">
+        {/* Same height with or without badges, so titles line up across a row. */}
+        <div className="mb-3 flex min-h-[22px] flex-wrap items-center gap-2">
           {project.featured && (
             <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/10 px-2.5 py-0.5 text-[11px] font-semibold text-amber-600 dark:text-amber-400">
               <Star className="size-3 fill-current" aria-hidden />
@@ -150,16 +177,7 @@ function ProjectCard({ project, onOpen }: { project: Project; onOpen: (slug: str
         </h3>
         <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-muted">{l(project.summary)}</p>
 
-        <ul className="mt-5 flex flex-wrap gap-1.5" aria-label={t.projects.techUsed}>
-          {shownTech.map((tech) => (
-            <li key={tech} className="rounded-md bg-surface-2 px-2 py-1 font-mono text-[11px] text-muted">
-              {tech}
-            </li>
-          ))}
-          {hiddenTech > 0 && (
-            <li className="rounded-md bg-surface-2 px-2 py-1 font-mono text-[11px] text-subtle">+{hiddenTech}</li>
-          )}
-        </ul>
+        <TagList tags={project.tech} max={4} label={t.projects.techUsed} className="mt-5" />
 
         <div className="mt-auto flex items-center justify-between gap-3 pt-6">
           <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent" aria-hidden>

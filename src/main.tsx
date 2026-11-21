@@ -2,6 +2,7 @@ import "@fontsource-variable/plus-jakarta-sans";
 import "@fontsource-variable/jetbrains-mono";
 import "./index.css";
 
+import { MotionConfig } from "motion/react";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App";
@@ -11,12 +12,15 @@ import { LanguageProvider } from "./i18n/LanguageProvider";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <ThemeProvider>
-      <LanguageProvider>
-        <ToastProvider>
-          <App />
-        </ToastProvider>
-      </LanguageProvider>
-    </ThemeProvider>
+    {/* Visitors who ask their OS for less motion get fades instead of movement. */}
+    <MotionConfig reducedMotion="user">
+      <ThemeProvider>
+        <LanguageProvider>
+          <ToastProvider>
+            <App />
+          </ToastProvider>
+        </LanguageProvider>
+      </ThemeProvider>
+    </MotionConfig>
   </StrictMode>,
 );

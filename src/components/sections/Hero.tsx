@@ -34,7 +34,7 @@ export function Hero() {
   const nameLines = [`${first} ${rest[0]}`, rest.slice(1).join(" ")];
 
   const heroStats = [
-    { value: stats.publicRepos, suffix: "+", label: t.hero.stats.repos },
+    { value: stats.publicRepos, suffix: "", label: t.hero.stats.repos },
     { value: projects.length, suffix: "", label: t.hero.stats.projects },
     { value: programmingLanguageCount, suffix: "", label: t.hero.stats.languages },
     { value: stats.totalStars, suffix: "★", label: t.hero.stats.stars },
@@ -75,8 +75,8 @@ export function Hero() {
               <span className="relative inline-flex size-2.5 rounded-full bg-emerald-500" />
             </span>
             {t.hero.badge}
-            <span className="text-subtle">·</span>
-            <span className="text-subtle">{l(profile.location)}</span>
+            <span className="hidden text-subtle sm:inline">·</span>
+            <span className="hidden text-subtle sm:inline">{l(profile.location)}</span>
           </motion.div>
 
           <motion.p
@@ -205,7 +205,7 @@ export function Hero() {
             <div key={s.label} className="flex flex-col-reverse gap-1 bg-bg/80 px-5 py-5 backdrop-blur sm:px-6">
               <dt className="text-xs text-muted sm:text-sm">{s.label}</dt>
               <dd className="text-3xl font-bold tracking-tight sm:text-4xl">
-                <CountUp value={s.value} suffix={s.suffix} />
+                <CountUp value={s.value} suffix={s.suffix} delay={0.85} />
               </dd>
             </div>
           ))}
@@ -217,7 +217,7 @@ export function Hero() {
 
 /** Avatar with a 3D tilt on hover and floating highlight chips. */
 function Portrait({ reduce }: { reduce: boolean }) {
-  const { lang } = useLanguage();
+  const { t } = useLanguage();
   const [imgFailed, setImgFailed] = useState(false);
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
@@ -239,7 +239,7 @@ function Portrait({ reduce }: { reduce: boolean }) {
     {
       icon: Rocket,
       title: "TGO",
-      sub: lang === "id" ? "Optimizer Windows" : "Windows optimizer",
+      sub: t.hero.chips.tgo,
       className: "-left-4 top-[8%] sm:-left-10",
       delay: "0s",
     },
@@ -252,8 +252,8 @@ function Portrait({ reduce }: { reduce: boolean }) {
     },
     {
       icon: BrainCircuit,
-      title: lang === "id" ? "6 Algoritma" : "6 Algorithms",
-      sub: lang === "id" ? "ZZZ Predictor · Data Mining" : "ZZZ Predictor · Data Mining",
+      title: t.hero.chips.algorithms,
+      sub: "ZZZ Predictor · Data Mining",
       className: "-left-2 bottom-[10%] sm:-left-8",
       delay: "-4s",
     },

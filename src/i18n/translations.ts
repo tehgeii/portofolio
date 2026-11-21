@@ -18,6 +18,8 @@ const id = {
     backToTop: "Kembali ke atas",
     close: "Tutup",
     opensNewTab: "(membuka tab baru)",
+    mainNav: "Navigasi utama",
+    footerNav: "Navigasi footer",
   },
   nav: {
     home: "Beranda",
@@ -41,6 +43,7 @@ const id = {
       languages: "Bahasa pemrograman",
       stars: "Bintang di GitHub",
     },
+    chips: { tgo: "Optimizer Windows", algorithms: "6 Algoritma" },
   },
   about: {
     eyebrow: "Tentang Saya",
@@ -67,7 +70,7 @@ const id = {
   projects: {
     eyebrow: "Portofolio",
     title: "Project pilihan",
-    subtitle: "Beberapa hal yang sudah saya bangun, dari tool open-source sampai project kuliah.",
+    subtitle: "Beberapa hal yang sudah saya bangun, dari aplikasi desktop dan Android sampai project kuliah.",
     featured: "Unggulan",
     details: "Lihat detail",
     empty: "Belum ada project di kategori ini.",
@@ -108,7 +111,8 @@ const id = {
   github: {
     eyebrow: "Aktivitas",
     title: "Langsung dari GitHub",
-    subtitle: "Data diambil secara real-time dari GitHub API setiap kali halaman dibuka.",
+    subtitle:
+      "Statistik diperbarui otomatis setiap deploy, lalu diambil ulang dari GitHub API saat halaman dibuka (disimpan 30 menit).",
     repos: "Repositori",
     stars: "Total bintang",
     followers: "Followers",
@@ -121,6 +125,8 @@ const id = {
     viewProfile: "Kunjungi profil GitHub",
     noDescription: "Tanpa deskripsi",
     other: "Lainnya",
+    live: "Live",
+    snapshot: "Data per",
   },
   contact: {
     eyebrow: "Kontak",
@@ -132,6 +138,7 @@ const id = {
     copied: "Email disalin ke clipboard!",
     copyFailed: "Gagal menyalin. Silakan salin manual.",
     findMe: "Temukan saya di",
+    emailLabel: "Email",
     form: {
       title: "Kirim pesan",
       name: "Nama",
@@ -169,6 +176,7 @@ const id = {
       sendEmail: "Kirim email",
     },
     hint: { navigate: "navigasi", select: "pilih", close: "tutup" },
+    tgoWebsite: "Website TGO",
   },
 };
 
@@ -189,6 +197,8 @@ const en: Translation = {
     backToTop: "Back to top",
     close: "Close",
     opensNewTab: "(opens in a new tab)",
+    mainNav: "Main",
+    footerNav: "Footer",
   },
   nav: {
     home: "Home",
@@ -196,7 +206,7 @@ const en: Translation = {
     skills: "Skills",
     projects: "Projects",
     journey: "Journey",
-    certificates: "Awards",
+    certificates: "Achievements",
     github: "GitHub",
     contact: "Contact",
     search: "Search…",
@@ -212,6 +222,7 @@ const en: Translation = {
       languages: "Programming languages",
       stars: "GitHub stars",
     },
+    chips: { tgo: "Windows optimizer", algorithms: "6 Algorithms" },
   },
   about: {
     eyebrow: "About Me",
@@ -238,7 +249,7 @@ const en: Translation = {
   projects: {
     eyebrow: "Portfolio",
     title: "Selected projects",
-    subtitle: "A few things I've built, from open-source tools to university projects.",
+    subtitle: "A few things I've built, from desktop and Android apps to university projects.",
     featured: "Featured",
     details: "View details",
     empty: "No projects in this category yet.",
@@ -279,7 +290,8 @@ const en: Translation = {
   github: {
     eyebrow: "Activity",
     title: "Live from GitHub",
-    subtitle: "Pulled in real time from the GitHub API every time this page loads.",
+    subtitle:
+      "Baked in at every deploy, then refreshed from the GitHub API when the page opens (cached for 30 minutes).",
     repos: "Repositories",
     stars: "Total stars",
     followers: "Followers",
@@ -292,6 +304,8 @@ const en: Translation = {
     viewProfile: "Visit GitHub profile",
     noDescription: "No description",
     other: "Other",
+    live: "Live",
+    snapshot: "Snapshot",
   },
   contact: {
     eyebrow: "Contact",
@@ -302,6 +316,7 @@ const en: Translation = {
     copied: "Email copied to clipboard!",
     copyFailed: "Couldn't copy. Please copy it manually.",
     findMe: "Find me on",
+    emailLabel: "Email",
     form: {
       title: "Send a message",
       name: "Name",
@@ -339,6 +354,7 @@ const en: Translation = {
       sendEmail: "Send an email",
     },
     hint: { navigate: "navigate", select: "select", close: "close" },
+    tgoWebsite: "TGO Website",
   },
 };
 

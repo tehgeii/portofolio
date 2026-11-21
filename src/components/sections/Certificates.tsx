@@ -8,7 +8,9 @@ import type { Lang } from "../../types";
 import { Reveal } from "../ui/Reveal";
 import { Section } from "../ui/Section";
 import { SpotlightCard } from "../ui/SpotlightCard";
-import { button } from "../ui/styles";
+import { button, textLink } from "../ui/styles";
+import { Subheading } from "../ui/Subheading";
+import { TagList } from "../ui/TagList";
 import { CertificatePreview } from "./CertificatePreview";
 
 /** "2026-10" → "Oktober 2026" / "October 2026". */
@@ -47,7 +49,7 @@ export function Certificates() {
       {awards.length > 0 && (
         <>
           <Reveal>
-            <h3 className="mb-5 font-mono text-sm text-subtle">// {t.certificates.awards}</h3>
+            <Subheading>{t.certificates.awards}</Subheading>
           </Reveal>
           <ul className="grid gap-5 md:grid-cols-2">
             {awards.map((cert, i) => {
@@ -71,11 +73,7 @@ export function Certificates() {
                       {(cert.preview || cert.relatedUrl) && (
                         <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2">
                           {cert.preview && (
-                            <button
-                              type="button"
-                              onClick={() => setPreviewId(cert.id)}
-                              className="group inline-flex items-center gap-1.5 text-sm font-semibold text-accent"
-                            >
+                            <button type="button" onClick={() => setPreviewId(cert.id)} className={`group ${textLink}`}>
                               <FileImage className="size-4" aria-hidden />
                               {t.certificates.viewCertificate}
                             </button>
@@ -109,7 +107,7 @@ export function Certificates() {
       {certifications.length > 0 && (
         <>
           <Reveal className={awards.length > 0 ? "mt-14" : ""}>
-            <h3 className="mb-5 font-mono text-sm text-subtle">// {t.certificates.certifications}</h3>
+            <Subheading>{t.certificates.certifications}</Subheading>
           </Reveal>
           <ul id="certifications-list" className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {visible.map((cert, i) => (
@@ -128,21 +126,13 @@ export function Certificates() {
                       <span className="whitespace-nowrap text-subtle"> · {t.certificates.courses(cert.courses)}</span>
                     ) : null}
                   </p>
-                  {cert.skills && (
-                    <ul className="mt-4 flex flex-wrap gap-1.5">
-                      {cert.skills.map((skill) => (
-                        <li key={skill} className="rounded-md bg-surface-2 px-2 py-1 font-mono text-[11px] text-muted">
-                          {skill}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
+                  {cert.skills && <TagList tags={cert.skills} className="mt-4" />}
                   {cert.credentialUrl && (
                     <a
                       href={cert.credentialUrl}
                       target="_blank"
                       rel="noreferrer noopener"
-                      className="group mt-auto inline-flex items-center gap-1.5 self-start pt-5 text-sm font-semibold text-accent"
+                      className={`group mt-auto self-start pt-5 ${textLink}`}
                     >
                       {t.certificates.verify}
                       <ArrowUpRight

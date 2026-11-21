@@ -72,7 +72,10 @@ export function Navbar({ active, onOpenPalette }: NavbarProps) {
         scrolled || open ? "border-b border-line glass" : "border-b border-transparent"
       }`}
     >
-      <nav aria-label="Main" className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-5 sm:px-8">
+      <nav
+        aria-label={t.a11y.mainNav}
+        className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-5 sm:px-8"
+      >
         <a href="#home" onClick={go("home")} aria-label={`${profile.shortName}, ${t.nav.home}`} className="rounded-xl">
           <Logo />
         </a>
