@@ -11,6 +11,7 @@ interface TagListProps {
 
 /** A wrapping row of technology / skill tags, styled the same everywhere. */
 export function TagList({ tags, size = "sm", max, label, className = "" }: TagListProps) {
+  if (tags.length === 0) return null;
   const shown = max ? tags.slice(0, max) : tags;
   const hidden = tags.length - shown.length;
   return (

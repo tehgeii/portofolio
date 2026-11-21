@@ -70,7 +70,7 @@ const id = {
   projects: {
     eyebrow: "Portofolio",
     title: "Project pilihan",
-    subtitle: "Beberapa hal yang sudah saya bangun, dari aplikasi desktop dan Android sampai project kuliah.",
+    subtitle: "Beberapa hal yang sudah saya bangun, dari web, aplikasi desktop, dan Android sampai project kuliah.",
     featured: "Unggulan",
     details: "Lihat detail",
     empty: "Belum ada project di kategori ini.",
@@ -78,6 +78,7 @@ const id = {
     team: "Project tim",
     myRole: "Peran saya",
     highlights: "Fitur utama",
+    story: { title: "Cerita project", problem: "Masalah", approach: "Pendekatan", result: "Hasil" },
     screenshots: "Tangkapan layar",
     openFull: "(perbesar)",
     techUsed: "Teknologi",
@@ -255,7 +256,7 @@ const en: Translation = {
   projects: {
     eyebrow: "Portfolio",
     title: "Selected projects",
-    subtitle: "A few things I've built, from desktop and Android apps to university projects.",
+    subtitle: "A few things I've built, from web, desktop, and Android apps to university projects.",
     featured: "Featured",
     details: "View details",
     empty: "No projects in this category yet.",
@@ -263,6 +264,7 @@ const en: Translation = {
     team: "Team project",
     myRole: "My role",
     highlights: "Key features",
+    story: { title: "The story", problem: "Problem", approach: "Approach", result: "Result" },
     screenshots: "Screenshots",
     openFull: "(enlarge)",
     techUsed: "Tech stack",

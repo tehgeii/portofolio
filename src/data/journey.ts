@@ -1,9 +1,12 @@
 import type { LucideIcon } from "lucide-react";
 import { BookOpen, Code2, GraduationCap, Rocket, Sparkles } from "lucide-react";
+import { semesterAt, semesterPeriod } from "../lib/semester";
 import type { Localized } from "../types";
 
 export interface JourneyItem {
   period: Localized;
+  /** Semester entries get their dates and "now" badge from the calendar. */
+  semester?: number;
   title: Localized;
   place?: string;
   description: Localized;
@@ -13,9 +16,10 @@ export interface JourneyItem {
 }
 
 /** Newest first. */
-export const journey: JourneyItem[] = [
+const entries: JourneyItem[] = [
   {
-    period: { id: "Sep 2026 – Sekarang", en: "Sep 2026 – Present" },
+    period: { id: "", en: "" },
+    semester: 5,
     title: { id: "Semester 5 · Data Mining & Android", en: "Semester 5 · Data Mining & Android" },
     place: "UDINUS",
     description: {
@@ -24,10 +28,10 @@ export const journey: JourneyItem[] = [
     },
     tags: ["Python", "Kotlin", "Go", "Machine Learning"],
     icon: Sparkles,
-    current: true,
   },
   {
-    period: { id: "Feb – Jul 2026", en: "Feb – Jul 2026" },
+    period: { id: "", en: "" },
+    semester: 4,
     title: { id: "Semester 4 · Pemrograman Web Lanjut", en: "Semester 4 · Advanced Web Programming" },
     place: "UDINUS",
     description: {
@@ -71,3 +75,36 @@ export const journey: JourneyItem[] = [
     icon: GraduationCap,
   },
 ];
+
+/**
+ * The timeline with semester dates filled in and the running semester marked
+ * "now". If a new semester has started before it has its own entry, a short
+ * placeholder keeps the timeline honest until the entry is written.
+ */
+export function journeyAt(date: Date): JourneyItem[] {
+  const now = semesterAt(date);
+  const items = entries.map((item) =>
+    item.semester
+      ? { ...item, period: semesterPeriod(item.semester, item.semester === now), current: item.semester === now }
+      : item,
+  );
+  const newest = Math.max(...entries.map((e) => e.semester ?? 0));
+  if (now && now > newest) {
+    items.unshift({
+      semester: now,
+      period: semesterPeriod(now, true),
+      title: { id: `Semester ${now}`, en: `Semester ${now}` },
+      place: "UDINUS",
+      description: {
+        id: `Sedang menjalani semester ${now} Teknik Informatika di UDINUS.`,
+        en: `Currently in semester ${now} of Informatics Engineering at UDINUS.`,
+      },
+      tags: [],
+      icon: GraduationCap,
+      current: true,
+    });
+  }
+  return items;
+}
+
+export const journey = journeyAt(new Date());

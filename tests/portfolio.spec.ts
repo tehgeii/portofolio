@@ -252,7 +252,9 @@ test("privacy: no CV details on the site and no third-party requests", async ({ 
 test("project grid: only TGO is featured and no empty category is offered", async ({ page }) => {
   await page.goto("./#projects");
   const cards = page.locator("#projects article");
-  await expect(cards).toHaveCount(4);
+  await expect(cards).toHaveCount(5);
+  // This website itself is the web project, so the Web filter is offered.
+  await expect(page.getByRole("button", { name: /^Web/ })).toBeVisible();
 
   const featured = page.locator("#projects article", { hasText: /Unggulan|Featured/ });
   await expect(featured).toHaveCount(1);
@@ -352,4 +354,16 @@ test("mobile menu keeps keyboard focus inside while open", async ({ page, isMobi
   await expect(page.locator("#mobile-menu")).toBeVisible();
   for (let i = 0; i < 20; i++) await page.keyboard.press("Tab");
   expect(await page.evaluate(() => !!document.activeElement?.closest("header"))).toBe(true);
+});
+
+test("project details tell the story and label the old TGO repository", async ({ page }) => {
+  await page.goto("./#project/tgo");
+  const details = page.getByRole("dialog");
+  await expect(details.locator("ol > li")).toHaveCount(3);
+  await expect(details.locator("ol > li").first()).toContainText(/Masalah|Problem/);
+  await expect(details.getByRole("link", { name: /Versi lama|Legacy version/ })).toHaveAttribute(
+    "href",
+    "https://github.com/tehgeii/TGO",
+  );
+  await expect(details).not.toContainText(/open-source tool|tool open-source/i);
 });

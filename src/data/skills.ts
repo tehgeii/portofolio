@@ -39,11 +39,11 @@ export const skillCategories: SkillCategory[] = [
       { name: "Go", color: "#00ADD8", note: { id: "WiFi Speed Tester", en: "WiFi Speed Tester" } },
       { name: "PHP", color: "#4F5D95", note: { id: "Backend web & CodeIgniter", en: "Web backend & CodeIgniter" } },
       { name: "C++", color: "#f34b7d", note: { id: "Algoritma & struktur data", en: "Algorithms & data structures" } },
-      { name: "C#", color: "#178600", note: { id: "Aplikasi desktop Windows", en: "Windows desktop apps" } },
+      { name: "C#", color: "#178600", note: { id: "Aplikasi desktop TGO (.NET)", en: "The TGO desktop app (.NET)" } },
       {
         name: "Batch & PowerShell",
         color: "#C1F12E",
-        note: { id: "Otomasi & tweak Windows (TGO)", en: "Windows automation & tweaks (TGO)" },
+        note: { id: "Otomasi & tweak Windows (TGO versi awal)", en: "Windows automation & tweaks (early TGO)" },
       },
       {
         name: "HTML & CSS",
@@ -67,7 +67,7 @@ export const skillCategories: SkillCategory[] = [
       en: "Tools that help me ship products faster.",
     },
     skills: [
-      { name: "React", color: "#61dafb", note: { id: "UI berbasis komponen", en: "Component-based UI" } },
+      { name: "React", color: "#61dafb", note: { id: "UI website portofolio ini", en: "This portfolio's UI" } },
       {
         name: "Tailwind CSS",
         color: "#38bdf8",

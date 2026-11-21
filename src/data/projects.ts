@@ -1,5 +1,5 @@
 import type { LucideIcon } from "lucide-react";
-import { BrainCircuit, Rocket, Smartphone, Sparkles, Wifi } from "lucide-react";
+import { BrainCircuit, LayoutTemplate, Rocket, Smartphone, Sparkles, Wifi } from "lucide-react";
 import ngibsenJadwalThumb from "../assets/projects/ngibsen-jadwal-thumb.webp";
 import ngibsenJadwal from "../assets/projects/ngibsen-jadwal.webp";
 import ngibsenRiwayatThumb from "../assets/projects/ngibsen-riwayat-thumb.webp";
@@ -14,6 +14,9 @@ import zzzKalkulator from "../assets/projects/zzz-predictor-kalkulator.webp";
 import wifiHistory from "../assets/projects/wifi-tester-history.webp";
 import wifiMainCover from "../assets/projects/wifi-tester-main-cover.webp";
 import wifiMain from "../assets/projects/wifi-tester-main.webp";
+import portfolioDarkCover from "../assets/projects/portfolio-dark-cover.webp";
+import portfolioDark from "../assets/projects/portfolio-dark.webp";
+import portfolioLight from "../assets/projects/portfolio-light.webp";
 import type { Localized, LocalizedList } from "../types";
 
 export type ProjectCategory = "web" | "mobile" | "desktop" | "data";
@@ -23,6 +26,8 @@ export interface ProjectLink {
   url: string;
   /** Optional custom label, e.g. when a project has two repositories. */
   label?: Localized;
+  /** An older version kept for reference; its repo summary isn't the project's. */
+  legacy?: boolean;
 }
 
 export interface ProjectStat {
@@ -45,6 +50,13 @@ export interface ProjectScreenshot {
   device: "phone" | "desktop";
 }
 
+/** Problem → approach → result, shown in the project details. */
+export interface ProjectStory {
+  problem: Localized;
+  approach: Localized;
+  result: Localized;
+}
+
 export interface Project {
   slug: string;
   title: string;
@@ -57,6 +69,7 @@ export interface Project {
   role?: Localized;
   summary: Localized;
   description: Localized;
+  story?: ProjectStory;
   highlights: LocalizedList;
   tech: string[];
   stats?: ProjectStat[];
@@ -87,38 +100,57 @@ export const allProjects: Project[] = [
     category: "desktop",
     featured: true,
     summary: {
-      id: "Tool open-source untuk membersihkan dan men-tweak Windows agar lebih responsif dan input lag lebih rendah saat gaming.",
-      en: "An open-source tool that cleans and tweaks Windows for a snappier system and lower input latency while gaming.",
+      id: "Aplikasi desktop Windows untuk memantau dan mengoptimalkan PC agar lebih responsif dan input lag lebih rendah saat gaming.",
+      en: "A Windows desktop app that monitors and tunes your PC for a snappier system and lower input latency while gaming.",
     },
     description: {
-      id: "TGO lahir dari keresahan saya sebagai gamer: PC terasa berat padahal spesifikasinya cukup. TGO merangkum puluhan tweak Windows (registry, services, power plan, disk, hingga input device) ke dalam satu menu interaktif yang mudah dipakai, lengkap dengan opsi revert untuk keamanan. Versi terbarunya kini didistribusikan lewat website resmi tgopremium.my.id.",
-      en: "TGO was born from my frustration as a gamer: PCs felt sluggish even with decent specs. It bundles dozens of Windows tweaks (registry, services, power plans, disk, and input devices) into one easy interactive menu, with revert options for safety. The latest version is now distributed through the official website, tgopremium.my.id.",
+      id: "TGO lahir dari keresahan saya sebagai gamer: PC terasa berat padahal spesifikasinya cukup. Berawal dari script batch open-source, TGO kini menjadi aplikasi desktop C#/.NET dengan dashboard yang menampilkan kondisi perangkat secara real-time dan modul optimasi untuk tiap komponen. TGO bisa dipakai gratis, dengan fitur tambahan lewat lisensi Premium, dan didistribusikan melalui tgopremium.my.id.",
+      en: "TGO was born from my frustration as a gamer: PCs felt sluggish even with decent specs. It started as an open-source batch script and is now a C#/.NET desktop app with a real-time dashboard of the device and optimization modules for each component. TGO is free to use, with extra features through a Premium license, and is distributed through tgopremium.my.id.",
+    },
+    story: {
+      problem: {
+        id: "PC gaming sering terasa berat dan input lag-nya tinggi padahal spesifikasinya cukup, sementara tweak Windows tersebar di banyak forum dan berisiko kalau diterapkan sembarangan.",
+        en: "Gaming PCs often feel sluggish with high input lag despite decent specs, while Windows tweaks are scattered across forums and risky to apply by hand.",
+      },
+      approach: {
+        id: "Mengumpulkan tweak yang teruji ke dalam satu aplikasi. Awalnya berupa script batch open-source, lalu saya bangun ulang dengan C#/.NET menjadi aplikasi desktop dengan dashboard real-time, modul per komponen, dan restore point sebelum mengubah sistem.",
+        en: "Bring proven tweaks together in one app. It began as an open-source batch script, which I rebuilt in C#/.NET as a desktop app with a real-time dashboard, per-component modules, and a restore point before changing anything.",
+      },
+      result: {
+        id: "TGO tersedia untuk Windows 10 & 11 dalam versi Free dan Premium di tgopremium.my.id, sementara versi script lamanya tetap terbuka di GitHub.",
+        en: "TGO is available for Windows 10 & 11 in Free and Premium editions at tgopremium.my.id, while the original script version stays open on GitHub.",
+      },
     },
     highlights: {
       id: [
-        "Preset Mouse & Keyboard (Low / Medium / High) untuk menurunkan input latency, lengkap dengan revert",
-        "Optimasi berbeda untuk HDD dan SSD, pembersihan temp, cache update, dan TRIM",
-        "Pengaturan RAM, power saving, dan startup (via Sysinternals Autoruns)",
-        "Membuat System Restore point langsung dari menu sebelum mengubah sistem",
-        "Otomatis meminta hak Administrator, mendukung Windows 10 & 11",
+        "Dashboard real-time: spesifikasi CPU, GPU, RAM, dan storage, plus pemantauan CPU, RAM, disk, GPU, jaringan, dan uptime",
+        "Modul optimasi per komponen: CPU & Power, GPU, RAM & Disk, Network, Mouse & Keyboard, dan Boot",
+        "Gaming Mode, Memory Optimizer, Deep Cleaner, pengatur Startup, dan App Manager untuk memasang atau menghapus aplikasi beserta sisa filenya",
+        "Pengaturan lanjutan untuk Services, Windows Update, Windows Security, dan Device Manager, dengan Restore & Backup serta Activity Log",
+        "Tampilan dua bahasa (EN/ID) untuk Windows 10 & 11, tersedia versi Free dan Premium",
       ],
       en: [
-        "Mouse & Keyboard presets (Low / Medium / High) to reduce input latency, with revert",
-        "Separate HDD and SSD optimizations, temp & update-cache cleanup, and TRIM",
-        "RAM, power-saving, and startup tuning (via Sysinternals Autoruns)",
-        "Creates a System Restore point right from the menu before changing anything",
-        "Auto-elevates to Administrator, supports Windows 10 & 11",
+        "Real-time dashboard: CPU, GPU, RAM and storage specs, plus live CPU, RAM, disk, GPU, network and uptime monitoring",
+        "Optimization modules per component: CPU & Power, GPU, RAM & Disk, Network, Mouse & Keyboard, and Boot",
+        "Gaming Mode, Memory Optimizer, Deep Cleaner, a Startup manager, and an App Manager that installs or removes apps and their leftovers",
+        "Advanced settings for Services, Windows Update, Windows Security and Device Manager, with Restore & Backup and an Activity Log",
+        "Bilingual interface (EN/ID) for Windows 10 & 11, in Free and Premium editions",
       ],
     },
-    tech: ["Batch", "Windows Registry", "PowerShell", "fsutil"],
+    tech: ["C#", ".NET", "Windows"],
     stats: [
-      { value: "v3.1", label: { id: "Versi rilis", en: "Release" } },
-      { value: "6★", label: { id: "Bintang GitHub", en: "GitHub stars" } },
-      { value: "10/11", label: { id: "Windows", en: "Windows" } },
+      { value: "Free", label: { id: "+ versi Premium", en: "+ Premium edition" } },
+      { value: "10 · 11", label: { id: "Windows", en: "Windows" } },
+      { value: "EN · ID", label: { id: "Bahasa aplikasi", en: "App languages" } },
     ],
     links: [
       { kind: "website", url: "https://tgopremium.my.id" },
-      { kind: "repo", url: "https://github.com/tehgeii/TGO" },
+      {
+        kind: "repo",
+        url: "https://github.com/tehgeii/TGO",
+        label: { id: "Versi lama (open-source)", en: "Legacy version (open source)" },
+        legacy: true,
+      },
     ],
     screenshots: [
       {
@@ -142,12 +174,8 @@ export const allProjects: Project[] = [
         },
       },
     ],
-    screenshotsNote: {
-      id: "Pratinjau tampilan baru TGO yang masih dalam pengembangan.",
-      en: "A preview of TGO's new interface, still in development.",
-    },
     icon: Rocket,
-    file: "TGO.bat",
+    file: "Program.cs",
     gradient: ["#7c3aed", "#ec4899"],
   },
   {
@@ -162,6 +190,20 @@ export const allProjects: Project[] = [
     description: {
       id: "NgiBsen (peNGIngat aBSEN) memastikan mahasiswa tidak lupa presensi. Saat jam absen dibuka, HP bergetar dengan nama mata kuliah; satu tap membuka halaman presensi SiAdin (dengan login otomatis) atau Dinusverse. Tombol presensi tetap ditekan sendiri oleh pemilik HP. Aplikasi hanya mengingatkan, membuka halaman, mencatat, dan mengirim bukti ke Telegram.",
       en: 'NgiBsen ("attendance reminder" in Indonesian slang) makes sure students never forget to check in. When attendance opens, the phone vibrates with the course name; one tap opens the SiAdin attendance page (with auto-login) or Dinusverse. The student always presses the attendance button themselves. The app only reminds, opens the page, logs, and sends proof to Telegram.',
+    },
+    story: {
+      problem: {
+        id: "Jam presensi online tiap mata kuliah berbeda-beda, sehingga mahasiswa mudah lupa absen tepat waktu.",
+        en: "Online attendance opens at a different time for every course, so students easily miss checking in on time.",
+      },
+      approach: {
+        id: "Aplikasi Android dengan Kotlin dan Jetpack Compose yang menjadwalkan notifikasi tepat waktu lewat AlarmManager, membuka halaman SiAdin dengan login otomatis, dan mengirim bukti ke Telegram. Tombol presensi tetap ditekan sendiri oleh mahasiswa.",
+        en: "An Android app in Kotlin and Jetpack Compose that schedules on-time notifications with AlarmManager, opens SiAdin with auto-login, and sends proof to Telegram. Students always press the attendance button themselves.",
+      },
+      result: {
+        id: "Pengingat yang tetap jalan saat Doze dan setelah HP restart, dari Android 8 sampai 16, lengkap dengan riwayat dan bukti absen yang tersimpan rapi.",
+        en: "Reminders that keep working through Doze and reboots, from Android 8 to 16, with a tidy history of attendance and proof.",
+      },
     },
     highlights: {
       id: [
@@ -271,6 +313,20 @@ export const allProjects: Project[] = [
       id: "Tanpa installer, tanpa background service: cukup ekstrak dan jalankan. Aplikasi mendeteksi jaringan aktif, menampilkan detail Wi-Fi, lalu memberi rating koneksi dengan bahasa yang mudah dipahami, termasuk mode khusus gaming yang menilai stabilitas ping.",
       en: "No installer, no background service: just extract and run. It detects the active network, shows Wi-Fi details, and rates the connection in plain language, including a gaming mode that scores ping stability.",
     },
+    story: {
+      problem: {
+        id: "Tes kecepatan biasa hanya menampilkan angka bandwidth, padahal untuk gaming yang lebih penting adalah stabilitas ping, jitter, dan packet loss.",
+        en: "Typical speed tests only show bandwidth, while for gaming the stability of ping, jitter, and packet loss matters more.",
+      },
+      approach: {
+        id: "Utility Windows portable dengan Go dan WebView2 yang menguji download/upload multi-koneksi, mengukur ping saat jaringan dibebani untuk mendeteksi bufferbloat, dan menilai koneksi dengan bahasa yang mudah dipahami.",
+        en: "A portable Windows utility in Go and WebView2 that runs multi-connection download/upload tests, samples ping under load to spot bufferbloat, and rates the connection in plain language.",
+      },
+      result: {
+        id: "Cukup ekstrak dan jalankan tanpa installer, untuk x64 dan ARM64. Hasil bisa diekspor ke TXT, JSON, CSV, atau kartu PNG dengan data sensitif disamarkan.",
+        en: "Just extract and run, no installer, on x64 and ARM64. Results export to TXT, JSON, CSV, or a PNG card with sensitive data masked.",
+      },
+    },
     highlights: {
       id: [
         "Tes download/upload multi-koneksi dengan gauge & grafik live",
@@ -337,6 +393,20 @@ export const allProjects: Project[] = [
       id: "Dikerjakan bersama 4 rekan satu kelas. Saya bertanggung jawab membangun aplikasinya serta mengumpulkan dan menguji data asli. Aplikasi bisa dibuka di HP maupun laptop dan mendukung tiga cara impor data.",
       en: "Built with four classmates. I was responsible for developing the app and for collecting and testing the real data. It runs on phones and laptops and supports three ways to import data.",
     },
+    story: {
+      problem: {
+        id: "Peluang mendapat S-Rank di sistem gacha Zenless Zone Zero (pity dan 50:50) sulit dihitung secara manual.",
+        en: "The odds of an S-Rank in Zenless Zone Zero's gacha (pity and 50:50) are hard to work out by hand.",
+      },
+      approach: {
+        id: "Kami berlima membandingkan 6 algoritma data mining dengan metrik lengkap, memakai Markov Chain sebagai acuan teori. Saya membangun aplikasinya serta mengumpulkan dan menguji data asli.",
+        en: "Five of us compared 6 data mining algorithms with full metrics, using a Markov Chain as the theoretical baseline. I built the app and collected and tested the real data.",
+      },
+      result: {
+        id: "Aplikasi Streamlit yang bisa dibuka di HP maupun laptop, dengan tiga cara impor data dan kalkulator peluang eksak.",
+        en: "A Streamlit app that works on phones and laptops, with three ways to import data and an exact odds calculator.",
+      },
+    },
     highlights: {
       id: [
         "Perbandingan Naive Bayes, KNN, Logistic Regression, Decision Tree, Random Forest, dan XGBoost",
@@ -388,6 +458,85 @@ export const allProjects: Project[] = [
       },
     ],
     gradient: ["#8b5cf6", "#06b6d4"],
+  },
+  {
+    slug: "portofolio",
+    title: "dafi. · Portfolio Website",
+    year: "2026",
+    category: "web",
+    summary: {
+      id: "Website portofolio yang sedang kamu buka: dua bahasa, mode terang/gelap, dan data GitHub yang diperbarui otomatis.",
+      en: "The portfolio you're looking at: bilingual, light and dark themes, and GitHub data that keeps itself up to date.",
+    },
+    description: {
+      id: "Saya bangun dari nol dengan React, TypeScript, dan Tailwind CSS. Semua isi diambil dari file data, jadi menambah project atau sertifikat tidak perlu menyentuh komponen. Setiap perubahan diuji otomatis, lalu di-deploy ke GitHub Pages lewat GitHub Actions.",
+      en: "Built from scratch with React, TypeScript, and Tailwind CSS. All content comes from data files, so adding a project or certificate never touches the components. Every change is tested automatically and then deployed to GitHub Pages with GitHub Actions.",
+    },
+    story: {
+      problem: {
+        id: "Saya butuh satu tempat yang rapi untuk menunjukkan project, sertifikat, dan aktivitas GitHub, yang mudah diperbarui tanpa harus mengubah tampilan.",
+        en: "I needed one tidy place to show my projects, certificates, and GitHub activity that is easy to update without touching the design.",
+      },
+      approach: {
+        id: "Memisahkan data dari tampilan, menulis semua teks dalam dua bahasa, dan menyiapkan CI yang menjalankan lint, tes end-to-end, dan build di setiap perubahan.",
+        en: "Keep data separate from the UI, write every text in two languages, and set up CI that runs linting, end-to-end tests, and the build on every change.",
+      },
+      result: {
+        id: "Website cepat dan mudah diakses yang diperbarui cukup dengan mengubah file data; setiap update tayang otomatis setelah lolos tes.",
+        en: "A fast, accessible site that updates by editing data files; every change goes live automatically once the tests pass.",
+      },
+    },
+    highlights: {
+      id: [
+        "Dua bahasa (Indonesia/English) dan mode terang/gelap tanpa kedipan saat halaman dimuat",
+        "Pencarian cepat dengan Ctrl+K, plus link langsung ke setiap section dan project",
+        "Statistik GitHub yang dipanggang saat deploy dan diperbarui langsung di browser",
+        "Ramah aksesibilitas: navigasi keyboard, focus trap, dan mengikuti pengaturan kurangi gerakan",
+        "Tes end-to-end Playwright (desktop & mobile) di setiap push sebelum deploy otomatis",
+      ],
+      en: [
+        "Bilingual (Indonesian/English) with light and dark themes that never flash on load",
+        "Ctrl+K quick search, plus direct links to every section and project",
+        "GitHub stats baked in at deploy time and refreshed live in the browser",
+        "Accessible: keyboard navigation, focus traps, and respect for reduced-motion settings",
+        "Playwright end-to-end tests (desktop & mobile) on every push before automatic deploys",
+      ],
+    },
+    tech: ["React", "TypeScript", "Tailwind CSS", "Vite", "Motion", "Playwright", "GitHub Actions"],
+    stats: [
+      { value: "ID · EN", label: { id: "Bahasa", en: "Languages" } },
+      { value: "2", label: { id: "Tema", en: "Themes" } },
+      { value: "CI/CD", label: { id: "Deploy otomatis", en: "Automatic deploys" } },
+    ],
+    links: [
+      { kind: "live", url: "https://tehgeii.github.io/portofolio/" },
+      { kind: "repo", url: "https://github.com/tehgeii/portofolio" },
+    ],
+    icon: LayoutTemplate,
+    file: "App.tsx",
+    screenshots: [
+      {
+        src: portfolioDark,
+        size: [1280, 800],
+        thumb: portfolioDarkCover,
+        thumbSize: [720, 483],
+        device: "desktop",
+        alt: {
+          id: "Halaman utama portofolio dalam mode gelap",
+          en: "The portfolio's home page in dark mode",
+        },
+      },
+      {
+        src: portfolioLight,
+        size: [1280, 800],
+        device: "desktop",
+        alt: {
+          id: "Bagian project dalam mode terang, dengan filter kategori",
+          en: "The projects section in light mode, with category filters",
+        },
+      },
+    ],
+    gradient: ["#6366f1", "#14b8a6"],
   },
 ];
 

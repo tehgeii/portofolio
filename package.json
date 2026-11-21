@@ -19,7 +19,8 @@
     "stats": "node scripts/fetch-github-stats.ts",
     "test:e2e": "playwright test",
     "cv": "vite --open /cv.html",
-    "cv:pdf": "node scripts/export-cv.ts"
+    "cv:pdf": "node scripts/export-cv.ts",
+    "screenshots": "node scripts/capture-screenshots.ts"
   },
   "dependencies": {
     "@fontsource-variable/jetbrains-mono": "^5.3.0",

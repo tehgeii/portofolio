@@ -21,7 +21,9 @@ const normalize = (url: string) => url.replace(/\/$/, "").toLowerCase();
 function useRepoDescription() {
   const { t, l } = useLanguage();
   return (repo: RepoSummary) => {
-    const project = allProjects.find((p) => p.links.some((link) => normalize(link.url) === normalize(repo.url)));
+    const project = allProjects.find((p) =>
+      p.links.some((link) => !link.legacy && normalize(link.url) === normalize(repo.url)),
+    );
     const raw = repo.description?.trim();
     if (raw && !/^https?:\/\//.test(raw)) return raw;
     if (project) return l(project.summary);

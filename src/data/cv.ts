@@ -60,8 +60,8 @@ export const cv = {
   } satisfies Localized,
 
   summary: {
-    id: "Mahasiswa Teknik Informatika UDINUS yang senang membangun software yang benar-benar dipakai orang. Berpengalaman membuat tool desktop open-source (TGO), aplikasi Android dengan Kotlin & Jetpack Compose, web dengan React dan CodeIgniter, serta aplikasi data mining berbasis machine learning. Terbiasa bekerja mandiri dari ide sampai rilis, dan aktif berbagi lewat kanal YouTube Tech Gameplay Indonesia.",
-    en: "Informatics Engineering student at UDINUS who loves building software people actually use. Experienced in shipping an open-source desktop tool (TGO), Android apps with Kotlin & Jetpack Compose, web apps with React and CodeIgniter, and machine-learning powered data mining apps. Comfortable taking work from idea to release, and actively sharing knowledge on the Tech Gameplay Indonesia YouTube channel.",
+    id: "Mahasiswa Teknik Informatika UDINUS yang senang membangun software yang benar-benar dipakai orang. Berpengalaman membuat aplikasi desktop Windows (TGO, C#/.NET), aplikasi Android dengan Kotlin & Jetpack Compose, web dengan React dan CodeIgniter, serta aplikasi data mining berbasis machine learning. Terbiasa bekerja mandiri dari ide sampai rilis, dan aktif berbagi lewat kanal YouTube Tech Gameplay Indonesia.",
+    en: "Informatics Engineering student at UDINUS who loves building software people actually use. Experienced in shipping a Windows desktop app (TGO, C#/.NET), Android apps with Kotlin & Jetpack Compose, web apps with React and CodeIgniter, and machine-learning powered data mining apps. Comfortable taking work from idea to release, and actively sharing knowledge on the Tech Gameplay Indonesia YouTube channel.",
   } satisfies Localized,
 
   education: [
@@ -87,11 +87,11 @@ export const cv = {
       period: { id: "2025 – Sekarang", en: "2025 – Present" },
       bullets: {
         id: [
-          "Membangun dan memelihara TGO (Tech Gameplay Optimizer), tool optimasi Windows open-source yang dirilis hingga v3.1 dan didistribusikan lewat tgopremium.my.id.",
+          "Membangun dan memelihara TGO (Tech Gameplay Optimizer), aplikasi optimasi Windows berbasis C#/.NET dengan versi Free dan Premium di tgopremium.my.id, yang berawal dari script batch open-source.",
           "Mengelola kanal YouTube Tech Gameplay Indonesia dan merangkum 58 part kumpulan aplikasi serta 33 part tweak Registry untuk penonton lewat GitHub Releases.",
         ],
         en: [
-          "Built and maintain TGO (Tech Gameplay Optimizer), an open-source Windows optimization tool released up to v3.1 and distributed via tgopremium.my.id.",
+          "Built and maintain TGO (Tech Gameplay Optimizer), a C#/.NET Windows optimization app with Free and Premium editions at tgopremium.my.id, which began as an open-source batch script.",
           "Run the Tech Gameplay Indonesia YouTube channel and curated 58 parts of useful apps and 33 parts of Registry tweaks for viewers via GitHub Releases.",
         ],
       },

@@ -43,12 +43,12 @@ export const profile = {
   about: {
     id: [
       "Halo! Saya Dafi, mahasiswa S1 Teknik Informatika di Universitas Dian Nuswantoro (UDINUS). Saya senang mengubah masalah sehari-hari menjadi aplikasi yang rapi, cepat, dan nyaman dipakai.",
-      "Perjalanan saya dimulai dari dunia PC & gaming. Rasa penasaran tentang cara kerja Windows melahirkan TGO (Tech Gameplay Optimizer), tool open-source untuk membuat PC lebih responsif. Dari situ saya merambah ke web, Android, sampai data mining & machine learning.",
+      "Perjalanan saya dimulai dari dunia PC & gaming. Rasa penasaran tentang cara kerja Windows melahirkan TGO (Tech Gameplay Optimizer): berawal dari script open-source, kini menjadi aplikasi desktop untuk membuat PC lebih responsif. Dari situ saya merambah ke web, Android, sampai data mining & machine learning.",
       "Saat ini saya fokus memperdalam pengembangan web modern dan aplikasi Android, sambil terus berbagi lewat kanal YouTube Tech Gameplay Indonesia.",
     ],
     en: [
       "Hi! I'm Dafi, an Informatics Engineering undergraduate at Universitas Dian Nuswantoro (UDINUS). I love turning everyday problems into apps that are clean, fast, and pleasant to use.",
-      "My journey started in the world of PCs & gaming. Curiosity about how Windows works led me to build TGO (Tech Gameplay Optimizer), an open-source tool that makes PCs feel snappier. From there I expanded into web, Android, and data mining & machine learning.",
+      "My journey started in the world of PCs & gaming. Curiosity about how Windows works led me to build TGO (Tech Gameplay Optimizer): it started as an open-source script and is now a desktop app that makes PCs feel snappier. From there I expanded into web, Android, and data mining & machine learning.",
       "Right now I'm focused on deepening my skills in modern web and Android development, while sharing what I learn on my YouTube channel, Tech Gameplay Indonesia.",
     ],
   } satisfies LocalizedList,

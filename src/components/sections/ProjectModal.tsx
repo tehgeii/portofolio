@@ -1,8 +1,10 @@
 import { AnimatePresence, motion, useIsPresent } from "motion/react";
-import { CheckCircle2, ChevronLeft, ChevronRight, Users, X } from "lucide-react";
+import { CheckCircle2, ChevronLeft, ChevronRight, Star, Users, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { profile } from "../../data/profile";
 import { projectCategories, projects, type Project } from "../../data/projects";
 import { useFocusTrap } from "../../hooks/useFocusTrap";
+import { useGitHubStats } from "../../hooks/useGitHubStats";
 import { useScrollLock } from "../../hooks/useScrollLock";
 import { useLanguage } from "../../i18n/language";
 import { ImageLightbox } from "../ui/ImageLightbox";
@@ -10,6 +12,12 @@ import { ProjectCover } from "../ui/ProjectCover";
 import { linkIcon } from "../ui/linkIcon";
 import { button } from "../ui/styles";
 import { TagList } from "../ui/TagList";
+
+/** Live star count of a github.com/<owner>/<repo> link, from the GitHub stats. */
+function repoStars(stars: Record<string, number> | undefined, url: string) {
+  const name = /github\.com\/[^/]+\/([^/?#]+)/i.exec(url)?.[1];
+  return (name && stars?.[name.toLowerCase()]) || 0;
+}
 
 interface ProjectModalProps {
   project: Project;
@@ -19,6 +27,7 @@ interface ProjectModalProps {
 
 export function ProjectModal({ project, onClose, onNavigate }: ProjectModalProps) {
   const { t, l } = useLanguage();
+  const { stats: github } = useGitHubStats(profile.username);
   const panelRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const titleId = `project-${project.slug}-title`;
@@ -119,6 +128,30 @@ export function ProjectModal({ project, onClose, onNavigate }: ProjectModalProps
             </div>
           )}
 
+          {project.story && (
+            <>
+              <h3 className="mt-8 font-mono text-xs font-semibold tracking-[0.15em] text-subtle uppercase">
+                {t.projects.story.title}
+              </h3>
+              <ol className="mt-4 grid gap-3">
+                {(["problem", "approach", "result"] as const).map((step, i) => (
+                  <li key={step} className="flex gap-4 rounded-2xl border border-line bg-surface-2/50 p-4">
+                    <span
+                      className="grid size-7 shrink-0 place-items-center rounded-full bg-gradient-accent font-mono text-xs font-bold text-white dark:text-zinc-950"
+                      aria-hidden
+                    >
+                      {i + 1}
+                    </span>
+                    <div>
+                      <p className="text-sm font-semibold">{t.projects.story[step]}</p>
+                      <p className="mt-1 text-sm leading-relaxed text-pretty text-muted">{l(project.story![step])}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </>
+          )}
+
           {project.stats && (
             <dl className="mt-6 grid grid-cols-3 gap-px overflow-hidden rounded-2xl border border-line bg-line">
               {project.stats.map((s) => (
@@ -187,6 +220,7 @@ export function ProjectModal({ project, onClose, onNavigate }: ProjectModalProps
             {project.links.map((link, i) => {
               const Icon = linkIcon(link.kind);
               const label = link.label ? l(link.label) : t.projects.links[link.kind];
+              const stars = link.kind === "repo" ? repoStars(github.repoStars, link.url) : 0;
               return (
                 <a
                   key={link.url}
@@ -197,6 +231,13 @@ export function ProjectModal({ project, onClose, onNavigate }: ProjectModalProps
                 >
                   <Icon className="size-4" aria-hidden />
                   {label}
+                  {stars > 0 && (
+                    <span className="inline-flex items-center gap-0.5 font-mono text-xs opacity-70">
+                      <Star className="size-3" aria-hidden />
+                      {stars}
+                      <span className="sr-only">{t.github.stars}</span>
+                    </span>
+                  )}
                   <span className="sr-only">{t.a11y.opensNewTab}</span>
                 </a>
               );
