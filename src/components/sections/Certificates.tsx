@@ -1,6 +1,6 @@
 import { AnimatePresence } from "motion/react";
 import { ArrowUpRight, Award, BadgeCheck, ChevronDown, FileImage, Medal, type LucideIcon } from "lucide-react";
-import { useCallback, useRef, useState } from "react";
+import { lazy, Suspense, useCallback, useRef, useState } from "react";
 import { awards, certifications, type Certificate } from "../../data/certificates";
 import { useLanguage } from "../../i18n/language";
 import { monthYear } from "../../lib/format";
@@ -11,7 +11,9 @@ import { SpotlightCard } from "../ui/SpotlightCard";
 import { button, textLink } from "../ui/styles";
 import { Subheading } from "../ui/Subheading";
 import { TagList } from "../ui/TagList";
-import { CertificatePreview } from "./CertificatePreview";
+
+const loadPreview = () => import("./CertificatePreview");
+const CertificatePreview = lazy(() => loadPreview().then((m) => ({ default: m.CertificatePreview })));
 
 /** "2026-10" → "Oktober 2026" / "October 2026". */
 function formatDate(date: string, lang: Lang) {
@@ -73,7 +75,13 @@ export function Certificates() {
                       {(cert.preview || cert.relatedUrl) && (
                         <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2">
                           {cert.preview && (
-                            <button type="button" onClick={() => setPreviewId(cert.id)} className={`group ${textLink}`}>
+                            <button
+                              type="button"
+                              onClick={() => setPreviewId(cert.id)}
+                              onPointerEnter={() => void loadPreview()}
+                              onFocus={() => void loadPreview()}
+                              className={`group ${textLink}`}
+                            >
                               <FileImage className="size-4" aria-hidden />
                               {t.certificates.viewCertificate}
                             </button>
@@ -174,7 +182,11 @@ export function Certificates() {
       )}
 
       <AnimatePresence>
-        {previewCert && <CertificatePreview key={previewCert.id} cert={previewCert} onClose={closePreview} />}
+        {previewCert && (
+          <Suspense key={previewCert.id} fallback={null}>
+            <CertificatePreview cert={previewCert} onClose={closePreview} />
+          </Suspense>
+        )}
       </AnimatePresence>
     </Section>
   );

@@ -1,7 +1,6 @@
 import { AnimatePresence } from "motion/react";
-import { useCallback, useEffect, useState } from "react";
+import { lazy, Suspense, useCallback, useEffect, useState } from "react";
 import { BackToTop } from "./components/layout/BackToTop";
-import { CommandPalette } from "./components/layout/CommandPalette";
 import { Footer } from "./components/layout/Footer";
 import { Navbar } from "./components/layout/Navbar";
 import { ScrollProgress } from "./components/layout/ScrollProgress";
@@ -11,7 +10,6 @@ import { Contact } from "./components/sections/Contact";
 import { GitHubActivity } from "./components/sections/GitHubActivity";
 import { Hero } from "./components/sections/Hero";
 import { Journey } from "./components/sections/Journey";
-import { ProjectModal } from "./components/sections/ProjectModal";
 import { Projects } from "./components/sections/Projects";
 import { Skills } from "./components/sections/Skills";
 import { TechMarquee } from "./components/sections/TechMarquee";
@@ -20,6 +18,12 @@ import { SECTIONS, type SectionId } from "./data/sections";
 import { useActiveSection } from "./hooks/useActiveSection";
 import { useProjectRoute } from "./hooks/useProjectRoute";
 import { useLanguage } from "./i18n/language";
+
+// Overlays load on demand, so the first visit downloads less JavaScript.
+const loadProjectModal = () => import("./components/sections/ProjectModal");
+const loadCommandPalette = () => import("./components/layout/CommandPalette");
+const ProjectModal = lazy(() => loadProjectModal().then((m) => ({ default: m.ProjectModal })));
+const CommandPalette = lazy(() => loadCommandPalette().then((m) => ({ default: m.CommandPalette })));
 
 function isTypingTarget(target: EventTarget | null) {
   const el = target as HTMLElement | null;
@@ -34,6 +38,20 @@ export default function App() {
 
   const openProject = projects.find((p) => p.slug === projectSlug) ?? null;
   const closePalette = useCallback(() => setPaletteOpen(false), []);
+
+  // Fetch the overlays once the page is idle, so opening one feels instant.
+  useEffect(() => {
+    const prefetch = () => {
+      loadProjectModal().catch(() => {});
+      loadCommandPalette().catch(() => {});
+    };
+    if (typeof window.requestIdleCallback === "function") {
+      const id = window.requestIdleCallback(prefetch, { timeout: 4000 });
+      return () => window.cancelIdleCallback(id);
+    }
+    const id = window.setTimeout(prefetch, 2000);
+    return () => window.clearTimeout(id);
+  }, []);
 
   // Sections are rendered by JavaScript, so the browser can't jump to
   // `…/#contact` on its own when the page first loads. Do it ourselves.
@@ -91,11 +109,17 @@ export default function App() {
 
       <AnimatePresence>
         {openProject && (
-          <ProjectModal key="project-modal" project={openProject} onClose={closeProject} onNavigate={showProject} />
+          <Suspense key="project-modal" fallback={null}>
+            <ProjectModal project={openProject} onClose={closeProject} onNavigate={showProject} />
+          </Suspense>
         )}
       </AnimatePresence>
       <AnimatePresence>
-        {paletteOpen && <CommandPalette key="palette" onClose={closePalette} onOpenProject={showProject} />}
+        {paletteOpen && (
+          <Suspense key="palette" fallback={null}>
+            <CommandPalette onClose={closePalette} onOpenProject={showProject} />
+          </Suspense>
+        )}
       </AnimatePresence>
     </>
   );

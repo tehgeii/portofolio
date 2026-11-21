@@ -1,6 +1,8 @@
 import type { LucideIcon } from "lucide-react";
 import { BrainCircuit, Rocket, Smartphone, Sparkles, Wifi } from "lucide-react";
+import ngibsenJadwalThumb from "../assets/projects/ngibsen-jadwal-thumb.webp";
 import ngibsenJadwal from "../assets/projects/ngibsen-jadwal.webp";
+import ngibsenRiwayatThumb from "../assets/projects/ngibsen-riwayat-thumb.webp";
 import ngibsenRiwayat from "../assets/projects/ngibsen-riwayat.webp";
 import tgoAppManager from "../assets/projects/tgo-app-manager.webp";
 import tgoDashboardCover from "../assets/projects/tgo-dashboard-cover.webp";
@@ -34,8 +36,11 @@ export interface ProjectStat {
  */
 export interface ProjectScreenshot {
   src: string;
-  /** Tighter crop for the project card; defaults to `src`. */
+  /** Width and height of `src` in pixels, so the page doesn't jump while it loads. */
+  size: [number, number];
+  /** Smaller image or tighter crop for the project card; defaults to `src`. */
   thumb?: string;
+  thumbSize?: [number, number];
   alt: Localized;
   device: "phone" | "desktop";
 }
@@ -118,7 +123,9 @@ export const allProjects: Project[] = [
     screenshots: [
       {
         src: tgoDashboard,
+        size: [1180, 760],
         thumb: tgoDashboardCover,
+        thumbSize: [720, 483],
         device: "desktop",
         alt: {
           id: "Dashboard TGO: spesifikasi perangkat dan pemantauan CPU, RAM, disk, GPU, jaringan secara real-time",
@@ -127,6 +134,7 @@ export const allProjects: Project[] = [
       },
       {
         src: tgoAppManager,
+        size: [1180, 760],
         device: "desktop",
         alt: {
           id: "App Manager TGO: pasang aplikasi populer atau hapus aplikasi desktop & Microsoft Store beserta sisa filenya",
@@ -183,6 +191,9 @@ export const allProjects: Project[] = [
     screenshots: [
       {
         src: ngibsenJadwal,
+        size: [540, 1176],
+        thumb: ngibsenJadwalThumb,
+        thumbSize: [270, 588],
         device: "phone",
         alt: {
           id: "Halaman Jadwal NgiBsen: daftar mata kuliah per hari dan status absen hari ini",
@@ -191,6 +202,9 @@ export const allProjects: Project[] = [
       },
       {
         src: ngibsenRiwayat,
+        size: [540, 1176],
+        thumb: ngibsenRiwayatThumb,
+        thumbSize: [270, 588],
         device: "phone",
         alt: {
           id: "Halaman Riwayat NgiBsen: grafik kehadiran per minggu dan bukti absen yang terkirim",
@@ -285,7 +299,9 @@ export const allProjects: Project[] = [
     screenshots: [
       {
         src: wifiMain,
+        size: [1046, 798],
         thumb: wifiMainCover,
+        thumbSize: [720, 483],
         device: "desktop",
         alt: {
           id: "Hasil tes WiFi Speed + Ping Tester: download, upload, ping, jitter, packet loss dan rating koneksi",
@@ -294,6 +310,7 @@ export const allProjects: Project[] = [
       },
       {
         src: wifiHistory,
+        size: [1046, 813],
         device: "desktop",
         alt: {
           id: "Riwayat tes dengan grafik kecepatan & ping serta rata-rata per koneksi",
@@ -349,7 +366,9 @@ export const allProjects: Project[] = [
     screenshots: [
       {
         src: zzzBeranda,
+        size: [1440, 697],
         thumb: zzzBerandaCover,
+        thumbSize: [720, 483],
         device: "desktop",
         alt: {
           id: "Beranda ZZZ Gacha Predictor dengan menu dan aturan banner yang dipakai",
@@ -358,7 +377,9 @@ export const allProjects: Project[] = [
       },
       {
         src: zzzKalkulator,
+        size: [1440, 697],
         thumb: zzzKalkulatorCover,
+        thumbSize: [720, 483],
         device: "desktop",
         alt: {
           id: "Kalkulator peluang S-Rank berbasis Markov Chain",

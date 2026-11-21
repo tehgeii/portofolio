@@ -1,10 +1,11 @@
-import { motion, useIsPresent } from "motion/react";
+import { AnimatePresence, motion, useIsPresent } from "motion/react";
 import { CheckCircle2, ChevronLeft, ChevronRight, Users, X } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { projectCategories, projects, type Project } from "../../data/projects";
 import { useFocusTrap } from "../../hooks/useFocusTrap";
 import { useScrollLock } from "../../hooks/useScrollLock";
 import { useLanguage } from "../../i18n/language";
+import { ImageLightbox } from "../ui/ImageLightbox";
 import { ProjectCover } from "../ui/ProjectCover";
 import { linkIcon } from "../ui/linkIcon";
 import { button } from "../ui/styles";
@@ -25,6 +26,11 @@ export function ProjectModal({ project, onClose, onNavigate }: ProjectModalProps
   // False while the modal animates out; it must stop reacting to keys then,
   // or an Escape meant for a newly opened overlay would close things twice.
   const isPresent = useIsPresent();
+  // Screenshot shown full size, if any. While it is open it owns the keyboard.
+  // Tied to the project, so moving to another project closes it.
+  const [viewer, setViewer] = useState<{ slug: string; index: number } | null>(null);
+  const shot = viewer?.slug === project.slug ? viewer.index : null;
+  const setShot = (index: number | null) => setViewer(index === null ? null : { slug: project.slug, index });
 
   useScrollLock(true);
   useFocusTrap(panelRef, isPresent, closeRef);
@@ -35,7 +41,7 @@ export function ProjectModal({ project, onClose, onNavigate }: ProjectModalProps
   const category = projectCategories.find((c) => c.key === project.category);
 
   useEffect(() => {
-    if (!isPresent) return;
+    if (!isPresent || shot !== null) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
       else if (e.key === "ArrowLeft") onNavigate(prev.slug);
@@ -43,7 +49,7 @@ export function ProjectModal({ project, onClose, onNavigate }: ProjectModalProps
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [isPresent, onClose, onNavigate, prev.slug, next.slug]);
+  }, [isPresent, shot, onClose, onNavigate, prev.slug, next.slug]);
 
   // Start each project at the top when navigating between them.
   useEffect(() => {
@@ -73,17 +79,20 @@ export function ProjectModal({ project, onClose, onNavigate }: ProjectModalProps
         transition={{ type: "spring", stiffness: 380, damping: 34 }}
         className="relative max-h-[92dvh] w-full max-w-2xl overflow-y-auto overscroll-contain rounded-t-3xl border border-line-strong bg-surface shadow-2xl outline-none sm:rounded-3xl"
       >
-        <div className="group relative">
-          <ProjectCover project={project} size="lg" hideYear />
+        {/* Zero-height sticky bar: the close button stays in reach while the content scrolls. */}
+        <div className="pointer-events-none sticky top-0 z-20 flex h-0 justify-end">
           <button
             ref={closeRef}
             type="button"
             onClick={onClose}
             aria-label={t.a11y.close}
-            className="absolute top-3 right-3 grid size-10 place-items-center rounded-full bg-black/35 text-white backdrop-blur-md transition hover:bg-black/55"
+            className="pointer-events-auto mt-3 mr-3 grid size-10 place-items-center rounded-full bg-black/40 text-white backdrop-blur-md transition hover:bg-black/60"
           >
             <X className="size-5" aria-hidden />
           </button>
+        </div>
+        <div className="group relative">
+          <ProjectCover project={project} size="lg" hideYear />
         </div>
 
         <div className="p-6 sm:p-8">
@@ -130,25 +139,26 @@ export function ProjectModal({ project, onClose, onNavigate }: ProjectModalProps
               <ul
                 className={`mt-4 grid gap-3 ${project.screenshots[0].device === "phone" ? "grid-cols-2" : "grid-cols-1"}`}
               >
-                {project.screenshots.map((shot) => (
-                  <li key={shot.src}>
+                {project.screenshots.map((s, i) => (
+                  <li key={s.src}>
                     <figure>
-                      <a
-                        href={shot.src}
-                        target="_blank"
-                        rel="noreferrer noopener"
-                        className="group/shot block overflow-hidden rounded-xl border border-line bg-surface-2"
+                      <button
+                        type="button"
+                        onClick={() => setShot(i)}
+                        className="group/shot block w-full cursor-zoom-in overflow-hidden rounded-xl border border-line bg-surface-2"
                       >
                         <img
-                          src={shot.src}
-                          alt={l(shot.alt)}
+                          src={s.src}
+                          width={s.size[0]}
+                          height={s.size[1]}
+                          alt={l(s.alt)}
                           loading="lazy"
                           decoding="async"
-                          className="block w-full transition-transform duration-300 group-hover/shot:scale-[1.02]"
+                          className="block h-auto w-full transition-transform duration-300 group-hover/shot:scale-[1.02]"
                         />
                         <span className="sr-only">{t.projects.openFull}</span>
-                      </a>
-                      <figcaption className="mt-2 text-xs leading-relaxed text-muted">{l(shot.alt)}</figcaption>
+                      </button>
+                      <figcaption className="mt-2 text-xs leading-relaxed text-muted">{l(s.alt)}</figcaption>
                     </figure>
                   </li>
                 ))}
@@ -230,6 +240,25 @@ export function ProjectModal({ project, onClose, onNavigate }: ProjectModalProps
           </button>
         </nav>
       </motion.div>
+
+      <AnimatePresence>
+        {shot !== null && project.screenshots && (
+          <ImageLightbox
+            images={project.screenshots.map((s) => ({
+              src: s.src,
+              width: s.size[0],
+              height: s.size[1],
+              alt: l(s.alt),
+              caption: l(s.alt),
+            }))}
+            index={shot}
+            onIndexChange={setShot}
+            onClose={() => setShot(null)}
+            title={project.title}
+            subtitle={t.projects.screenshots}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }

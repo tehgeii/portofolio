@@ -169,6 +169,12 @@ for (const slug of ["ngibsen", "tgo"]) {
       await img.scrollIntoViewIfNeeded();
       await expect(img).toHaveAttribute("alt", /.+/);
       await expect.poll(() => img.evaluate((el: HTMLImageElement) => el.complete && el.naturalWidth > 0)).toBe(true);
+      // The declared size must match the file, or the layout jumps while it loads.
+      const [declared, natural] = await img.evaluate((el: HTMLImageElement) => [
+        `${el.getAttribute("width")}x${el.getAttribute("height")}`,
+        `${el.naturalWidth}x${el.naturalHeight}`,
+      ]);
+      expect(declared).toBe(natural);
     }
   });
 }
@@ -298,4 +304,52 @@ test("small phones (360px): nothing sticks out of the screen", async ({ browser 
   );
   expect(spilling).toEqual([]);
   await context.close();
+});
+
+test("screenshots open in an in-page viewer; Escape closes it before the project", async ({ page }) => {
+  await page.goto("./#project/tgo");
+  const project = page.getByRole("dialog", { name: /TGO/ }).first();
+  await expect(project).toBeVisible();
+
+  await project.locator("figure button").first().click();
+  const viewer = page.getByRole("dialog", { name: /TGO/ }).last();
+  await expect(viewer.locator("img")).toBeVisible();
+  await expect(page.getByRole("dialog")).toHaveCount(2);
+  await expect(viewer.getByRole("button", { name: /close|tutup/i })).toBeFocused();
+
+  // Arrow keys move between screenshots inside the viewer, not between projects.
+  await page.keyboard.press("ArrowRight");
+  await expect(viewer).toContainText("2/2");
+  await expect(page).toHaveURL(/#project\/tgo$/);
+
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("dialog")).toHaveCount(1);
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("dialog")).toHaveCount(0);
+  expect(await pageIsScrollable(page)).toBe(true);
+});
+
+test("palette lists certificates and closes with its own button", async ({ page }) => {
+  await page.goto("./");
+  await page
+    .getByRole("button", { name: /search|cari/i })
+    .first()
+    .click();
+  await palette(page).fill("nginx");
+  await expect(page.getByRole("group", { name: /sertifikat|certificates/i }).getByRole("option")).toHaveCount(1);
+
+  await dialog(page)
+    .getByRole("button", { name: /close|tutup/i })
+    .click();
+  await expect(dialog(page)).toHaveCount(0);
+  expect(await pageIsScrollable(page)).toBe(true);
+});
+
+test("mobile menu keeps keyboard focus inside while open", async ({ page, isMobile }) => {
+  test.skip(!isMobile, "Mobile-only menu.");
+  await page.goto("./");
+  await page.getByRole("button", { name: /open menu|buka menu/i }).click();
+  await expect(page.locator("#mobile-menu")).toBeVisible();
+  for (let i = 0; i < 20; i++) await page.keyboard.press("Tab");
+  expect(await page.evaluate(() => !!document.activeElement?.closest("header"))).toBe(true);
 });

@@ -4,10 +4,14 @@ import { ThemeContext, type Theme, type ThemeContextValue } from "./theme";
 
 const STORAGE_KEY = "theme";
 
+/** Browser UI colour (mobile address bar), matching --bg in index.css. */
+const THEME_COLOR: Record<Theme, string> = { dark: "#09090b", light: "#fafafa" };
+
 function applyTheme(theme: Theme) {
   const root = document.documentElement;
   root.classList.toggle("dark", theme === "dark");
   root.style.colorScheme = theme;
+  document.querySelector<HTMLMetaElement>('meta[name="theme-color"]')?.setAttribute("content", THEME_COLOR[theme]);
 }
 
 function prefersReducedMotion() {

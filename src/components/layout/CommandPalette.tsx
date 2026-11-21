@@ -1,6 +1,7 @@
 import { motion, useIsPresent } from "motion/react";
 import {
   ArrowUpRight,
+  BadgeCheck,
   Copy,
   CornerDownLeft,
   Globe,
@@ -10,10 +11,12 @@ import {
   Moon,
   Search,
   Sun,
+  X,
   type LucideIcon,
 } from "lucide-react";
 import { useEffect, useId, useMemo, useRef, useState, type ComponentType, type SVGProps } from "react";
 import { useTheme } from "../../context/theme";
+import { certifications } from "../../data/certificates";
 import { profile } from "../../data/profile";
 import { projects } from "../../data/projects";
 import { SECTIONS, scrollToSection } from "../../data/sections";
@@ -25,7 +28,7 @@ import { translations } from "../../i18n/translations";
 import { socialIcons } from "../ui/socialIcons";
 import { Kbd } from "../ui/Kbd";
 
-type Group = "navigation" | "projects" | "actions" | "links";
+type Group = "navigation" | "projects" | "certificates" | "actions" | "links";
 
 interface Command {
   id: string;
@@ -42,7 +45,7 @@ interface CommandPaletteProps {
   onOpenProject: (slug: string) => void;
 }
 
-const GROUP_ORDER: Group[] = ["navigation", "projects", "actions", "links"];
+const GROUP_ORDER: Group[] = ["navigation", "projects", "certificates", "actions", "links"];
 
 function openExternal(url: string) {
   window.open(url, "_blank", "noopener,noreferrer");
@@ -56,7 +59,7 @@ export function CommandPalette({ onClose, onOpenProject }: CommandPaletteProps) 
   const [activeIndex, setActiveIndex] = useState(0);
   const panelRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const listRef = useRef<HTMLUListElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
   const uid = useId();
 
   const isPresent = useIsPresent();
@@ -85,6 +88,18 @@ export function CommandPalette({ onClose, onOpenProject }: CommandPaletteProps) 
         keywords: `${p.tech.join(" ")} ${p.category} ${l(p.summary)}`,
         run: () => onOpenProject(p.slug),
       })),
+      // Certifications open their official verification page.
+      ...certifications
+        .filter((c) => c.credentialUrl)
+        .map((c) => ({
+          id: `cert-${c.id}`,
+          group: "certificates" as const,
+          label: l(c.name),
+          hint: c.issuer.split(" · ")[0],
+          icon: BadgeCheck,
+          keywords: `${c.issuer} ${(c.skills ?? []).join(" ")} sertifikat certificate`,
+          run: () => openExternal(c.credentialUrl!),
+        })),
       {
         id: "action-theme",
         group: "actions",
@@ -200,7 +215,7 @@ export function CommandPalette({ onClose, onOpenProject }: CommandPaletteProps) 
   const optionId = (i: number) => `${uid}-option-${i}`;
 
   return (
-    <div className="fixed inset-0 z-[80] flex items-start justify-center px-4 pt-[12vh]">
+    <div className="fixed inset-0 z-[80] flex items-start justify-center px-4 pt-[12dvh]">
       <motion.div
         aria-hidden
         className="absolute inset-0 bg-black/50 backdrop-blur-sm"
@@ -238,59 +253,81 @@ export function CommandPalette({ onClose, onOpenProject }: CommandPaletteProps) 
             autoComplete="off"
             spellCheck={false}
           />
-          <Kbd className="shrink-0">Esc</Kbd>
+          {/* "Esc" for keyboards; a plain close button on touch screens. */}
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label={t.a11y.close}
+            className="grid shrink-0 place-items-center rounded-lg text-subtle transition-colors hover:text-fg pointer-coarse:size-9"
+          >
+            <Kbd className="pointer-coarse:hidden">Esc</Kbd>
+            <X className="hidden size-5 pointer-coarse:block" aria-hidden />
+          </button>
         </div>
 
-        <ul ref={listRef} id={listboxId} role="listbox" className="max-h-[min(420px,55vh)] overflow-y-auto p-2">
-          {filtered.length === 0 && <li className="px-3 py-10 text-center text-sm text-muted">{t.palette.empty}</li>}
-          {filtered.map((command, i) => {
-            const showHeader = i === 0 || filtered[i - 1].group !== command.group;
-            const Icon = command.icon;
-            const active = i === activeIndex;
+        <div ref={listRef} id={listboxId} role="listbox" className="max-h-[min(420px,55dvh)] overflow-y-auto p-2">
+          {filtered.length === 0 && <p className="px-3 py-10 text-center text-sm text-muted">{t.palette.empty}</p>}
+          {GROUP_ORDER.map((group) => {
+            const items = filtered
+              .map((command, i) => ({ command, i }))
+              .filter(({ command }) => command.group === group);
+            if (items.length === 0) return null;
+            const headerId = `${uid}-group-${group}`;
             return (
-              <li key={command.id} role="presentation">
-                {showHeader && (
-                  <p
-                    role="presentation"
-                    className="px-3 pt-3 pb-1.5 text-[11px] font-semibold tracking-wider text-subtle uppercase"
-                  >
-                    {t.palette.groups[command.group]}
-                  </p>
-                )}
-                <div
-                  id={optionId(i)}
-                  role="option"
-                  aria-selected={active}
-                  data-index={i}
-                  onMouseMove={() => !active && setActiveIndex(i)}
-                  onClick={() => runCommand(command)}
-                  className={`flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-colors ${
-                    active ? "bg-surface-2 text-fg" : "text-muted"
-                  }`}
+              <div key={group} role="group" aria-labelledby={headerId}>
+                <p
+                  id={headerId}
+                  className="px-3 pt-3 pb-1.5 text-[11px] font-semibold tracking-wider text-subtle uppercase"
                 >
-                  <span
-                    className={`grid size-8 shrink-0 place-items-center rounded-lg border transition-colors ${
-                      active ? "border-line-strong bg-surface text-accent" : "border-line"
-                    }`}
-                  >
-                    <Icon className="size-4" aria-hidden />
-                  </span>
-                  <span className="min-w-0 flex-1 truncate font-medium">{command.label}</span>
-                  {command.hint && (
-                    <span className="hidden truncate font-mono text-xs text-subtle sm:block">{command.hint}</span>
-                  )}
-                  {command.group === "links" ? (
-                    <ArrowUpRight className={`size-4 shrink-0 ${active ? "opacity-100" : "opacity-0"}`} aria-hidden />
-                  ) : (
-                    <CornerDownLeft className={`size-4 shrink-0 ${active ? "opacity-100" : "opacity-0"}`} aria-hidden />
-                  )}
-                </div>
-              </li>
+                  {t.palette.groups[group]}
+                </p>
+                {items.map(({ command, i }) => {
+                  const Icon = command.icon;
+                  const active = i === activeIndex;
+                  return (
+                    <div
+                      key={command.id}
+                      id={optionId(i)}
+                      role="option"
+                      aria-selected={active}
+                      data-index={i}
+                      onMouseMove={() => !active && setActiveIndex(i)}
+                      onClick={() => runCommand(command)}
+                      className={`flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-colors ${
+                        active ? "bg-surface-2 text-fg" : "text-muted"
+                      }`}
+                    >
+                      <span
+                        className={`grid size-8 shrink-0 place-items-center rounded-lg border transition-colors ${
+                          active ? "border-line-strong bg-surface text-accent" : "border-line"
+                        }`}
+                      >
+                        <Icon className="size-4" aria-hidden />
+                      </span>
+                      <span className="min-w-0 flex-1 truncate font-medium">{command.label}</span>
+                      {command.hint && (
+                        <span className="hidden truncate font-mono text-xs text-subtle sm:block">{command.hint}</span>
+                      )}
+                      {command.group === "links" || command.group === "certificates" ? (
+                        <ArrowUpRight
+                          className={`size-4 shrink-0 ${active ? "opacity-100" : "opacity-0"}`}
+                          aria-hidden
+                        />
+                      ) : (
+                        <CornerDownLeft
+                          className={`size-4 shrink-0 ${active ? "opacity-100" : "opacity-0"}`}
+                          aria-hidden
+                        />
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
             );
           })}
-        </ul>
+        </div>
 
-        <div className="flex items-center gap-4 border-t border-line px-4 py-2.5 text-[11px] text-subtle">
+        <div className="flex items-center gap-4 border-t border-line px-4 py-2.5 text-[11px] text-subtle pointer-coarse:hidden">
           <span className="flex items-center gap-1.5">
             <Kbd>↑</Kbd>
             <Kbd>↓</Kbd>

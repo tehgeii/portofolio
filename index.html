@@ -13,8 +13,7 @@
       name="keywords"
       content="Dafi Hauzan, tehgeii, portfolio, portofolio, developer, UDINUS, TGO, Tech Gameplay, React, Kotlin, Python"
     />
-    <meta name="theme-color" content="#09090b" media="(prefers-color-scheme: dark)" />
-    <meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#09090b" />
     <meta name="color-scheme" content="dark light" />
     <link rel="canonical" href="https://tehgeii.github.io/portofolio/" />
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
@@ -89,6 +88,7 @@
           }
           root.classList.toggle("dark", theme === "dark");
           root.style.colorScheme = theme;
+          document.querySelector('meta[name="theme-color"]').content = theme === "dark" ? "#09090b" : "#fafafa";
 
           var lang = localStorage.getItem("lang");
           if (lang !== "id" && lang !== "en") {

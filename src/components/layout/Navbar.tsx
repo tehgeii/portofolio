@@ -1,8 +1,9 @@
 import { AnimatePresence, motion } from "motion/react";
 import { Menu, Search, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { profile } from "../../data/profile";
 import { SECTIONS, scrollToSection, type SectionId } from "../../data/sections";
+import { useFocusTrap } from "../../hooks/useFocusTrap";
 import { useScrollLock } from "../../hooks/useScrollLock";
 import { useLanguage } from "../../i18n/language";
 import { socialIcons } from "../ui/socialIcons";
@@ -37,8 +38,12 @@ export function Navbar({ active, onOpenPalette }: NavbarProps) {
   const { t } = useLanguage();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
 
   useScrollLock(open);
+  // While the mobile menu is open, Tab cycles through the header and menu only.
+  useFocusTrap(headerRef, open, toggleRef);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -68,6 +73,7 @@ export function Navbar({ active, onOpenPalette }: NavbarProps) {
 
   return (
     <header
+      ref={headerRef}
       className={`fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,box-shadow] duration-300 ${
         scrolled || open ? "border-b border-line glass" : "border-b border-transparent"
       }`}
@@ -140,6 +146,7 @@ export function Navbar({ active, onOpenPalette }: NavbarProps) {
           </div>
           <ThemeToggle />
           <button
+            ref={toggleRef}
             type="button"
             onClick={() => setOpen((v) => !v)}
             className={`${button("ghost", "icon")} lg:hidden`}

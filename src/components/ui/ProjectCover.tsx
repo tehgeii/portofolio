@@ -74,7 +74,7 @@ function Mockup({ shots, large }: { shots: ProjectScreenshot[]; large: boolean }
           <span className="size-1.5 rounded-full bg-amber-400/80" />
           <span className="size-1.5 rounded-full bg-emerald-400/80" />
         </div>
-        <img src={shot.thumb ?? shot.src} alt="" loading="lazy" decoding="async" className="block w-full" />
+        <CardImage shot={shot} />
       </div>
     );
   }
@@ -92,9 +92,25 @@ function Mockup({ shots, large }: { shots: ProjectScreenshot[]; large: boolean }
           } ${large ? "top-14 w-[108px] sm:top-16 sm:w-[124px]" : "top-12 w-[92px]"} ${i === 0 ? "z-10" : ""}`}
           style={phones.length > 1 ? { marginLeft: i === 0 ? "-38px" : "38px" } : undefined}
         >
-          <img src={shot.src} alt="" loading="lazy" decoding="async" className="block w-full" />
+          <CardImage shot={shot} />
         </div>
       ))}
     </>
+  );
+}
+
+/** The card-sized version of a screenshot, with its real dimensions to avoid layout shift. */
+function CardImage({ shot }: { shot: ProjectScreenshot }) {
+  const [width, height] = shot.thumb ? (shot.thumbSize ?? shot.size) : shot.size;
+  return (
+    <img
+      src={shot.thumb ?? shot.src}
+      width={width}
+      height={height}
+      alt=""
+      loading="lazy"
+      decoding="async"
+      className="block h-auto w-full"
+    />
   );
 }

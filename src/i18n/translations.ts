@@ -79,7 +79,7 @@ const id = {
     myRole: "Peran saya",
     highlights: "Fitur utama",
     screenshots: "Tangkapan layar",
-    openFull: "(buka ukuran penuh di tab baru)",
+    openFull: "(perbesar)",
     techUsed: "Teknologi",
     links: { repo: "Kode", live: "Demo Live", website: "Website" },
     filterLabel: "Filter kategori project",
@@ -168,7 +168,13 @@ const id = {
   palette: {
     placeholder: "Ketik perintah atau cari…",
     empty: "Tidak ada hasil.",
-    groups: { navigation: "Navigasi", actions: "Aksi", projects: "Project", links: "Tautan" },
+    groups: {
+      navigation: "Navigasi",
+      actions: "Aksi",
+      projects: "Project",
+      certificates: "Sertifikat",
+      links: "Tautan",
+    },
     actions: {
       theme: "Ganti tema terang / gelap",
       lang: "Switch to English",
@@ -258,7 +264,7 @@ const en: Translation = {
     myRole: "My role",
     highlights: "Key features",
     screenshots: "Screenshots",
-    openFull: "(open full size in a new tab)",
+    openFull: "(enlarge)",
     techUsed: "Tech stack",
     links: { repo: "Code", live: "Live Demo", website: "Website" },
     filterLabel: "Filter projects by category",
@@ -346,7 +352,13 @@ const en: Translation = {
   palette: {
     placeholder: "Type a command or search…",
     empty: "No results found.",
-    groups: { navigation: "Navigation", actions: "Actions", projects: "Projects", links: "Links" },
+    groups: {
+      navigation: "Navigation",
+      actions: "Actions",
+      projects: "Projects",
+      certificates: "Certificates",
+      links: "Links",
+    },
     actions: {
       theme: "Toggle light / dark theme",
       lang: "Ganti ke Bahasa Indonesia",
