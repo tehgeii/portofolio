@@ -32,7 +32,12 @@ export default defineConfig({
   },
   projects: [
     { name: "desktop", use: { ...devices["Desktop Chrome"] }, testIgnore: /integrations\.spec\.ts/ },
-    { name: "mobile", use: { ...devices["Pixel 7"] }, testIgnore: /integrations\.spec\.ts/ },
+    {
+      name: "mobile",
+      use: { ...devices["Pixel 7"] },
+      // Page-wide checks (accessibility, metadata, security policy) don't depend on the screen.
+      testIgnore: /(integrations|quality)\.spec\.ts/,
+    },
     {
       name: "integrations",
       use: { ...devices["Desktop Chrome"], baseURL: integrationsURL },

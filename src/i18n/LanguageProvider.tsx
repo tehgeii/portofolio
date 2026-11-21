@@ -17,6 +17,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     document.documentElement.lang = lang;
     document.title = translations[lang].meta.title;
+    document.querySelector('meta[name="description"]')?.setAttribute("content", translations[lang].meta.description);
     try {
       localStorage.setItem(STORAGE_KEY, lang);
     } catch {

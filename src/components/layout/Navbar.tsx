@@ -23,7 +23,10 @@ const NAV_ITEMS = SECTIONS.filter((id) => id !== "home");
 export function Logo() {
   return (
     <span className="flex items-center gap-2.5">
-      <span className="relative grid size-9 place-items-center rounded-xl bg-fg font-mono text-sm font-bold text-bg shadow-card">
+      <span
+        aria-hidden
+        className="relative grid size-9 place-items-center rounded-xl bg-fg font-mono text-sm font-bold text-bg shadow-card"
+      >
         D
         <span className="absolute -right-0.5 -bottom-0.5 size-2.5 rounded-full border-2 border-bg bg-gradient-accent" />
       </span>
@@ -82,8 +85,9 @@ export function Navbar({ active, onOpenPalette }: NavbarProps) {
         aria-label={t.a11y.mainNav}
         className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-5 sm:px-8"
       >
-        <a href="#home" onClick={go("home")} aria-label={`${profile.shortName}, ${t.nav.home}`} className="rounded-xl">
+        <a href="#home" onClick={go("home")} className="rounded-xl">
           <Logo />
+          <span className="sr-only">, {t.nav.home}</span>
         </a>
 
         {/* Desktop links */}

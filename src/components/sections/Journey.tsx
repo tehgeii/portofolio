@@ -56,7 +56,7 @@ export function Journey() {
                   <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
                     <p className="font-mono text-xs text-muted lg:hidden">{l(item.period)}</p>
                     {item.current && (
-                      <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-600 dark:text-emerald-400">
+                      <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-700 dark:text-emerald-400">
                         <span className="size-1.5 animate-pulse rounded-full bg-current" aria-hidden />
                         {t.journey.now}
                       </span>

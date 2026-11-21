@@ -43,27 +43,30 @@ export function About() {
         <Reveal delay={0.1}>
           <dl className="divide-y divide-line overflow-hidden rounded-2xl border border-line bg-surface shadow-card">
             {facts.map(({ icon: Icon, label, value, href }) => (
-              <div key={label} className="flex items-center gap-4 px-5 py-4">
-                <span className="grid size-10 shrink-0 place-items-center rounded-xl border border-line bg-surface-2 text-accent">
-                  <Icon className="size-[18px]" aria-hidden />
-                </span>
-                <div className="min-w-0">
-                  <dt className="text-xs font-medium tracking-wide text-subtle uppercase">{label}</dt>
-                  <dd className="mt-0.5 font-semibold">
-                    {href ? (
-                      <a
-                        href={href}
-                        target="_blank"
-                        rel="noreferrer noopener"
-                        className="underline decoration-line-strong underline-offset-4 transition-colors hover:text-accent hover:decoration-accent"
-                      >
-                        {value}
-                      </a>
-                    ) : (
-                      value
-                    )}
-                  </dd>
-                </div>
+              <div key={label} className="relative min-w-0 py-4 pr-5 pl-[4.75rem]">
+                <dt className="text-xs font-medium tracking-wide text-subtle uppercase">
+                  <span
+                    aria-hidden
+                    className="absolute top-1/2 left-5 grid size-10 -translate-y-1/2 place-items-center rounded-xl border border-line bg-surface-2 text-accent"
+                  >
+                    <Icon className="size-[18px]" />
+                  </span>
+                  {label}
+                </dt>
+                <dd className="mt-0.5 font-semibold">
+                  {href ? (
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      className="underline decoration-line-strong underline-offset-4 transition-colors hover:text-accent hover:decoration-accent"
+                    >
+                      {value}
+                    </a>
+                  ) : (
+                    value
+                  )}
+                </dd>
               </div>
             ))}
           </dl>

@@ -6,6 +6,8 @@
 const id = {
   meta: {
     title: "Dafi Hauzan Atsillah Hoenarko · Mahasiswa Informatika & Developer",
+    description:
+      "Portofolio Dafi Hauzan Atsillah Hoenarko (tehgeii), mahasiswa Teknik Informatika UDINUS & developer. Kreator TGO, NgiBsen, dan ZZZ Gacha Predictor.",
   },
   a11y: {
     skip: "Lewati ke konten utama",
@@ -217,6 +219,8 @@ export type Translation = typeof id;
 const en: Translation = {
   meta: {
     title: "Dafi Hauzan Atsillah Hoenarko · Informatics Student & Developer",
+    description:
+      "Portfolio of Dafi Hauzan Atsillah Hoenarko (tehgeii), Informatics Engineering student at UDINUS & developer. Creator of TGO, NgiBsen and ZZZ Gacha Predictor.",
   },
   a11y: {
     skip: "Skip to main content",

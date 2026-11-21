@@ -1,32 +1,26 @@
 import avatar from "../assets/avatar.jpg";
 import type { Localized, LocalizedList } from "../types";
+import { site } from "./site";
+
+export type { SocialKey, SocialLink } from "./site";
 
 /**
  * Everything personal about the site owner lives here.
  * Edit this file to update name, bio, links and contact details.
  */
 
-export type SocialKey = "github" | "linkedin" | "instagram" | "youtube";
-
-export interface SocialLink {
-  key: SocialKey;
-  label: string;
-  handle: string;
-  url: string;
-}
-
 export const profile = {
-  name: "Dafi Hauzan Atsillah Hoenarko",
+  name: site.name,
   shortName: "Dafi",
-  username: "tehgeii",
-  email: "antsters9@gmail.com",
+  username: site.username,
+  email: site.email,
   /** Profile photo, cropped to face & chest. Replace src/assets/avatar.jpg to change it. */
   avatar,
-  website: "https://tgopremium.my.id",
-  siteUrl: "https://tehgeii.github.io/portofolio/",
+  website: site.website,
+  siteUrl: site.url,
 
   location: { id: "Jawa Tengah, Indonesia", en: "Central Java, Indonesia" } satisfies Localized,
-  campus: "Universitas Dian Nuswantoro",
+  campus: site.campus.name,
   campusShort: "UDINUS",
   major: { id: "S1 Teknik Informatika", en: "B.Sc. Informatics Engineering" } satisfies Localized,
 
@@ -53,20 +47,5 @@ export const profile = {
     ],
   } satisfies LocalizedList,
 
-  socials: [
-    { key: "github", label: "GitHub", handle: "@tehgeii", url: "https://github.com/tehgeii" },
-    { key: "linkedin", label: "LinkedIn", handle: "in/dafi-hauzan", url: "https://www.linkedin.com/in/dafi-hauzan" },
-    {
-      key: "instagram",
-      label: "Instagram",
-      handle: "@kokohpasarsenen",
-      url: "https://www.instagram.com/kokohpasarsenen",
-    },
-    {
-      key: "youtube",
-      label: "YouTube",
-      handle: "@techgameplayindonesia",
-      url: "https://www.youtube.com/@techgameplayindonesia",
-    },
-  ] satisfies SocialLink[],
+  socials: site.socials,
 } as const;

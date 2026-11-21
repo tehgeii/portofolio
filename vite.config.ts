@@ -2,12 +2,13 @@ import { fileURLToPath } from "node:url";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
+import { siteHtml } from "./scripts/vite-site-html.ts";
 
 // `base: "./"` makes the build work on any static host, including
 // GitHub Pages under https://tehgeii.github.io/portofolio/.
 export default defineConfig(({ mode }) => ({
   base: "./",
-  plugins: [react(), tailwindcss()],
+  plugins: [react(), tailwindcss(), siteHtml()],
   resolve: {
     alias: {
       // Data generated in CI (YouTube). The e2e test build uses fixed fixtures instead.
