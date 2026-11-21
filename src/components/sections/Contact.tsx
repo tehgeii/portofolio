@@ -1,10 +1,22 @@
 import { AnimatePresence, motion } from "motion/react";
-import { ArrowUpRight, Check, Copy, Mail, Send } from "lucide-react";
-import { useId, useState, type FormEvent } from "react";
+import {
+  AlertCircle,
+  ArrowUpRight,
+  Check,
+  CheckCircle2,
+  Copy,
+  LoaderCircle,
+  Mail,
+  RotateCcw,
+  Send,
+} from "lucide-react";
+import { useId, useRef, useState, type FormEvent } from "react";
+import { integrations } from "../../config/integrations";
 import { useToast } from "../../context/toast";
 import { profile } from "../../data/profile";
 import { useCopyEmail } from "../../hooks/useCopyEmail";
 import { useLanguage } from "../../i18n/language";
+import { sendContactMessage } from "../../lib/web3forms";
 import { socialIcons } from "../ui/socialIcons";
 import { Reveal } from "../ui/Reveal";
 import { Section } from "../ui/Section";
@@ -13,6 +25,7 @@ import { Subheading } from "../ui/Subheading";
 import { button } from "../ui/styles";
 
 type Field = "name" | "email" | "message";
+type Status = "idle" | "sending" | "sent" | "error";
 type Errors = Partial<Record<Field, string>>;
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -118,6 +131,11 @@ function ContactForm() {
   const uid = useId();
   const [values, setValues] = useState<Record<Field, string>>({ name: "", email: "", message: "" });
   const [errors, setErrors] = useState<Errors>({});
+  const [status, setStatus] = useState<Status>("idle");
+  const honeypot = useRef<HTMLInputElement>(null);
+  const statusRef = useRef<HTMLDivElement>(null);
+  // With a Web3Forms key the message is sent directly; otherwise the visitor's email app opens.
+  const direct = !!integrations.web3formsAccessKey;
 
   const validate = (v: Record<Field, string>): Errors => {
     const e: Errors = {};
@@ -144,10 +162,43 @@ function ContactForm() {
       return;
     }
 
-    const subject = t.contact.form.subject(values.name.trim());
-    const body = `${values.message.trim()}\n\n— ${values.name.trim()} (${values.email.trim()})`;
-    window.location.href = `mailto:${profile.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    toast(t.contact.form.opening, "info");
+    if (!direct) {
+      window.location.assign(mailtoUrl);
+      toast(t.contact.form.opening, "info");
+      return;
+    }
+    void send();
+  };
+
+  const subject = t.contact.form.subject(values.name.trim());
+  const body = `${values.message.trim()}\n\n— ${values.name.trim()} (${values.email.trim()})`;
+  const mailtoUrl = `mailto:${profile.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+  const send = async () => {
+    if (status === "sending") return;
+    // Bots fill in every field, people never see this one: pretend it worked and send nothing.
+    if (honeypot.current?.value) {
+      setStatus("sent");
+      return;
+    }
+    setStatus("sending");
+    try {
+      await sendContactMessage(integrations.web3formsAccessKey, {
+        name: values.name.trim(),
+        email: values.email.trim(),
+        message: values.message.trim(),
+        subject,
+      });
+      setStatus("sent");
+    } catch {
+      setStatus("error");
+    }
+    requestAnimationFrame(() => statusRef.current?.focus());
+  };
+
+  const reset = () => {
+    setValues({ name: "", email: "", message: "" });
+    setStatus("idle");
   };
 
   const fields: { key: Field; label: string; placeholder: string; type?: string; autoComplete: string }[] = [
@@ -166,10 +217,45 @@ function ContactForm() {
       invalid ? "border-rose-500/70 focus:border-rose-500" : "border-line focus:border-accent"
     }`;
 
+  if (status === "sent") {
+    return (
+      <SpotlightCard className="flex h-full flex-col items-center justify-center p-6 text-center sm:p-8">
+        <div ref={statusRef} tabIndex={-1} role="status" className="flex flex-col items-center outline-none">
+          <span className="grid size-14 place-items-center rounded-full bg-emerald-500/10 text-emerald-500">
+            <CheckCircle2 className="size-7" aria-hidden />
+          </span>
+          <h3 className="mt-5 text-xl font-semibold">{t.contact.form.sentTitle}</h3>
+          <p className="mt-2 max-w-sm text-sm leading-relaxed text-muted">
+            {t.contact.form.sentBody(values.name.trim())}
+          </p>
+        </div>
+        <button type="button" onClick={reset} className={`${button("secondary", "md")} mt-6`}>
+          <RotateCcw className="size-4" aria-hidden />
+          {t.contact.form.sendAnother}
+        </button>
+      </SpotlightCard>
+    );
+  }
+
+  const sending = status === "sending";
+
   return (
     <SpotlightCard className="h-full p-6 sm:p-8">
       <h3 className="text-xl font-semibold">{t.contact.form.title}</h3>
-      <form noValidate onSubmit={onSubmit} className="mt-6 flex flex-col gap-5">
+      <form
+        noValidate
+        onSubmit={onSubmit}
+        aria-busy={sending}
+        data-mode={direct ? "web3forms" : "mailto"}
+        className="relative mt-6 flex flex-col gap-5"
+      >
+        {/* Honeypot for spam bots: hidden from people and assistive tech. */}
+        <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
+          <label>
+            Website
+            <input ref={honeypot} type="text" name="botcheck" tabIndex={-1} autoComplete="off" />
+          </label>
+        </div>
         <div className="grid gap-5 sm:grid-cols-2">
           {fields.map((f) => (
             <div key={f.key}>
@@ -211,14 +297,42 @@ function ContactForm() {
           <FieldError id={`${uid}-message-error`} message={errors.message} />
         </div>
 
-        <button type="submit" className={`${button("gradient", "lg")} group w-full`}>
-          {t.contact.form.submit}
-          <Send
-            className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-            aria-hidden
-          />
+        {status === "error" && (
+          <div
+            ref={statusRef}
+            tabIndex={-1}
+            role="alert"
+            className="flex flex-col gap-3 rounded-xl border border-rose-500/30 bg-rose-500/5 p-4 text-sm outline-none"
+          >
+            <p className="flex items-start gap-2 text-rose-600 dark:text-rose-400">
+              <AlertCircle className="mt-0.5 size-4 shrink-0" aria-hidden />
+              {t.contact.form.failed}
+            </p>
+            <div className="flex flex-wrap gap-2">
+              <button type="button" onClick={() => void send()} className={button("secondary", "sm")}>
+                <RotateCcw className="size-4" aria-hidden />
+                {t.contact.form.retry}
+              </button>
+              <a href={mailtoUrl} className={button("ghost", "sm")}>
+                <Mail className="size-4" aria-hidden />
+                {t.contact.form.useEmailApp}
+              </a>
+            </div>
+          </div>
+        )}
+
+        <button type="submit" disabled={sending} className={`${button("gradient", "lg")} group w-full`}>
+          {sending ? t.contact.form.sending : t.contact.form.submit}
+          {sending ? (
+            <LoaderCircle className="size-4 animate-spin" aria-hidden />
+          ) : (
+            <Send
+              className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              aria-hidden
+            />
+          )}
         </button>
-        <p className="text-center text-xs text-subtle">{t.contact.form.note}</p>
+        <p className="text-center text-xs text-subtle">{direct ? t.contact.form.noteDirect : t.contact.form.note}</p>
       </form>
     </SpotlightCard>
   );

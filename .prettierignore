@@ -1,4 +1,5 @@
 dist
+dist-e2e
 node_modules
 package-lock.json
 src/data/github-snapshot.json

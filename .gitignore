@@ -3,6 +3,7 @@ node_modules/
 
 # Build output
 dist/
+dist-e2e/
 *.tsbuildinfo
 
 # Logs
@@ -20,6 +21,7 @@ Thumbs.db
 .env
 .env.*
 !.env.example
+!.env.e2e
 
 # Playwright
 test-results/

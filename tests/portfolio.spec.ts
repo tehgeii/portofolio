@@ -9,8 +9,11 @@ const dialog = (page: Page) => page.getByRole("dialog");
 const palette = (page: Page) => page.getByRole("combobox");
 
 test.beforeEach(async ({ page }) => {
-  // Keep tests deterministic: use the baked-in GitHub snapshot.
+  // Keep tests deterministic: use the baked-in GitHub snapshot, and never
+  // send mail or count visits if the real site has those services switched on.
   await page.route("https://api.github.com/**", (route) => route.abort());
+  await page.route("https://api.web3forms.com/**", (route) => route.abort());
+  await page.route(/goatcounter\.com/, (route) => route.abort());
 });
 
 test("loads without errors, in Indonesian by default for Indonesian browsers", async ({ browser }) => {
